@@ -2,4 +2,5 @@
 
 if __name__ == "__main__":
     from bidoc.cli import main
+
     main()
