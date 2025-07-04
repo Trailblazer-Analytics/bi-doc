@@ -1,0 +1,11 @@
+# GUI Requirements for BI Documentation Tool
+# Optional dependencies for enhanced GUI experience
+
+# For drag-and-drop functionality (optional)
+tkinterdnd2>=0.3.0
+
+# For Excel export functionality (optional)
+openpyxl>=3.0.0
+
+# Enhanced file dialogs (optional)
+tkinter-tooltip>=2.0.0

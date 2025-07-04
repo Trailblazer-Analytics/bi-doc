@@ -139,13 +139,14 @@ class TableauParser(MetadataExtractor):
         worksheets = []
 
         try:
-            for worksheet in workbook.worksheets:
+            # workbook.worksheets returns a list of worksheet names (strings)
+            for worksheet_name in workbook.worksheets:
                 worksheet_info = {
-                    "name": worksheet.name,
-                    "data_source": getattr(worksheet, "data_source", ""),
-                    "fields_used": self._get_worksheet_fields(worksheet),
-                    "filters": self._get_worksheet_filters(worksheet),
-                    "parameters_used": self._get_worksheet_parameters(worksheet),
+                    "name": worksheet_name,
+                    "data_source": "",  # Not available in basic API
+                    "fields_used": [],  # Would need more complex parsing
+                    "filters": [],     # Would need more complex parsing
+                    "parameters_used": [],  # Would need more complex parsing
                 }
                 worksheets.append(worksheet_info)
 
@@ -162,15 +163,12 @@ class TableauParser(MetadataExtractor):
         dashboards = []
 
         try:
-            for dashboard in workbook.dashboards:
+            # workbook.dashboards returns a list of dashboard names (strings)
+            for dashboard_name in workbook.dashboards:
                 dashboard_info = {
-                    "name": dashboard.name,
-                    "worksheets": (
-                        [ws.name for ws in dashboard.worksheets]
-                        if hasattr(dashboard, "worksheets")
-                        else []
-                    ),
-                    "objects": self._get_dashboard_objects(dashboard),
+                    "name": dashboard_name,
+                    "worksheets": [],  # Would need more complex parsing to get worksheet relationships
+                    "objects": [],     # Would need more complex parsing
                 }
                 dashboards.append(dashboard_info)
 

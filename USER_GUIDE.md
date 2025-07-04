@@ -669,13 +669,51 @@ docs/generated/
 - Review output before sharing externally
 - Consider masking sensitive server details in documentation
 
+## Future Enhancements & Roadmap
+
+### Quality of Life Improvements
+
+The development team actively works on improving user experience. For detailed information about planned enhancements, see [QOL_SUGGESTIONS.md](QOL_SUGGESTIONS.md).
+
+**High Priority Improvements:**
+
+- **Progress Indicators**: Real-time progress bars for file processing
+- **Better Error Messages**: Context-aware error reporting with suggested fixes
+- **Parallel Processing**: Faster batch processing using multiple CPU cores
+- **Enhanced Output**: Table of contents, collapsible sections, syntax highlighting
+- **Incremental Updates**: Only reprocess files that have changed
+
+**Medium Priority Features:**
+
+- **Template System**: Custom Jinja2 templates for different documentation styles
+- **Enterprise Integration**: Direct export to Confluence, SharePoint, and wikis
+- **Advanced Analytics**: Usage patterns, similarity detection, complexity scoring
+- **Configuration Files**: Save and reuse processing preferences
+
+**Long-term Vision:**
+
+- **Web Interface**: Browser-based tool for non-technical users
+- **AI Integration**: Smart summarization and pattern recognition
+- **Real-time Processing**: Live dashboard documentation updates
+- **Plugin System**: Community-developed extensions and parsers
+
+### Contributing Ideas
+
+We welcome feedback and suggestions! Ways to contribute:
+
+- **Feature Requests**: Submit GitHub issues with enhancement ideas
+- **User Feedback**: Share your experience and pain points
+- **Community Templates**: Contribute custom templates for different use cases
+- **Documentation**: Help improve guides and examples
+
 ## Commercial Use & Licensing
 
 This software is licensed under the Business Source License 1.1 (BSL). Production or commercial use requires a commercial license from the author.
 
 **To use this tool in production or for commercial purposes, please contact:**
-- Email: your@email.com
-- Website: https://yourproductsite.com
+
+- Email: <your@email.com>
+- Website: <https://yourproductsite.com>
 
 Flexible licensing, support, and enterprise options are available. Non-commercial, research, and evaluation use is always free under the BSL.
 

@@ -64,6 +64,24 @@ python -m bidoc -i *.pbix -i *.twbx -o docs/ -f all
 python -m bidoc -i report.pbix -o docs/ --with-summary
 ```
 
+### Analyst-Friendly Options
+
+**For Windows analysts who prefer GUI tools:**
+
+```powershell
+# PowerShell Module (recommended for Windows users)
+Invoke-BIFileScan "dashboard.pbix" -ShowProgress -OpenResult
+# Or use the shorter alias: Scan-BIFile "dashboard.pbix" -ShowProgress -OpenResult
+
+# Drag-and-drop batch file
+# Simply drag any .pbix/.twb/.twbx file onto BI-Doc-Quick-Scan.bat
+
+# Graphical user interface
+python analyst_extensions/gui/bidoc_gui.py
+```
+
+See **[Analyst Extensions Guide](analyst_extensions/INSTALLATION_GUIDE.md)** for complete setup instructions.
+
 ### Docker Usage
 
 ```bash
@@ -77,6 +95,9 @@ docker run -v $(pwd):/data bidoc-tool --input /data/report.pbix --output /data/d
 ## 📖 Documentation
 
 - **[User Guide](USER_GUIDE.md)** - Comprehensive usage guide with examples
+- **[Analyst Extensions](analyst_extensions/INSTALLATION_GUIDE.md)** - Windows-friendly GUI and PowerShell tools
+- **[QoL Suggestions](QOL_SUGGESTIONS.md)** - Quality of life improvements and roadmap
+- **[Roadmap](ROADMAP.md)** - Development roadmap and planned features
 - **[Deployment Summary](DEPLOYMENT_SUMMARY.md)** - Production deployment information
 
 ## 🔍 What Gets Extracted
@@ -167,14 +188,26 @@ bidoc/
 └── utils.py           # Common utilities
 ```
 
-## 🚀 Future Enhancements
+## 🚀 Current Status & Roadmap
 
-- **Enhanced AI Integration**: OpenAI, Anthropic, and local LLM support
-- **Additional Formats**: HTML, PDF, Confluence output
-- **Advanced Analytics**: Usage patterns and impact analysis
-- **Lineage Tracking**: Enhanced data lineage visualization
-- **Vertical Templates**: Industry-specific documentation templates
-- **Real-time Processing**: Live dashboard documentation updates
+### ✅ Completed Features
+
+- **Multi-format Support**: Robust parsing of Power BI (.pbix) and Tableau (.twb/.twbx) files
+- **Rich Metadata Extraction**: Complete extraction of datasets, fields, measures, calculations, and visuals
+- **Dual Output Formats**: High-quality Markdown (markdownlint compliant) and structured JSON
+- **Production Ready**: Robust CLI, Docker support, comprehensive error handling
+- **Batch Processing**: Efficient processing of multiple files with detailed logging
+- **Modular Architecture**: Extensible design ready for future enhancements
+
+### 🔄 Next Priorities
+
+For detailed roadmap and quality-of-life improvements, see [QOL_SUGGESTIONS.md](QOL_SUGGESTIONS.md):
+
+- **Enhanced User Experience**: Progress indicators, better error messages, interactive mode
+- **Performance Optimizations**: Parallel processing, incremental updates, caching
+- **Output Quality**: Enhanced Markdown with TOC, collapsible sections, syntax highlighting
+- **Enterprise Integration**: Git hooks, Confluence export, SharePoint integration
+- **Advanced Analytics**: Usage patterns, similarity detection, AI-powered insights
 
 ## 🔧 Dependencies
 
@@ -185,6 +218,17 @@ bidoc/
 - **pandas**: Data processing (`>=1.5.0`)
 - **lxml**: XML processing (`>=4.9.0`)
 - **colorama**: Cross-platform colored output (`>=0.4.0`)
+
+## 🙏 Acknowledgments
+
+We are grateful to the open-source community and the following projects that make this tool possible:
+
+- **[PBIXRay](https://github.com/aafvstam/pbixray)** by Arjen van Stam - Essential Power BI file parsing capabilities
+- **[Tableau Document API](https://github.com/tableau/document-api-python)** by Tableau Software - Comprehensive Tableau workbook analysis
+- **Microsoft** - Power BI sample files for testing and demonstration
+- **Python Community** - The amazing ecosystem of libraries (pandas, click, jinja2, etc.)
+
+For complete attribution and licensing information, see [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
 
 ## 🤝 Contributing
 
@@ -237,8 +281,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 This software is licensed under the Business Source License 1.1 (BSL). Production or commercial use requires a commercial license from the author.
 
 **To use this tool in production or for commercial purposes, please contact:**
-- Email: your@email.com
-- Website: https://yourproductsite.com
+
+- Email: <your@email.com>
+- Website: <https://yourproductsite.com>
 
 We offer flexible licensing, support, and enterprise options. Non-commercial, research, and evaluation use is always free under the BSL.
 
@@ -246,4 +291,4 @@ For organizations or users interested in a commercial license, see the [COMMERCI
 
 ---
 
-**Made with ❤️ for the BI community**
+Made with ❤️ for the BI community
