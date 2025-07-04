@@ -267,7 +267,24 @@ python -m pytest --cov=bidoc tests/
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **Business Source License 1.1 (BSL)** - see the [LICENSE](LICENSE) file for details.
+
+### ⚠️ Commercial Use Restrictions
+
+**IMPORTANT**: Commercial and production use is **RESTRICTED** until July 4, 2028.
+
+**Permitted Uses**:
+- ✅ Non-commercial research and evaluation
+- ✅ Personal and educational purposes  
+- ✅ Open source development and testing
+
+**Prohibited Uses**:
+- ❌ Production business operations
+- ❌ Paid consulting or services
+- ❌ Commercial product integration
+- ❌ Revenue-generating activities
+
+**Future**: Automatically converts to Apache 2.0 license on July 4, 2028.
 
 ## 🆘 Support
 
