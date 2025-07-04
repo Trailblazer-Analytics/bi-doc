@@ -15,6 +15,7 @@ The BI Documentation Tool has been enhanced with comprehensive analyst-friendly 
 - ✅ Sensitive test data excluded via `.gitignore`
 - ✅ All code complies with static analysis tools
 - ✅ Third-party licenses documented
+- ✅ Docker vulnerabilities addressed (Alpine-based secure image)
 
 ### Code Quality
 - ✅ **PowerShell**: PSScriptAnalyzer compliant (zero warnings)
