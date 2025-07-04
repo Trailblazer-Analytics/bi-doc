@@ -4,12 +4,15 @@ import logging
 import tempfile
 import zipfile
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional, Any, TYPE_CHECKING
 
-try:
+if TYPE_CHECKING:
     from tableaudocumentapi import Workbook
-except ImportError:
-    Workbook = None
+else:
+    try:
+        from tableaudocumentapi import Workbook
+    except ImportError:
+        Workbook = None
 
 from bidoc.utils import MetadataExtractor
 

@@ -4,12 +4,15 @@ import logging
 import zipfile
 import json
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional, Any, TYPE_CHECKING
 
-try:
+if TYPE_CHECKING:
     from pbixray import PBIXRay
-except ImportError:
-    PBIXRay = None
+else:
+    try:
+        from pbixray import PBIXRay
+    except ImportError:
+        PBIXRay = None
 
 from bidoc.utils import MetadataExtractor
 
@@ -51,7 +54,7 @@ class PowerBIParser(MetadataExtractor):
             self.logger.error(f"Failed to parse Power BI file: {str(e)}")
             raise
     
-    def _extract_data_sources(self, model: PBIXRay) -> List[Dict[str, Any]]:
+    def _extract_data_sources(self, model: "PBIXRay") -> List[Dict[str, Any]]:
         """Extract data source information"""
         self.log_extraction_progress("Extracting data sources")
         
@@ -85,7 +88,7 @@ class PowerBIParser(MetadataExtractor):
         self.log_extraction_progress("Data sources extracted", len(data_sources))
         return data_sources
     
-    def _extract_tables(self, model: PBIXRay) -> List[Dict[str, Any]]:
+    def _extract_tables(self, model: "PBIXRay") -> List[Dict[str, Any]]:
         """Extract table and column information"""
         self.log_extraction_progress("Extracting tables and columns")
         
@@ -123,7 +126,7 @@ class PowerBIParser(MetadataExtractor):
         self.log_extraction_progress("Tables extracted", len(tables))
         return tables
     
-    def _extract_relationships(self, model: PBIXRay) -> List[Dict[str, Any]]:
+    def _extract_relationships(self, model: "PBIXRay") -> List[Dict[str, Any]]:
         """Extract table relationships"""
         self.log_extraction_progress("Extracting relationships")
         
@@ -150,7 +153,7 @@ class PowerBIParser(MetadataExtractor):
         self.log_extraction_progress("Relationships extracted", len(relationships))
         return relationships
     
-    def _extract_measures(self, model: PBIXRay) -> List[Dict[str, Any]]:
+    def _extract_measures(self, model: "PBIXRay") -> List[Dict[str, Any]]:
         """Extract DAX measures"""
         self.log_extraction_progress("Extracting DAX measures")
         
@@ -176,7 +179,7 @@ class PowerBIParser(MetadataExtractor):
         self.log_extraction_progress("Measures extracted", len(measures))
         return measures
     
-    def _extract_calculated_columns(self, model: PBIXRay) -> List[Dict[str, Any]]:
+    def _extract_calculated_columns(self, model: "PBIXRay") -> List[Dict[str, Any]]:
         """Extract calculated columns"""
         self.log_extraction_progress("Extracting calculated columns")
         
@@ -250,7 +253,7 @@ class PowerBIParser(MetadataExtractor):
         self.log_extraction_progress("Visualizations extracted", len(visualizations))
         return visualizations
     
-    def _extract_power_query(self, model: PBIXRay) -> Dict[str, str]:
+    def _extract_power_query(self, model: "PBIXRay") -> Dict[str, str]:
         """Extract Power Query M code"""
         self.log_extraction_progress("Extracting Power Query code")
         
