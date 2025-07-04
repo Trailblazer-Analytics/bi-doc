@@ -6,6 +6,8 @@ import zipfile
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
+import pandas as pd
+
 if TYPE_CHECKING:
     from pbixray import PBIXRay
 else:
@@ -64,19 +66,36 @@ class PowerBIParser(MetadataExtractor):
 
         try:
             # Get Power Query information if available
-            if hasattr(model, "power_query") and model.power_query is not None:
-                for query_name, query_content in model.power_query.items():
-                    # Extract connection info from M code
-                    source_info = self._parse_m_code_for_source(query_content)
-                    if source_info:
-                        data_sources.append(
-                            {
-                                "name": query_name,
-                                "type": source_info.get("type", "Unknown"),
-                                "connection": source_info.get("connection", ""),
-                                "query": query_content,
-                            }
-                        )
+            if hasattr(model, "power_query"):
+                pq_data = model.power_query
+                
+                if pq_data is not None:
+                    try:
+                        # Handle different types of power_query data safely
+                        if isinstance(pq_data, dict):
+                            query_items = pq_data.items()
+                        elif hasattr(pq_data, 'items'):
+                            query_items = pq_data.items()
+                        else:
+                            # Skip if we can't iterate safely
+                            query_items = []
+                            
+                        for query_name, query_content in query_items:
+                            # Extract connection info from M code
+                            source_info = self._parse_m_code_for_source(str(query_content))
+                            if source_info:
+                                data_sources.append(
+                                    {
+                                        "name": str(query_name),
+                                        "type": source_info.get("type", "Unknown"),
+                                        "connection": source_info.get("connection", ""),
+                                        "query": str(query_content),
+                                    }
+                                )
+                                
+                    except Exception as inner_e:
+                        self.logger.debug(f"Error processing Power Query items: {str(inner_e)}")
+                        
         except Exception as e:
             self.logger.debug(f"Could not extract Power Query sources: {str(e)}")
 
@@ -101,37 +120,64 @@ class PowerBIParser(MetadataExtractor):
         tables = []
 
         try:
-            # Get table names
-            table_names = model.tables if hasattr(model, "tables") else []
-
             # Get schema information
-            schema_df = model.schema if hasattr(model, "schema") else None
+            if hasattr(model, "schema"):
+                schema_df = model.schema
+                
+                if schema_df is not None and not schema_df.empty:
+                    # Debug: Log available columns
+                    self.logger.debug(f"Schema columns: {list(schema_df.columns)}")
+                    
+                    # Use correct column names from PBIXRay
+                    if 'TableName' in schema_df.columns:
+                        unique_tables = schema_df['TableName'].unique()
+                        
+                        for table_name in unique_tables:
+                            if pd.isna(table_name):
+                                continue
+                                
+                            table_columns = schema_df[schema_df['TableName'] == table_name]
+                            
+                            columns = []
+                            for _, row in table_columns.iterrows():
+                                # Use correct column names from PBIXRay
+                                column_name = row.get("ColumnName", "")
+                                data_type = row.get("PandasDataType", "Unknown")
+                                
+                                columns.append(
+                                    {
+                                        "name": str(column_name),
+                                        "data_type": str(data_type),
+                                        "is_hidden": bool(row.get("IsHidden", False)),
+                                        "description": str(row.get("Description", "")),
+                                    }
+                                )
 
-            if schema_df is not None and not schema_df.empty:
-                # Group by table
-                for table_name in table_names:
-                    table_columns = schema_df[schema_df["Table"] == table_name]
-
-                    columns = []
-                    for _, row in table_columns.iterrows():
-                        columns.append(
-                            {
-                                "name": row.get("Column", ""),
-                                "data_type": row.get("DataType", "Unknown"),
-                                "is_hidden": row.get("IsHidden", False),
-                                "description": row.get("Description", ""),
-                            }
-                        )
-
-                    tables.append(
-                        {
-                            "name": table_name,
-                            "columns": columns,
-                            "row_count": None,  # PBIXRay might provide this in future versions
-                        }
-                    )
+                            tables.append(
+                                {
+                                    "name": str(table_name),
+                                    "columns": columns,
+                                    "row_count": None,
+                                }
+                            )
+                    else:
+                        self.logger.debug("No table column found in schema")
+                        
         except Exception as e:
             self.logger.debug(f"Error extracting tables: {str(e)}")
+            # Try alternative method
+            try:
+                if hasattr(model, "tables") and model.tables:
+                    for table_name in model.tables:
+                        tables.append(
+                            {
+                                "name": str(table_name),
+                                "columns": [],
+                                "row_count": None,
+                            }
+                        )
+            except Exception as e2:
+                self.logger.debug(f"Alternative table extraction failed: {str(e2)}")
 
         self.log_extraction_progress("Tables extracted", len(tables))
         return tables
@@ -147,18 +193,26 @@ class PowerBIParser(MetadataExtractor):
                 rel_df = model.relationships
 
                 if rel_df is not None and not rel_df.empty:
+                    # Debug: Log available columns
+                    self.logger.debug(f"Relationships columns: {list(rel_df.columns)}")
+                    
                     for _, row in rel_df.iterrows():
+                        # Use correct column names from PBIXRay
+                        from_table = row.get("FromTableName", "")
+                        from_column = row.get("FromColumnName", "")
+                        to_table = row.get("ToTableName", "")
+                        to_column = row.get("ToColumnName", "")
+                        cardinality = row.get("Cardinality", "")
+                        
                         relationships.append(
                             {
-                                "from_table": row.get("FromTable", ""),
-                                "from_column": row.get("FromColumn", ""),
-                                "to_table": row.get("ToTable", ""),
-                                "to_column": row.get("ToColumn", ""),
-                                "cardinality": row.get("Cardinality", ""),
-                                "is_active": row.get("IsActive", True),
-                                "cross_filter_direction": row.get(
-                                    "CrossFilterDirection", ""
-                                ),
+                                "from_table": str(from_table),
+                                "from_column": str(from_column),
+                                "to_table": str(to_table),
+                                "to_column": str(to_column),
+                                "cardinality": str(cardinality),
+                                "is_active": bool(row.get("IsActive", True)),
+                                "cross_filter_direction": str(row.get("CrossFilteringBehavior", "")),
                             }
                         )
         except Exception as e:
@@ -178,15 +232,24 @@ class PowerBIParser(MetadataExtractor):
                 measures_df = model.dax_measures
 
                 if measures_df is not None and not measures_df.empty:
+                    # Debug: Log available columns
+                    self.logger.debug(f"Measures columns: {list(measures_df.columns)}")
+                    
                     for _, row in measures_df.iterrows():
+                        # Use correct column names from PBIXRay
+                        measure_name = row.get("Name", "")
+                        table_name = row.get("TableName", "")
+                        expression = row.get("Expression", "")
+                        
                         measures.append(
                             {
-                                "name": row.get("Measure", ""),
-                                "table": row.get("Table", ""),
-                                "expression": row.get("Expression", ""),
-                                "format_string": row.get("FormatString", ""),
-                                "description": row.get("Description", ""),
-                                "is_hidden": row.get("IsHidden", False),
+                                "name": str(measure_name),
+                                "table": str(table_name),
+                                "expression": str(expression),
+                                "format_string": str(row.get("FormatString", "")),
+                                "description": str(row.get("Description", "")),
+                                "display_folder": str(row.get("DisplayFolder", "")),
+                                "is_hidden": bool(row.get("IsHidden", False)),
                             }
                         )
         except Exception as e:
@@ -206,15 +269,24 @@ class PowerBIParser(MetadataExtractor):
                 columns_df = model.dax_columns
 
                 if columns_df is not None and not columns_df.empty:
+                    # Debug: Log available columns
+                    self.logger.debug(f"Calculated columns columns: {list(columns_df.columns)}")
+                    
                     for _, row in columns_df.iterrows():
+                        # Use correct column names from PBIXRay
+                        column_name = row.get("ColumnName", "")
+                        table_name = row.get("TableName", "")
+                        expression = row.get("Expression", "")
+                        
                         calculated_columns.append(
                             {
-                                "name": row.get("Column", ""),
-                                "table": row.get("Table", ""),
-                                "expression": row.get("Expression", ""),
-                                "data_type": row.get("DataType", ""),
-                                "description": row.get("Description", ""),
-                                "is_hidden": row.get("IsHidden", False),
+                                "name": str(column_name),
+                                "table": str(table_name),
+                                "expression": str(expression),
+                                "data_type": str(row.get("DataType", "")),
+                                "format_string": str(row.get("FormatString", "")),
+                                "description": str(row.get("Description", "")),
+                                "is_hidden": bool(row.get("IsHidden", False)),
                             }
                         )
         except Exception as e:
@@ -284,8 +356,25 @@ class PowerBIParser(MetadataExtractor):
         power_query = {}
 
         try:
-            if hasattr(model, "power_query") and model.power_query:
-                power_query = dict(model.power_query)
+            if hasattr(model, "power_query"):
+                pq_data = model.power_query
+                
+                # Handle different types of power_query data
+                if pq_data is not None:
+                    if isinstance(pq_data, dict):
+                        power_query = pq_data
+                    elif hasattr(pq_data, 'to_dict'):
+                        power_query = pq_data.to_dict()
+                    elif hasattr(pq_data, '__iter__'):
+                        # Handle iterable but avoid DataFrame boolean ambiguity
+                        try:
+                            power_query = dict(pq_data)
+                        except Exception:
+                            # If conversion fails, create a summary
+                            power_query = {"Summary": f"Power Query data available ({type(pq_data).__name__})"}
+                    else:
+                        power_query = {"Content": str(pq_data)}
+                        
         except Exception as e:
             self.logger.debug(f"Error extracting Power Query: {str(e)}")
 

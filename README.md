@@ -232,6 +232,18 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - ✅ **CI/CD Ready**: Automated testing and deployment pipelines
 - 🔄 **Active Development**: Regular updates and new features
 
+## Commercial Use & Licensing
+
+This software is licensed under the Business Source License 1.1 (BSL). Production or commercial use requires a commercial license from the author.
+
+**To use this tool in production or for commercial purposes, please contact:**
+- Email: your@email.com
+- Website: https://yourproductsite.com
+
+We offer flexible licensing, support, and enterprise options. Non-commercial, research, and evaluation use is always free under the BSL.
+
+For organizations or users interested in a commercial license, see the [COMMERCIAL_LICENSE_TEMPLATE.md](COMMERCIAL_LICENSE_TEMPLATE.md) file for a sample agreement.
+
 ---
 
 **Made with ❤️ for the BI community**

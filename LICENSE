@@ -1,21 +1,23 @@
-MIT License
+Business Source License 1.1
 
-Copyright (c) 2025 BI Documentation Tool
+Licensor: BI Documentation Tool
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Software: BI Documentation Tool (the "Software")
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Use Limitation: The Software may not be used for production or commercial purposes, as defined below, except as expressly permitted by the Licensor.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Additional Use Grant: You may use, copy, modify, and distribute the Software for non-production, non-commercial, research, evaluation, or personal purposes.
+
+Change Date: July 4, 2028
+
+Change License: Apache License, Version 2.0
+
+On the Change Date, the Use Limitation will no longer apply, and the Software will be made available under the Change License.
+
+Definitions:
+- "Production" means the use of the Software in the operation of a business, including running a service for third parties, or for any internal or external business purpose.
+- "Commercial" means the use of the Software for monetary or other consideration, including but not limited to providing paid services, consulting, or as part of a product offering.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+For more information, see https://mariadb.com/bsl11/

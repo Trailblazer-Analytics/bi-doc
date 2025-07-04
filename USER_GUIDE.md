@@ -11,6 +11,7 @@
 7. [Docker Usage](#docker-usage)
 8. [Troubleshooting](#troubleshooting)
 9. [Best Practices](#best-practices)
+10. [Commercial Use & Licensing](#commercial-use--licensing)
 
 ## Installation
 
@@ -667,6 +668,16 @@ docs/generated/
 - The tool extracts connection information which may include server names
 - Review output before sharing externally
 - Consider masking sensitive server details in documentation
+
+## Commercial Use & Licensing
+
+This software is licensed under the Business Source License 1.1 (BSL). Production or commercial use requires a commercial license from the author.
+
+**To use this tool in production or for commercial purposes, please contact:**
+- Email: your@email.com
+- Website: https://yourproductsite.com
+
+Flexible licensing, support, and enterprise options are available. Non-commercial, research, and evaluation use is always free under the BSL.
 
 ---
 
