@@ -53,7 +53,7 @@ The BI Documentation Tool has been enhanced with comprehensive analyst-friendly 
 - **Risk Reduction**: Automated documentation reduces manual errors
 - **Compliance**: Standardized output format aids audit processes
 - **Knowledge Retention**: Documentation survives personnel changes
-- **Cost Effective**: Open source with commercial licensing available
+- **Source Available**: BSL 1.1 provides code transparency with usage limitations
 
 ## 📊 Supported BI Platforms
 
@@ -86,8 +86,9 @@ The BI Documentation Tool has been enhanced with comprehensive analyst-friendly 
 - **Community Guidelines**: Contribution and support processes
 
 ### Licensing
-- **Open Source**: MIT license for maximum adoption
-- **Commercial Options**: Template provided for enterprise features
+- **Business Source License (BSL) 1.1**: Production use restricted until July 4, 2028
+- **Future Open Source**: Converts to Apache 2.0 license on change date
+- **Development/Research Use**: Permitted for non-commercial purposes
 - **Clear Attribution**: Proper credit for all dependencies
 
 ## 📈 Success Metrics
