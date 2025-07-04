@@ -1,0 +1,38 @@
+# Docker ignore file
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git
+.mypy_cache
+.pytest_cache
+.hypothesis
+
+# Development files
+dev_output/
+test_data/
+*.pbix
+*.twb
+*.twbx
+docs/
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
