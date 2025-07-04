@@ -271,7 +271,7 @@ This project is licensed under the **Business Source License 1.1 (BSL)** - see t
 
 ### ⚠️ Commercial Use Restrictions
 
-**IMPORTANT**: Commercial and production use is **RESTRICTED** until July 4, 2028.
+**IMPORTANT**: Commercial and production use is **RESTRICTED** until July 4, 2030.
 
 **Permitted Uses**:
 - ✅ Non-commercial research and evaluation
@@ -284,7 +284,7 @@ This project is licensed under the **Business Source License 1.1 (BSL)** - see t
 - ❌ Commercial product integration
 - ❌ Revenue-generating activities
 
-**Future**: Automatically converts to Apache 2.0 license on July 4, 2028.
+**Future**: Automatically converts to Apache 2.0 license on July 4, 2030.
 
 ## 🆘 Support
 

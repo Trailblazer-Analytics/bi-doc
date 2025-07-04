@@ -86,10 +86,10 @@ The BI Documentation Tool has been enhanced with comprehensive analyst-friendly 
 - **Community Guidelines**: Contribution and support processes
 
 ### Licensing
-- **Business Source License (BSL) 1.1**: **Commercial and production use RESTRICTED** until July 4, 2028
+- **Business Source License (BSL) 1.1**: **Commercial and production use RESTRICTED** until July 4, 2030
 - **Permitted Uses**: Non-commercial, research, evaluation, and personal purposes only
 - **Prohibited Uses**: Production services, paid consulting, commercial products, business operations
-- **Future Open Source**: Automatically converts to Apache 2.0 license on July 4, 2028
+- **Future Open Source**: Automatically converts to Apache 2.0 license on July 4, 2030
 - **Clear Attribution**: Proper credit for all dependencies
 
 ## 📈 Success Metrics
