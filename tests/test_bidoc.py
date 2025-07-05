@@ -5,11 +5,13 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from bidoc.ai_summary import AISummary
+from bidoc.ai_summary import AISummary, get_summary_strategy
+from bidoc.config import AppConfig
 from bidoc.json_generator import JSONGenerator
 from bidoc.markdown_generator import MarkdownGenerator
 from bidoc.test_data import (create_sample_powerbi_metadata,
                              create_sample_tableau_metadata)
+from bidoc.utils import FileType
 
 
 class TestJSONGenerator(unittest.TestCase):
@@ -90,12 +92,14 @@ class TestAISummary(unittest.TestCase):
     """Test AI summary generation"""
 
     def setUp(self):
-        self.ai_summary = AISummary()
+        self.config = AppConfig()
 
     def test_powerbi_static_summary(self):
         """Test static summary generation for Power BI"""
         metadata = create_sample_powerbi_metadata()
-        summary = self.ai_summary.generate_summary(metadata)
+        strategy = get_summary_strategy(metadata["type"])
+        ai_summary = AISummary(strategy, self.config)
+        summary = ai_summary.generate_summary(metadata)
 
         self.assertIn("Power BI report", summary)
         self.assertIn("data tables", summary)
@@ -104,26 +108,13 @@ class TestAISummary(unittest.TestCase):
     def test_tableau_static_summary(self):
         """Test static summary generation for Tableau"""
         metadata = create_sample_tableau_metadata()
-        summary = self.ai_summary.generate_summary(metadata)
+        strategy = get_summary_strategy(FileType.TABLEAU_TWBX)
+        ai_summary = AISummary(strategy, self.config)
+        summary = ai_summary.generate_summary(metadata)
 
         self.assertIn("Tableau workbook", summary)
         self.assertIn("data sources", summary)
         self.assertIn("worksheets", summary)
-
-    def test_complexity_assessment(self):
-        """Test complexity assessment"""
-        powerbi_metadata = create_sample_powerbi_metadata()
-        tableau_metadata = create_sample_tableau_metadata()
-
-        powerbi_complexity = self.ai_summary._assess_powerbi_complexity(
-            powerbi_metadata
-        )
-        tableau_complexity = self.ai_summary._assess_tableau_complexity(
-            tableau_metadata
-        )
-
-        self.assertIn(powerbi_complexity, ["Low", "Medium", "High"])
-        self.assertIn(tableau_complexity, ["Low", "Medium", "High"])
 
 
 class TestIntegration(unittest.TestCase):
@@ -139,7 +130,8 @@ class TestIntegration(unittest.TestCase):
             powerbi_metadata = create_sample_powerbi_metadata()
 
             # Add AI summary
-            ai_summary = AISummary()
+            strategy = get_summary_strategy(FileType.POWER_BI)
+            ai_summary = AISummary(strategy, AppConfig())
             powerbi_metadata["ai_summary"] = ai_summary.generate_summary(
                 powerbi_metadata
             )

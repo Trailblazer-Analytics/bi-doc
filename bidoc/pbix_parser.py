@@ -2,7 +2,9 @@
 
 import json
 import logging
+import os
 import zipfile
+from datetime import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
@@ -16,7 +18,11 @@ else:
     except ImportError:
         PBIXRay = None
 
+from bidoc.dax_formatter import DAXFormatter, format_dax_expression
+from bidoc.metadata_schemas import ensure_complete_metadata, get_default_powerbi_metadata
 from bidoc.utils import MetadataExtractor
+from bidoc.metadata_schemas import ensure_complete_metadata, get_default_powerbi_metadata
+from bidoc.dax_formatter import DAXFormatter, format_dax_expression
 
 
 class PowerBIParser(MetadataExtractor):
@@ -28,35 +34,91 @@ class PowerBIParser(MetadataExtractor):
             raise ImportError(
                 "PBIXRay library is required. Install with: pip install pbixray"
             )
+        self.dax_formatter = DAXFormatter()
 
     def parse(self, file_path: Path) -> Dict[str, Any]:
         """Parse a Power BI .pbix file and extract metadata"""
         self.logger.info(f"Parsing Power BI file: {file_path.name}")
 
+        # Start with comprehensive default metadata structure
+        metadata = get_default_powerbi_metadata()
+        
+        # Update basic file information
+        metadata.update({
+            "file": file_path.name,
+            "type": "Power BI",
+            "file_path": str(file_path),
+            "file_size": file_path.stat().st_size if file_path.exists() else None,
+            "last_modified": str(file_path.stat().st_mtime) if file_path.exists() else "not available",
+        })
+
         try:
             # Initialize PBIXRay
             model = PBIXRay(str(file_path))
 
-            # Extract core metadata
-            metadata = {
-                "file": file_path.name,
-                "type": "Power BI",
-                "file_path": str(file_path),
+            # Extract and enhance model information
+            metadata["model_info"] = self._extract_model_info(model)
+            
+            # Overwrite default values with extracted data
+            metadata.update({
                 "data_sources": self._extract_data_sources(model),
                 "tables": self._extract_tables(model),
                 "relationships": self._extract_relationships(model),
                 "measures": self._extract_measures(model),
                 "calculated_columns": self._extract_calculated_columns(model),
+                "calculated_tables": self._extract_calculated_tables(model),
                 "visualizations": self._extract_visualizations(file_path),
                 "power_query": self._extract_power_query(model),
-            }
+                "rls_roles": self._extract_rls_roles(model),
+                "hierarchies": self._extract_hierarchies(model),
+                "culture_info": self._extract_culture_info(model),
+                "translations": self._extract_translations(model),
+                "perspectives": self._extract_perspectives(model),
+                "annotations": self._extract_model_annotations(model),
+                "extended_properties": self._extract_extended_properties(model),
+            })
 
+            # Ensure all metadata fields are present
+            metadata = ensure_complete_metadata(metadata, "Power BI")
+            
             self._log_extraction_summary(metadata)
             return metadata
 
         except Exception as e:
             self.logger.error(f"Failed to parse Power BI file: {str(e)}")
-            raise
+            # Return the complete default structure even if parsing fails
+            return ensure_complete_metadata(metadata, "Power BI")
+
+    def _extract_model_info(self, model: "PBIXRay") -> Dict[str, Any]:
+        """Extract model-level information"""
+        self.log_extraction_progress("Extracting model information")
+        
+        model_info = {
+            "name": "not available",
+            "description": "not available",
+            "culture": "not available",
+            "compatibility_level": None,
+            "default_mode": "not available",
+            "version": "not available",
+            "annotations": {},
+        }
+        
+        try:
+            # Try to extract model-level information from PBIXRay
+            if hasattr(model, 'model'):
+                model_data = getattr(model, 'model', None)
+                if model_data is not None:
+                    model_info["name"] = str(getattr(model_data, 'name', 'not available'))
+                    model_info["description"] = str(getattr(model_data, 'description', 'not available') or "not available")
+                    model_info["culture"] = str(getattr(model_data, 'culture', 'not available') or "not available")
+                    compatibility_level = getattr(model_data, 'compatibilityLevel', None)
+                    if compatibility_level is not None:
+                        model_info["compatibility_level"] = compatibility_level
+        except Exception as e:
+            self.logger.debug(f"Could not extract model info: {str(e)}")
+        
+        self.log_extraction_progress("Model information extracted")
+        return model_info
 
     def _extract_data_sources(self, model: "PBIXRay") -> List[Dict[str, Any]]:
         """Extract data source information"""
@@ -246,10 +308,12 @@ class PowerBIParser(MetadataExtractor):
                                 "name": str(measure_name),
                                 "table": str(table_name),
                                 "expression": str(expression),
-                                "format_string": str(row.get("FormatString", "")),
-                                "description": str(row.get("Description", "")),
-                                "display_folder": str(row.get("DisplayFolder", "")),
+                                "expression_formatted": format_dax_expression(str(expression)),
+                                "format_string": str(row.get("FormatString", "not available")),
+                                "description": str(row.get("Description", "not available")),
+                                "display_folder": str(row.get("DisplayFolder", "not available")),
                                 "is_hidden": bool(row.get("IsHidden", False)),
+                                "data_type": str(row.get("DataType", "not available")),
                             }
                         )
         except Exception as e:
@@ -283,10 +347,15 @@ class PowerBIParser(MetadataExtractor):
                                 "name": str(column_name),
                                 "table": str(table_name),
                                 "expression": str(expression),
-                                "data_type": str(row.get("DataType", "")),
-                                "format_string": str(row.get("FormatString", "")),
-                                "description": str(row.get("Description", "")),
+                                "expression_formatted": format_dax_expression(str(expression)),
+                                "data_type": str(row.get("DataType", "not available")),
+                                "format_string": str(row.get("FormatString", "not available")),
+                                "description": str(row.get("Description", "not available")),
                                 "is_hidden": bool(row.get("IsHidden", False)),
+                                "display_folder": str(row.get("DisplayFolder", "not available")),
+                                "sort_by_column": str(row.get("SortByColumn", "not available")),
+                                "summarize_by": str(row.get("SummarizeBy", "not available")),
+                                "data_category": str(row.get("DataCategory", "not available")),
                             }
                         )
         except Exception as e:
@@ -296,6 +365,34 @@ class PowerBIParser(MetadataExtractor):
             "Calculated columns extracted", len(calculated_columns)
         )
         return calculated_columns
+
+    def _extract_calculated_tables(self, model: "PBIXRay") -> List[Dict[str, Any]]:
+        """Extract calculated tables"""
+        self.log_extraction_progress("Extracting calculated tables")
+        
+        calculated_tables = []
+        
+        try:
+            # Check if model has calculated tables information
+            calc_tables_df = getattr(model, 'calculated_tables', None)
+            if calc_tables_df is not None and not calc_tables_df.empty:
+                    for _, row in calc_tables_df.iterrows():
+                        table_name = row.get("TableName", "Unknown")
+                        expression = row.get("Expression", "")
+                        
+                        calculated_tables.append({
+                            "name": str(table_name),
+                            "expression": str(expression),
+                            "expression_formatted": self.dax_formatter.format(str(expression)) if expression else "not available",
+                            "description": str(row.get("Description", "not available")),
+                            "is_hidden": bool(row.get("IsHidden", False)),
+                            "annotations": {},
+                        })
+        except Exception as e:
+            self.logger.debug(f"Error extracting calculated tables: {str(e)}")
+        
+        self.log_extraction_progress("Calculated tables extracted", len(calculated_tables))
+        return calculated_tables
 
     def _extract_visualizations(self, file_path: Path) -> List[Dict[str, Any]]:
         """Extract report layout and visualization information"""
@@ -380,6 +477,197 @@ class PowerBIParser(MetadataExtractor):
 
         self.log_extraction_progress("Power Query extracted", len(power_query))
         return power_query
+
+    def _extract_rls_roles(self, model: "PBIXRay") -> List[Dict[str, Any]]:
+        """Extract Role-Level Security roles"""
+        self.log_extraction_progress("Extracting RLS roles")
+        
+        rls_roles = []
+        
+        try:
+            # Check if model has RLS roles information
+            roles_df = getattr(model, 'rls_roles', None)
+            if roles_df is not None and not roles_df.empty:
+                    for _, row in roles_df.iterrows():
+                        role_name = row.get("RoleName", "Unknown")
+                        
+                        rls_roles.append({
+                            "name": str(role_name),
+                            "description": str(row.get("Description", "not available")),
+                            "table_permissions": [],  # Would need deeper extraction
+                            "model_permission": str(row.get("ModelPermission", "not available")),
+                            "annotations": {},
+                        })
+        except Exception as e:
+            self.logger.debug(f"Error extracting RLS roles: {str(e)}")
+        
+        self.log_extraction_progress("RLS roles extracted", len(rls_roles))
+        return rls_roles
+
+    def _extract_hierarchies(self, model: "PBIXRay") -> List[Dict[str, Any]]:
+        """Extract hierarchies"""
+        self.log_extraction_progress("Extracting hierarchies")
+        
+        hierarchies = []
+        
+        try:
+            # Check if model has hierarchies information
+            hier_df = getattr(model, 'hierarchies', None)
+            if hier_df is not None and not hier_df.empty:
+                for _, row in hier_df.iterrows():
+                    hierarchy_name = row.get("HierarchyName", "Unknown")
+                    table_name = row.get("TableName", "Unknown")
+                    
+                    hierarchies.append({
+                        "name": str(hierarchy_name),
+                        "table": str(table_name),
+                        "description": str(row.get("Description", "not available")),
+                        "is_hidden": bool(row.get("IsHidden", False)),
+                        "display_folder": str(row.get("DisplayFolder", "not available")),
+                        "levels": [],  # Would need deeper extraction
+                        "annotations": {},
+                    })
+        except Exception as e:
+            self.logger.debug(f"Error extracting hierarchies: {str(e)}")
+        
+        self.log_extraction_progress("Hierarchies extracted", len(hierarchies))
+        return hierarchies
+
+    def _extract_translations(self, model: "PBIXRay") -> List[Dict[str, Any]]:
+        """Extract translations"""
+        self.log_extraction_progress("Extracting translations")
+        
+        translations = []
+        
+        try:
+            # Check if model has translations information
+            trans_df = getattr(model, 'translations', None)
+            if trans_df is not None and not trans_df.empty:
+                # Group by language
+                languages = trans_df.get("Language", pd.Series()).unique()
+                
+                for lang in languages:
+                    if pd.isna(lang):
+                        continue
+                        
+                    lang_translations = trans_df[trans_df["Language"] == lang]
+                    objects = []
+                    
+                    for _, row in lang_translations.iterrows():
+                        objects.append({
+                            "object_type": str(row.get("ObjectType", "not available")),
+                            "object_name": str(row.get("ObjectName", "not available")),
+                            "property": str(row.get("Property", "not available")),
+                            "value": str(row.get("Value", "not available")),
+                        })
+                    
+                    translations.append({
+                        "language": str(lang),
+                        "objects": objects,
+                    })
+        except Exception as e:
+            self.logger.debug(f"Error extracting translations: {str(e)}")
+        
+        self.log_extraction_progress("Translations extracted", len(translations))
+        return translations
+
+    def _extract_perspectives(self, model: "PBIXRay") -> List[Dict[str, Any]]:
+        """Extract perspectives"""
+        self.log_extraction_progress("Extracting perspectives")
+        
+        perspectives = []
+        
+        try:
+            # Check if model has perspectives information
+            persp_df = getattr(model, 'perspectives', None)
+            if persp_df is not None and not persp_df.empty:
+                # Group by perspective name
+                perspective_names = persp_df.get("PerspectiveName", pd.Series()).unique()
+                
+                for persp_name in perspective_names:
+                    if pd.isna(persp_name):
+                        continue
+                        
+                    persp_objects = persp_df[persp_df["PerspectiveName"] == persp_name]
+                    objects = []
+                    
+                    for _, row in persp_objects.iterrows():
+                        objects.append(str(row.get("ObjectName", "not available")))
+                    
+                    perspectives.append({
+                        "name": str(persp_name),
+                        "description": "not available",  # Usually not available in basic extraction
+                        "objects": objects,
+                        "annotations": {},
+                    })
+        except Exception as e:
+            self.logger.debug(f"Error extracting perspectives: {str(e)}")
+        
+        self.log_extraction_progress("Perspectives extracted", len(perspectives))
+        return perspectives
+
+    def _extract_culture_info(self, model: "PBIXRay") -> Dict[str, Any]:
+        """Extract culture and formatting information"""
+        self.log_extraction_progress("Extracting culture information")
+        
+        culture_info = {
+            "culture": "not available",
+            "date_format": "not available",
+            "time_format": "not available",
+            "currency_symbol": "not available",
+            "thousand_separator": "not available",
+            "decimal_separator": "not available",
+        }
+        
+        try:
+            # Try to extract culture information from model
+            model_data = getattr(model, 'model', None)
+            if model_data is not None:
+                culture = getattr(model_data, 'culture', None)
+                if culture:
+                    culture_info["culture"] = str(culture)
+        except Exception as e:
+            self.logger.debug(f"Error extracting culture info: {str(e)}")
+        
+        self.log_extraction_progress("Culture information extracted")
+        return culture_info
+
+    def _extract_model_annotations(self, model: "PBIXRay") -> Dict[str, Any]:
+        """Extract model-level annotations"""
+        self.log_extraction_progress("Extracting model annotations")
+        
+        annotations = {}
+        
+        try:
+            # Try to extract annotations from model
+            annotations_df = getattr(model, 'annotations', None)
+            if annotations_df is not None and not annotations_df.empty:
+                for _, row in annotations_df.iterrows():
+                    name = row.get("Name", "unknown")
+                    value = row.get("Value", "")
+                    annotations[str(name)] = str(value)
+        except Exception as e:
+            self.logger.debug(f"Error extracting model annotations: {str(e)}")
+        
+        self.log_extraction_progress("Model annotations extracted", len(annotations))
+        return annotations
+
+    def _extract_extended_properties(self, model: "PBIXRay") -> Dict[str, Any]:
+        """Extract extended properties"""
+        self.log_extraction_progress("Extracting extended properties")
+        
+        extended_properties = {}
+        
+        try:
+            # Try to extract extended properties
+            ext_props = getattr(model, 'extended_properties', None)
+            if ext_props is not None and isinstance(ext_props, dict):
+                extended_properties = ext_props
+        except Exception as e:
+            self.logger.debug(f"Error extracting extended properties: {str(e)}")
+        
+        self.log_extraction_progress("Extended properties extracted", len(extended_properties))
+        return extended_properties
 
     def _parse_m_code_for_source(self, m_code: str) -> Optional[Dict[str, str]]:
         """Parse M code to extract data source information"""

@@ -1,0 +1,1734 @@
+{
+  "file": "Human Resources Sample PBIX.pbix",
+  "type": "Power BI",
+  "file_path": "C:\\SecretProjects\\bi-doc\\samples\\power_bi\\Human Resources Sample PBIX.pbix",
+  "file_size": 8700848,
+  "last_modified": "1751646882.6611662",
+  "created_date": "not available",
+  "model_info": {
+    "name": "not available",
+    "description": "not available",
+    "culture": "not available",
+    "compatibility_level": null,
+    "default_mode": "not available",
+    "version": "not available",
+    "annotations": {}
+  },
+  "data_sources": [
+    {
+      "name": "TableName",
+      "type": "Other",
+      "connection": "0                  BU\n1                  FP\n2             PayType\n3    SeparationReason\n4                Date\n5            Employee\n6           Ethnicity\n7              Gender\n8            AgeGroup\nNa...",
+      "query": "0                  BU\n1                  FP\n2             PayType\n3    SeparationReason\n4                Date\n5            Employee\n6           Ethnicity\n7              Gender\n8            AgeGroup\nName: TableName, dtype: object"
+    },
+    {
+      "name": "Expression",
+      "type": "SQL Server",
+      "connection": "0    let\\n    Source = Sql.Database(\".\", \"IP\", [Que...\n1    let\\n    Source = Sql.Database(\".\", \"IP\", [Que...\n2    let\\n    Source = Sql.Database(\".\", \"IP\", [Que...\n3    let\\n    Source = Sql.Database...",
+      "query": "0    let\\n    Source = Sql.Database(\".\", \"IP\", [Que...\n1    let\\n    Source = Sql.Database(\".\", \"IP\", [Que...\n2    let\\n    Source = Sql.Database(\".\", \"IP\", [Que...\n3    let\\n    Source = Sql.Database(\".\", \"IP\", [Que...\n4    let\\n    Source = Sql.Database(\".\", \"IP\", [Que...\n5    let\\n    Source = Sql.Database(\".\", \"IP\", [Que...\n6    let\\n    Source = Table.FromRows(Json.Document...\n7    let\\n    Source = Table.FromRows(Json.Document...\n8    let\\n    Source = Table.FromRows(Json.Document...\nName: Expression, dtype: object"
+    }
+  ],
+  "tables": [
+    {
+      "name": "AgeGroup",
+      "columns": [
+        {
+          "name": "AgeGroupID",
+          "data_type": "Int64",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "AgeGroup",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "BU",
+      "columns": [
+        {
+          "name": "BU",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "RegionSeq",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "VP",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Region",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "Date",
+      "columns": [
+        {
+          "name": "Date",
+          "data_type": "datetime64[ns]",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Month",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "MonthNumber",
+          "data_type": "Int64",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Period",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "PeriodNumber",
+          "data_type": "Int64",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Qtr",
+          "data_type": "Int64",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "QtrNumber",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Year",
+          "data_type": "Int64",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Day",
+          "data_type": "Int64",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "MonthStartDate",
+          "data_type": "datetime64[ns]",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "MonthEndDate",
+          "data_type": "datetime64[ns]",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "MonthIncrementNumber",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "DateTableTemplate_92fd358c-bb4c-4d52-9f5b-e9a59dc2315d",
+      "columns": [
+        {
+          "name": "Year",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "MonthNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Month",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "QuarterNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Quarter",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Day",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "Employee",
+      "columns": [
+        {
+          "name": "date",
+          "data_type": "datetime64[ns]",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "EmplID",
+          "data_type": "Int64",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Gender",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Age",
+          "data_type": "Int64",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "EthnicGroup",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "FP",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "TermDate",
+          "data_type": "datetime64[ns]",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "isNewHire",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "BU",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "HireDate",
+          "data_type": "datetime64[ns]",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "PayTypeID",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "TermReason",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "AgeGroupID",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "TenureDays",
+          "data_type": "Float64",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "TenureMonths",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "BadHires",
+          "data_type": "Float64",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "Ethnicity",
+      "columns": [
+        {
+          "name": "Ethnic Group",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Ethnicity",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "FP",
+      "columns": [
+        {
+          "name": "FP",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "FPDesc",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "Gender",
+      "columns": [
+        {
+          "name": "ID",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Gender",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Sort",
+          "data_type": "Int64",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "LocalDateTable_6f19fed3-1fc0-4f7a-878d-34aca93d6782",
+      "columns": [
+        {
+          "name": "Year",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "MonthNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Month",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "QuarterNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Quarter",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Day",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "LocalDateTable_c04ce649-6e25-466f-9bbc-faabfec0fe29",
+      "columns": [
+        {
+          "name": "Year",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "MonthNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Month",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "QuarterNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Quarter",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Day",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "LocalDateTable_c9dde99e-7ac1-4e8e-a5f2-c5ffc41d9cac",
+      "columns": [
+        {
+          "name": "Year",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "MonthNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Month",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "QuarterNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Quarter",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Day",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "LocalDateTable_cc28ef26-f63a-4bc3-b357-93ab34cd6d9b",
+      "columns": [
+        {
+          "name": "Year",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "MonthNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Month",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "QuarterNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Quarter",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Day",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "LocalDateTable_d2ea5b26-668d-4c17-b228-695669b066a6",
+      "columns": [
+        {
+          "name": "Year",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "MonthNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Month",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "QuarterNo",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Quarter",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "Day",
+          "data_type": "object",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "PayType",
+      "columns": [
+        {
+          "name": "PayTypeID",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "PayType",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    },
+    {
+      "name": "SeparationReason",
+      "columns": [
+        {
+          "name": "SeparationTypeID",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        },
+        {
+          "name": "SeparationReason",
+          "data_type": "string",
+          "is_hidden": false,
+          "description": ""
+        }
+      ],
+      "row_count": null
+    }
+  ],
+  "relationships": [
+    {
+      "from_table": "Employee",
+      "from_column": "date",
+      "to_table": "Date",
+      "to_column": "Date",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Employee",
+      "from_column": "FP",
+      "to_table": "FP",
+      "to_column": "FP",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Employee",
+      "from_column": "EthnicGroup",
+      "to_table": "Ethnicity",
+      "to_column": "Ethnic Group",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Employee",
+      "from_column": "Gender",
+      "to_table": "Gender",
+      "to_column": "ID",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Employee",
+      "from_column": "PayTypeID",
+      "to_table": "PayType",
+      "to_column": "PayTypeID",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Employee",
+      "from_column": "BU",
+      "to_table": "BU",
+      "to_column": "BU",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Employee",
+      "from_column": "AgeGroupID",
+      "to_table": "AgeGroup",
+      "to_column": "AgeGroupID",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Employee",
+      "from_column": "TermReason",
+      "to_table": "SeparationReason",
+      "to_column": "SeparationTypeID",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Date",
+      "from_column": "Date",
+      "to_table": "None",
+      "to_column": "None",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Date",
+      "from_column": "MonthStartDate",
+      "to_table": "None",
+      "to_column": "None",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Date",
+      "from_column": "MonthEndDate",
+      "to_table": "None",
+      "to_column": "None",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Employee",
+      "from_column": "TermDate",
+      "to_table": "None",
+      "to_column": "None",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    },
+    {
+      "from_table": "Employee",
+      "from_column": "HireDate",
+      "to_table": "None",
+      "to_column": "None",
+      "cardinality": "M:1",
+      "is_active": true,
+      "cross_filter_direction": "Single"
+    }
+  ],
+  "measures": [
+    {
+      "name": "EmpCount",
+      "table": "Employee",
+      "expression": "CALCULATE(COUNT([EmplID]), FILTER(ALL('Date'[PeriodNumber]), 'Date'[PeriodNumber] = MAX('Date'[PeriodNumber])))",
+      "expression_formatted": "CALCULATE(COUNT([EmplID]),\n    FILTER(ALL('Date'[PeriodNumber]),\n    'Date'[PeriodNumber] = MAX('Date'[PeriodNumber])))",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Seps",
+      "table": "Employee",
+      "expression": "CALCULATE(COUNT([EmplID]), FILTER(Employee, NOT(ISBLANK(Employee[TermDate]))))",
+      "expression_formatted": "CALCULATE(COUNT([EmplID]), FILTER(Employee, NOT(ISBLANK(Employee[TermDate]))))",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Actives",
+      "table": "Employee",
+      "expression": "CALCULATE([EmpCount], FILTER(Employee, ISBLANK(Employee[TermDate])))",
+      "expression_formatted": "CALCULATE([EmpCount], FILTER(Employee, ISBLANK(Employee[TermDate])))",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "New Hires",
+      "table": "Employee",
+      "expression": "SUM([isNewHire])",
+      "expression_formatted": "SUM([isNewHire])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "AVG Tenure Days",
+      "table": "Employee",
+      "expression": "AVERAGE([TenureDays])",
+      "expression_formatted": "AVERAGE([TenureDays])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "AVG Tenure Months",
+      "table": "Employee",
+      "expression": "ROUND([AVG Tenure Days]/30, 1)-1",
+      "expression_formatted": "ROUND([AVG Tenure Days]/30, 1)-1",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "AVG Age",
+      "table": "Employee",
+      "expression": "ROUND(AVERAGE([Age]), 0)",
+      "expression_formatted": "ROUND(AVERAGE([Age]), 0)",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Sum of BadHires",
+      "table": "Employee",
+      "expression": "SUM([BadHires])",
+      "expression_formatted": "SUM([BadHires])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "New Hires SPLY",
+      "table": "Employee",
+      "expression": "CALCULATE([New Hires],SAMEPERIODLASTYEAR('Date'[Date]))",
+      "expression_formatted": "CALCULATE([New Hires], SAMEPERIODLASTYEAR('Date'[Date]))",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Actives SPLY",
+      "table": "Employee",
+      "expression": "CALCULATE([Actives],SAMEPERIODLASTYEAR('Date'[Date]))",
+      "expression_formatted": "CALCULATE([Actives], SAMEPERIODLASTYEAR('Date'[Date]))",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Seps SPLY",
+      "table": "Employee",
+      "expression": "CALCULATE([Seps],SAMEPERIODLASTYEAR('Date'[Date]))",
+      "expression_formatted": "CALCULATE([Seps], SAMEPERIODLASTYEAR('Date'[Date]))",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "EmpCount SPLY",
+      "table": "Employee",
+      "expression": "CALCULATE(COUNT([EmplID]), FILTER(ALL('Date'[PeriodNumber]), 'Date'[PeriodNumber] = MAX('Date'[PeriodNumber])),SAMEPERIODLASTYEAR('Date'[Date]))",
+      "expression_formatted": "CALCULATE(COUNT([EmplID]),\n    FILTER(ALL('Date'[PeriodNumber]),\n    'Date'[PeriodNumber] = MAX('Date'[PeriodNumber])),\n    SAMEPERIODLASTYEAR('Date'[Date]))",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Seps YoY Var",
+      "table": "Employee",
+      "expression": "[Seps]-[Seps SPLY]",
+      "expression_formatted": "[Seps]-[Seps SPLY]",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Actives YoY Var",
+      "table": "Employee",
+      "expression": "[Actives]-[Actives SPLY]",
+      "expression_formatted": "[Actives]-[Actives SPLY]",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "New Hires YoY Var",
+      "table": "Employee",
+      "expression": "[New Hires]-[New Hires SPLY]",
+      "expression_formatted": "[New Hires]-[New Hires SPLY]",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Seps YoY % Change",
+      "table": "Employee",
+      "expression": "DIVIDE([Seps YoY Var], [Seps SPLY])",
+      "expression_formatted": "DIVIDE([Seps YoY VAR], [Seps SPLY])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Actives YoY % Change",
+      "table": "Employee",
+      "expression": "DIVIDE([Actives YoY Var], [Actives SPLY])",
+      "expression_formatted": "DIVIDE([Actives YoY VAR], [Actives SPLY])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "New Hires YoY % Change",
+      "table": "Employee",
+      "expression": "DIVIDE([New Hires YoY Var], [New Hires SPLY])",
+      "expression_formatted": "DIVIDE([New Hires YoY VAR], [New Hires SPLY])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Bad Hires SPLY",
+      "table": "Employee",
+      "expression": "CALCULATE([Sum of BadHires],SAMEPERIODLASTYEAR('Date'[Date]))",
+      "expression_formatted": "CALCULATE([Sum of BadHires], SAMEPERIODLASTYEAR('Date'[Date]))",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Bad Hires YoY Var",
+      "table": "Employee",
+      "expression": "[Sum of BadHires]-[Bad Hires SPLY]",
+      "expression_formatted": "[Sum of BadHires]-[Bad Hires SPLY]",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Bad Hires YoY % Change",
+      "table": "Employee",
+      "expression": "DIVIDE([Bad Hires YoY Var], [Bad Hires SPLY])",
+      "expression_formatted": "DIVIDE([Bad Hires YoY VAR], [Bad Hires SPLY])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "TO %",
+      "table": "Employee",
+      "expression": "DIVIDE([Seps], [Actives])",
+      "expression_formatted": "DIVIDE([Seps], [Actives])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "TO % Norm",
+      "table": "Employee",
+      "expression": "CALCULATE([TO %], all(Gender[Gender]), ALL(Ethnicity[Ethnicity]))",
+      "expression_formatted": "CALCULATE([TO %], ALL(Gender[Gender]), ALL(Ethnicity[Ethnicity]))",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "TO % Var",
+      "table": "Employee",
+      "expression": "[TO %]-[TO % Norm]",
+      "expression_formatted": "[TO %]-[TO % Norm]",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Sep%ofActive",
+      "table": "Employee",
+      "expression": "DIVIDE([Seps],[Actives])",
+      "expression_formatted": "DIVIDE([Seps], [Actives])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Sep%ofSMLYActives",
+      "table": "Employee",
+      "expression": "DIVIDE([Seps SPLY],[Actives SPLY])",
+      "expression_formatted": "DIVIDE([Seps SPLY], [Actives SPLY])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "BadHire%ofActives",
+      "table": "Employee",
+      "expression": "DIVIDE([Sum of BadHires],[Actives])",
+      "expression_formatted": "DIVIDE([Sum of BadHires], [Actives])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "BadHire%ofActiveSPLY",
+      "table": "Employee",
+      "expression": "DIVIDE([Bad Hires SPLY],[Actives SPLY])",
+      "expression_formatted": "DIVIDE([Bad Hires SPLY], [Actives SPLY])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Count of BU",
+      "table": "BU",
+      "expression": "COUNTA('BU'[BU])",
+      "expression_formatted": "COUNTA('BU'[BU])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    },
+    {
+      "name": "Count of Date",
+      "table": "Date",
+      "expression": "COUNTA('Date'[Date])",
+      "expression_formatted": "COUNTA('Date'[Date])",
+      "format_string": "not available",
+      "description": "None",
+      "display_folder": "None",
+      "is_hidden": false,
+      "data_type": "not available"
+    }
+  ],
+  "calculated_columns": [
+    {
+      "name": "Region",
+      "table": "BU",
+      "expression": "mid([RegionSeq], 3,15)",
+      "expression_formatted": "MID([RegionSeq], 3, 15)",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "MonthIncrementNumber",
+      "table": "Date",
+      "expression": "([Year]-MIN([Year]))*12 +[MonthNumber]",
+      "expression_formatted": "([Year]-MIN([Year]))*12 +[MonthNumber]",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "isNewHire",
+      "table": "Employee",
+      "expression": "IF(YEAR([date]) = YEAR([HireDate]) && MONTH([date])=MONTH([HireDate]), 1)",
+      "expression_formatted": "IF(YEAR([date])= YEAR([HireDate])&& MONTH([date])=MONTH([HireDate]), 1)",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "AgeGroupID",
+      "table": "Employee",
+      "expression": "IF([Age]<30, 1, IF([Age]<50, 2, 3))",
+      "expression_formatted": "IF([Age]<30, 1, IF([Age]<50, 2, 3))",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "TenureDays",
+      "table": "Employee",
+      "expression": "IF([date]-[HireDate]<0,[HireDate]-[date],[date]-[HireDate])",
+      "expression_formatted": "IF([date]-[HireDate]<0, [HireDate]-[date], [date]-[HireDate])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "TenureMonths",
+      "table": "Employee",
+      "expression": "CEILING([TenureDays]/30, 1) -1",
+      "expression_formatted": "CEILING([TenureDays]/30, 1)-1",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "BadHires",
+      "table": "Employee",
+      "expression": "IF(OR((([HireDate]-[TermDate])*-1)>=61,ISBLANK([TermDate])),0,1)",
+      "expression_formatted": "IF(OR((([HireDate]-[TermDate])*-1) >= 61, ISBLANK([TermDate])), 0, 1)",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Year",
+      "table": "DateTableTemplate_92fd358c-bb4c-4d52-9f5b-e9a59dc2315d",
+      "expression": "YEAR([Date])",
+      "expression_formatted": "YEAR([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "MonthNo",
+      "table": "DateTableTemplate_92fd358c-bb4c-4d52-9f5b-e9a59dc2315d",
+      "expression": "MONTH([Date])",
+      "expression_formatted": "MONTH([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Month",
+      "table": "DateTableTemplate_92fd358c-bb4c-4d52-9f5b-e9a59dc2315d",
+      "expression": "FORMAT([Date], \"MMMM\")",
+      "expression_formatted": "FORMAT([Date], \"MMMM\")",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "QuarterNo",
+      "table": "DateTableTemplate_92fd358c-bb4c-4d52-9f5b-e9a59dc2315d",
+      "expression": "INT(([MonthNo] + 2) / 3)",
+      "expression_formatted": "INT(([MonthNo] + 2)/ 3)",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Quarter",
+      "table": "DateTableTemplate_92fd358c-bb4c-4d52-9f5b-e9a59dc2315d",
+      "expression": "\"Qtr \" & [QuarterNo]",
+      "expression_formatted": "\"Qtr \" & [QuarterNo]",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Day",
+      "table": "DateTableTemplate_92fd358c-bb4c-4d52-9f5b-e9a59dc2315d",
+      "expression": "DAY([Date])",
+      "expression_formatted": "DAY([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Year",
+      "table": "LocalDateTable_6f19fed3-1fc0-4f7a-878d-34aca93d6782",
+      "expression": "YEAR([Date])",
+      "expression_formatted": "YEAR([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "MonthNo",
+      "table": "LocalDateTable_6f19fed3-1fc0-4f7a-878d-34aca93d6782",
+      "expression": "MONTH([Date])",
+      "expression_formatted": "MONTH([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Month",
+      "table": "LocalDateTable_6f19fed3-1fc0-4f7a-878d-34aca93d6782",
+      "expression": "FORMAT([Date], \"MMMM\")",
+      "expression_formatted": "FORMAT([Date], \"MMMM\")",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "QuarterNo",
+      "table": "LocalDateTable_6f19fed3-1fc0-4f7a-878d-34aca93d6782",
+      "expression": "INT(([MonthNo] + 2) / 3)",
+      "expression_formatted": "INT(([MonthNo] + 2)/ 3)",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Quarter",
+      "table": "LocalDateTable_6f19fed3-1fc0-4f7a-878d-34aca93d6782",
+      "expression": "\"Qtr \" & [QuarterNo]",
+      "expression_formatted": "\"Qtr \" & [QuarterNo]",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Day",
+      "table": "LocalDateTable_6f19fed3-1fc0-4f7a-878d-34aca93d6782",
+      "expression": "DAY([Date])",
+      "expression_formatted": "DAY([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Year",
+      "table": "LocalDateTable_d2ea5b26-668d-4c17-b228-695669b066a6",
+      "expression": "YEAR([Date])",
+      "expression_formatted": "YEAR([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "MonthNo",
+      "table": "LocalDateTable_d2ea5b26-668d-4c17-b228-695669b066a6",
+      "expression": "MONTH([Date])",
+      "expression_formatted": "MONTH([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Month",
+      "table": "LocalDateTable_d2ea5b26-668d-4c17-b228-695669b066a6",
+      "expression": "FORMAT([Date], \"MMMM\")",
+      "expression_formatted": "FORMAT([Date], \"MMMM\")",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "QuarterNo",
+      "table": "LocalDateTable_d2ea5b26-668d-4c17-b228-695669b066a6",
+      "expression": "INT(([MonthNo] + 2) / 3)",
+      "expression_formatted": "INT(([MonthNo] + 2)/ 3)",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Quarter",
+      "table": "LocalDateTable_d2ea5b26-668d-4c17-b228-695669b066a6",
+      "expression": "\"Qtr \" & [QuarterNo]",
+      "expression_formatted": "\"Qtr \" & [QuarterNo]",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Day",
+      "table": "LocalDateTable_d2ea5b26-668d-4c17-b228-695669b066a6",
+      "expression": "DAY([Date])",
+      "expression_formatted": "DAY([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Year",
+      "table": "LocalDateTable_c9dde99e-7ac1-4e8e-a5f2-c5ffc41d9cac",
+      "expression": "YEAR([Date])",
+      "expression_formatted": "YEAR([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "MonthNo",
+      "table": "LocalDateTable_c9dde99e-7ac1-4e8e-a5f2-c5ffc41d9cac",
+      "expression": "MONTH([Date])",
+      "expression_formatted": "MONTH([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Month",
+      "table": "LocalDateTable_c9dde99e-7ac1-4e8e-a5f2-c5ffc41d9cac",
+      "expression": "FORMAT([Date], \"MMMM\")",
+      "expression_formatted": "FORMAT([Date], \"MMMM\")",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "QuarterNo",
+      "table": "LocalDateTable_c9dde99e-7ac1-4e8e-a5f2-c5ffc41d9cac",
+      "expression": "INT(([MonthNo] + 2) / 3)",
+      "expression_formatted": "INT(([MonthNo] + 2)/ 3)",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Quarter",
+      "table": "LocalDateTable_c9dde99e-7ac1-4e8e-a5f2-c5ffc41d9cac",
+      "expression": "\"Qtr \" & [QuarterNo]",
+      "expression_formatted": "\"Qtr \" & [QuarterNo]",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Day",
+      "table": "LocalDateTable_c9dde99e-7ac1-4e8e-a5f2-c5ffc41d9cac",
+      "expression": "DAY([Date])",
+      "expression_formatted": "DAY([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Year",
+      "table": "LocalDateTable_cc28ef26-f63a-4bc3-b357-93ab34cd6d9b",
+      "expression": "YEAR([Date])",
+      "expression_formatted": "YEAR([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "MonthNo",
+      "table": "LocalDateTable_cc28ef26-f63a-4bc3-b357-93ab34cd6d9b",
+      "expression": "MONTH([Date])",
+      "expression_formatted": "MONTH([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Month",
+      "table": "LocalDateTable_cc28ef26-f63a-4bc3-b357-93ab34cd6d9b",
+      "expression": "FORMAT([Date], \"MMMM\")",
+      "expression_formatted": "FORMAT([Date], \"MMMM\")",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "QuarterNo",
+      "table": "LocalDateTable_cc28ef26-f63a-4bc3-b357-93ab34cd6d9b",
+      "expression": "INT(([MonthNo] + 2) / 3)",
+      "expression_formatted": "INT(([MonthNo] + 2)/ 3)",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Quarter",
+      "table": "LocalDateTable_cc28ef26-f63a-4bc3-b357-93ab34cd6d9b",
+      "expression": "\"Qtr \" & [QuarterNo]",
+      "expression_formatted": "\"Qtr \" & [QuarterNo]",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Day",
+      "table": "LocalDateTable_cc28ef26-f63a-4bc3-b357-93ab34cd6d9b",
+      "expression": "DAY([Date])",
+      "expression_formatted": "DAY([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Year",
+      "table": "LocalDateTable_c04ce649-6e25-466f-9bbc-faabfec0fe29",
+      "expression": "YEAR([Date])",
+      "expression_formatted": "YEAR([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "MonthNo",
+      "table": "LocalDateTable_c04ce649-6e25-466f-9bbc-faabfec0fe29",
+      "expression": "MONTH([Date])",
+      "expression_formatted": "MONTH([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Month",
+      "table": "LocalDateTable_c04ce649-6e25-466f-9bbc-faabfec0fe29",
+      "expression": "FORMAT([Date], \"MMMM\")",
+      "expression_formatted": "FORMAT([Date], \"MMMM\")",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "QuarterNo",
+      "table": "LocalDateTable_c04ce649-6e25-466f-9bbc-faabfec0fe29",
+      "expression": "INT(([MonthNo] + 2) / 3)",
+      "expression_formatted": "INT(([MonthNo] + 2)/ 3)",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Quarter",
+      "table": "LocalDateTable_c04ce649-6e25-466f-9bbc-faabfec0fe29",
+      "expression": "\"Qtr \" & [QuarterNo]",
+      "expression_formatted": "\"Qtr \" & [QuarterNo]",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    },
+    {
+      "name": "Day",
+      "table": "LocalDateTable_c04ce649-6e25-466f-9bbc-faabfec0fe29",
+      "expression": "DAY([Date])",
+      "expression_formatted": "DAY([Date])",
+      "data_type": "not available",
+      "format_string": "not available",
+      "description": "not available",
+      "is_hidden": false,
+      "display_folder": "not available",
+      "sort_by_column": "not available",
+      "summarize_by": "not available",
+      "data_category": "not available"
+    }
+  ],
+  "calculated_tables": [],
+  "visualizations": [
+    {
+      "page": "Info",
+      "visuals": []
+    },
+    {
+      "page": "New Hires",
+      "visuals": []
+    },
+    {
+      "page": "Actives and Separations",
+      "visuals": []
+    },
+    {
+      "page": "Bad Hires",
+      "visuals": []
+    },
+    {
+      "page": "New Hires Scorecard",
+      "visuals": []
+    }
+  ],
+  "power_query": {
+    "queries": [],
+    "data_sources": [],
+    "parameters": [],
+    "TableName": {
+      "0": "BU",
+      "1": "FP",
+      "2": "PayType",
+      "3": "SeparationReason",
+      "4": "Date",
+      "5": "Employee",
+      "6": "Ethnicity",
+      "7": "Gender",
+      "8": "AgeGroup"
+    },
+    "Expression": {
+      "0": "let\n    Source = Sql.Database(\".\", \"IP\", [Query=\"select distinct market BU,#(lf)  REGIONTITLE Region,#(lf)  MARKETDIRECTOR VP#(lf)from hr.bu\"]),\n    #\"Renamed Columns\" = Table.RenameColumns(Source, {{\"BU\", \"BU\"}, {\"Region\", \"RegionSeq\"}, {\"VP\", \"VP\"}}),\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\", {{\"BU\", type text}, {\"RegionSeq\", type text}, {\"VP\", type text}})\nin\n    #\"Changed Type\"",
+      "1": "let\n    Source = Sql.Database(\".\", \"IP\", [Query=\"SELECT [HR].[FP].*   FROM [HR].[FP]\"]),\n    #\"Renamed Columns\" = Table.RenameColumns(Source, {{\"FP\", \"FP\"}, {\"FPDesc\", \"FPDesc\"}}),\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\", {{\"FP\", type text}, {\"FPDesc\", type text}})\nin\n    #\"Changed Type\"",
+      "2": "let\n    Source = Sql.Database(\".\", \"IP\", [Query=\"select distinct PayTypeID, [Hrly-Salaried] PayType#(lf)from [HR].[PayGroup]\"]),\n    #\"Renamed Columns\" = Table.RenameColumns(Source, {{\"PayTypeID\", \"PayTypeID\"}, {\"PayType\", \"PayType\"}}),\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\", {{\"PayTypeID\", type text}, {\"PayType\", type text}})\nin\n    #\"Changed Type\"",
+      "3": "let\n    Source = Sql.Database(\".\", \"IP\", [Query=\"SELECT distinct SeparationTypeID, [Vol-Invol] SeparationReason#(lf)  FROM [IP].[HR].[TermReason]\"]),\n    #\"Renamed Columns\" = Table.RenameColumns(Source, {{\"SeparationTypeID\", \"SeparationTypeID\"}, {\"SeparationReason\", \"SeparationReason\"}}),\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\", {{\"SeparationTypeID\", type text}, {\"SeparationReason\", type text}})\nin\n    #\"Changed Type\"",
+      "4": "let\n    Source = Sql.Database(\".\", \"IP\", [Query=\"SELECT [HR].[Date].*   FROM [HR].[Date]\"]),\n    #\"Renamed Columns\" = Table.RenameColumns(Source, {{\"Date\", \"Date\"}, {\"Month\", \"Month\"}, {\"MonthNumber\", \"MonthNumber\"}, {\"Period\", \"Period\"}, {\"PeriodNumber\", \"PeriodNumber\"}, {\"Qtr\", \"Qtr\"}, {\"QtrNumber\", \"QtrNumber\"}, {\"Year\", \"Year\"}, {\"Day\", \"Day\"}, {\"MonthStartDate\", \"MonthStartDate\"}, {\"MonthEndDate\", \"MonthEndDate\"}}),\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\", {{\"Date\", type datetime}, {\"Month\", type text}, {\"MonthNumber\", Int64.Type}, {\"Period\", type text}, {\"PeriodNumber\", Int64.Type}, {\"Qtr\", Int64.Type}, {\"QtrNumber\", type text}, {\"Year\", Int64.Type}, {\"Day\", Int64.Type}, {\"MonthStartDate\", type datetime}, {\"MonthEndDate\", type datetime}})\nin\n    #\"Changed Type\"",
+      "5": "let\n    Source = Sql.Database(\".\", \"IP\", [Query=\"SELECT dateadd(year, 1, d.date) Date#(lf)  ,Market BU#(lf)  ,[EmplID]#(lf)  ,iif([Gender]='M', 'C', 'D') Gender --  ,iif([Gender]='M', 'F', 'M') Gender#(lf)  ,[Age] - (2013 - year(d.date)) Age#(lf)  ,[EthnicGroup]#(lf)  ,[FP]#(lf)  ,dateadd(year, 1, [SenDate]) HireDate#(lf)  ,p.PayTypeID#(lf)  ,null [TermDate]#(lf)  ,null [TermReason]#(lf) FROM [IP].[HR].[AllEmps] E , [HR].[Date] d , [HR].[BU] b , hr.PayGroup p --, hr.TermReason t#(lf) where d.day = 1 and e.SenDate <= d.MonthEndDate and isnull(e.termdate, '9999-01-01') >= d.MonthEndDate and d.Date < '2014-01-01'#(lf)  and p.PayGroup = e.PayGroup#(lf)  and b.UNIT = e.Unit and [EmplID] % 2 = 0#(lf)union all#(lf)--seps#(lf)SELECT dateadd(year, 1, d.date) Date#(lf)    ,Market BU#(lf)      ,[EmplID]#(lf)      ,iif([Gender]='M', 'C', 'D') Gender#(lf)      ,[Age] - (2013 - year(d.date)) Age#(lf)      ,[EthnicGroup]#(lf)      ,[FP]#(lf)      ,dateadd(year, 1,[SenDate]) HireDate#(lf)      ,p.PayTypeID#(lf)      ,dateadd(year, 1, [TermDate]) [TermDate]#(lf)      ,t.[SeparationTypeID] [TermReason]#(lf)  FROM [IP].[HR].[AllEmps] E, [HR].[Date] d , [HR].[BU] b, hr.PayGroup p , hr.TermReason t#(lf) where d.day = 1 and e.TermDate <= d.MonthEndDate and e.TermDate >= d.MonthStartDate and d.Date < '2014-01-01'#(lf)  and p.PayGroup = e.PayGroup #(lf)  and t.[Term-Discharge]= e.[Term-Discharge]#(lf)  and b.UNIT = e.Unit and [EmplID] % 2 = 0\"]),\n    #\"Renamed Columns\" = Table.RenameColumns(Source, {{\"date\", \"date\"}, {\"EmplID\", \"EmplID\"}, {\"Gender\", \"Gender\"}, {\"Age\", \"Age\"}, {\"EthnicGroup\", \"EthnicGroup\"}, {\"FP\", \"FP\"}, {\"TermDate\", \"TermDate\"}, {\"BU\", \"BU\"}, {\"HireDate\", \"HireDate\"}, {\"PayTypeID\", \"PayTypeID\"}, {\"TermReason\", \"TermReason\"}}),\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\", {{\"date\", type datetime}, {\"EmplID\", Int64.Type}, {\"Gender\", type text}, {\"Age\", Int64.Type}, {\"EthnicGroup\", type text}, {\"FP\", type text}, {\"TermDate\", type datetime}, {\"BU\", type text}, {\"HireDate\", type datetime}, {\"PayTypeID\", type text}, {\"TermReason\", type text}})\nin\n    #\"Changed Type\"",
+      "6": "let\n    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WMlTSUXIvyi8tUHBUitWJVjKC853AfGM43xnMN4HzXcB8UzjfFcw3g/PdwHxzON9dKTYWAA==\", BinaryEncoding.Base64), Compression.Deflate))),\n    #\"Renamed Columns\" = Table.RenameColumns(Source, {{\"Column1\", \"Ethnic Group\"}, {\"Column2\", \"Ethnicity\"}}),\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\", {{\"Ethnic Group\", type text}, {\"Ethnicity\", type text}})\n in\n    #\"Changed Type\"",
+      "7": "let\n    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WclHSUfJNzEkFUoZKsTrRSs5AlltqLkTISCk2FgA=\", BinaryEncoding.Base64), Compression.Deflate))),\n    #\"Renamed Columns\" = Table.RenameColumns(Source, {{\"Column1\", \"ID\"}, {\"Column2\", \"Gender\"}, {\"Column3\", \"Sort\"}}),\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\", {{\"ID\", type text}, {\"Gender\", type text}, {\"Sort\", Int64.Type}})\n in\n    #\"Changed Type\"",
+      "8": "let\n    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WMlTSUYopNTAwTjY2UIrViVYyAgoYG+iaWIJ5xkCeqYG2UmwsAA==\", BinaryEncoding.Base64), Compression.Deflate))),\n    #\"Renamed Columns\" = Table.RenameColumns(Source, {{\"Column1\", \"AgeGroupID\"}, {\"Column2\", \"AgeGroup\"}}),\n    #\"Changed Type\" = Table.TransformColumnTypes(#\"Renamed Columns\", {{\"AgeGroupID\", Int64.Type}, {\"AgeGroup\", type text}})\n in\n    #\"Changed Type\""
+    }
+  },
+  "rls_roles": [],
+  "hierarchies": [],
+  "translations": [],
+  "perspectives": [],
+  "culture_info": {
+    "culture": "not available",
+    "date_format": "not available",
+    "time_format": "not available",
+    "currency_symbol": "not available",
+    "thousand_separator": "not available",
+    "decimal_separator": "not available"
+  },
+  "model_annotations": {},
+  "extended_properties": {},
+  "annotations": {},
+  "generation_info": {
+    "generated_at": "2025-07-05T12:28:43.029433",
+    "generator": "BI Documentation Tool",
+    "version": "1.0.0"
+  }
+}

@@ -13,4 +13,7 @@ JSON_FORMAT = "json"
 
 # Default Folder Names
 DEFAULT_OUTPUT_FOLDER = "output"
-DEFAULT_DOCS_FOLDER = "docs/"
+DEFAULT_DOCS_FOLDER = "docs"
+
+# Logging
+LOG_FILE_NAME = "bidoc.log"

@@ -1,4 +1,12 @@
-"""JSON documentation generator"""
+"""JSON documentat        # Add generation metadata
+        output_metadata = {
+            **metadata,
+            "generation_info": {
+                "generated_at": datetime.now().isoformat(),
+                "generator": "BI Documentation Tool",
+                "version": "0.1.0",
+            },
+        }tor"""
 
 import json
 import logging
@@ -22,7 +30,7 @@ class JSONGenerator:
             "generation_info": {
                 "generated_at": datetime.now().isoformat(),
                 "generator": "BI Documentation Tool",
-                "version": "0.1.0",
+                "version": "1.0.0",
             },
         }
 
@@ -65,13 +73,22 @@ class JSONGenerator:
 
         # Ensure all expected sections exist
         default_sections = {
+            "model_info": {},
             "data_sources": [],
             "tables": [],
             "relationships": [],
             "measures": [],
             "calculated_columns": [],
+            "calculated_tables": [],
             "visualizations": [],
             "power_query": {},
+            "rls_roles": [],
+            "hierarchies": [],
+            "translations": [],
+            "perspectives": [],
+            "culture_info": {},
+            "model_annotations": {},
+            "extended_properties": {},
         }
 
         for section, default_value in default_sections.items():
@@ -120,12 +137,18 @@ class JSONGenerator:
 
         # Ensure all expected sections exist
         default_sections = {
+            "workbook_info": {},
             "data_sources": [],
             "worksheets": [],
             "dashboards": [],
             "parameters": [],
             "calculated_fields": [],
+            "stories": [],
             "field_usage": {},
+            "metadata_records": [],
+            "groups": [],
+            "sets": [],
+            "formatting": {},
         }
 
         for section, default_value in default_sections.items():

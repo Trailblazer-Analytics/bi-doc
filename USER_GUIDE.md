@@ -8,10 +8,10 @@
 4. [File Format Support](#file-format-support)
 5. [Output Examples](#output-examples)
 6. [Advanced Usage](#advanced-usage)
-7. [Docker Usage](#docker-usage)
-8. [Troubleshooting](#troubleshooting)
-9. [Best Practices](#best-practices)
-10. [Commercial Use & Licensing](#commercial-use--licensing)
+7. [Enterprise Integration](#enterprise-integration)
+8. [Docker Usage](#docker-usage)
+9. [Troubleshooting](#troubleshooting)
+10. [Best Practices](#best-practices)
 
 ## Installation
 
@@ -456,6 +456,52 @@ python -m bidoc -i complex_report.pbix -o docs/ --with-summary
 # - Recommended Actions
 ```
 
+## Enterprise Integration
+
+The BI Documentation Tool is designed for seamless integration with enterprise data management platforms. See [INTEGRATION_HOOKS.md](INTEGRATION_HOOKS.md) for comprehensive examples and implementation patterns.
+
+### Quick Integration Examples
+
+#### Confluence Integration
+
+```bash
+# Generate documentation and push to Confluence
+python -m bidoc -i "reports/*.pbix" -o "temp_docs" -f markdown
+python scripts/confluence_upload.py --docs-dir temp_docs --space "BITOOLS"
+```
+
+#### Data Catalog Integration
+
+```bash
+# Generate JSON metadata for data catalog ingestion
+python -m bidoc -i "*.pbix" -f json -o "metadata_export"
+python scripts/ataccama_sync.py --metadata-dir metadata_export
+```
+
+#### CI/CD Integration with Multiple Platforms
+
+```yaml
+# Example: Multi-platform CI/CD pipeline
+- name: Generate BI Documentation
+  run: python -m bidoc -i "bi-files/" -o "docs/" -f all
+
+- name: Deploy to Confluence
+  run: python scripts/confluence_deploy.py
+
+- name: Update Data Catalog
+  run: python scripts/catalog_sync.py
+
+- name: Notify Teams
+  run: python scripts/teams_notification.py
+```
+
+### Supported Integration Platforms
+
+- **Data Catalogs**: Ataccama DGC, Microsoft Purview, Apache Atlas, DataHub
+- **Documentation**: Confluence, SharePoint, GitBook, Notion
+- **Version Control**: Git-based workflows with automated documentation updates
+- **Notification**: Slack, Microsoft Teams, email alerts
+
 ## Docker Usage
 
 ### Basic Docker Commands
@@ -705,17 +751,6 @@ We welcome feedback and suggestions! Ways to contribute:
 - **User Feedback**: Share your experience and pain points
 - **Community Templates**: Contribute custom templates for different use cases
 - **Documentation**: Help improve guides and examples
-
-## Commercial Use & Licensing
-
-This software is licensed under the Business Source License 1.1 (BSL). Production or commercial use requires a commercial license from the author.
-
-**To use this tool in production or for commercial purposes, please contact:**
-
-- Email: <your@email.com>
-- Website: <https://yourproductsite.com>
-
-Flexible licensing, support, and enterprise options are available. Non-commercial, research, and evaluation use is always free under the BSL.
 
 ---
 

@@ -3,21 +3,23 @@
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Trailblazer-Analytics/bi-doc/releases/tag/v1.0.0)
 [![License](https://img.shields.io/badge/license-BSL%201.1-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/Trailblazer-Analytics/bi-doc)
+[![Tests](https://img.shields.io/badge/tests-48%20passing-brightgreen.svg)](tests/)
 
 A powerful command-line tool for automatically generating comprehensive documentation from Business Intelligence files. Supports Power BI (.pbix) and Tableau (.twb/.twbx) workbooks, extracting detailed metadata to produce professional Markdown and JSON documentation.
 
-**🎉 Version 1.0.0 - Official Public Release!** Complete with analyst-friendly extensions for users at all technical levels.
+**🎉 Version 1.0.0 - Production Ready!** Complete with enterprise integration hooks for tools like Ataccama, Confluence, SharePoint, and more.
 
-## 🚀 Features
+## 🚀 Key Features
 
-- **Multi-format Support**: Parse Power BI (.pbix) and Tableau (.twb/.twbx) files
-- **Rich Metadata Extraction**: Extract datasets, fields, measures, calculations, data sources, and visual layouts
+- **Multi-Format Support**: Parse Power BI (.pbix) and Tableau (.twb/.twbx) files
+- **Rich Metadata Extraction**: Complete extraction of tables, fields, measures, calculations, data sources, and relationships
 - **Dual Output Formats**: Generate both human-readable Markdown and machine-readable JSON
+- **Enterprise Integration**: Built-in hooks for Ataccama, Confluence, SharePoint, Microsoft Purview, and more
 - **Docker Ready**: Containerized for easy CI/CD integration
-- **Modular Architecture**: Extensible design for future enhancements
-- **AI Integration Ready**: Built-in hooks for AI-powered summarization and insights
 - **Batch Processing**: Process multiple files simultaneously
 - **Cross-Platform**: Works on Windows, macOS, and Linux
+- **Robust Testing**: 48+ comprehensive tests ensuring reliability
+- **DAX Formatting**: Professional formatting of DAX expressions in output
 
 ## 📋 Quick Start
 
@@ -29,6 +31,7 @@ A powerful command-line tool for automatically generating comprehensive document
 ### Installation
 
 #### Option 1: Local Installation
+
 ```bash
 # Clone the repository
 git clone <repository-url>
@@ -46,6 +49,7 @@ pip install -e .
 ```
 
 #### Option 2: Docker (Recommended for CI/CD)
+
 ```bash
 # Build the Docker image
 docker build -t bidoc-tool .
@@ -53,6 +57,17 @@ docker build -t bidoc-tool .
 # Verify installation
 docker run bidoc-tool --help
 ```
+
+## 🔗 Enterprise Integration
+
+The BI Documentation Tool provides comprehensive integration capabilities for enterprise data management platforms:
+
+- **Data Catalogs**: Ataccama DGC, Microsoft Purview, Apache Atlas, DataHub
+- **Documentation Platforms**: Confluence, SharePoint, GitBook, Notion
+- **CI/CD Pipelines**: GitHub Actions, Azure DevOps, Jenkins
+- **Custom APIs**: RESTful endpoints for internal systems
+
+See [INTEGRATION_HOOKS.md](INTEGRATION_HOOKS.md) for detailed implementation examples and best practices.
 
 ### Basic Usage
 
@@ -70,24 +85,6 @@ python -m bidoc -i *.pbix -i *.twbx -o docs/ -f all
 python -m bidoc -i report.pbix -o docs/ --with-summary
 ```
 
-### Analyst-Friendly Options
-
-**For Windows analysts who prefer GUI tools:**
-
-```powershell
-# PowerShell Module (recommended for Windows users)
-Invoke-BIFileScan "dashboard.pbix" -ShowProgress -OpenResult
-# Or use the shorter alias: Scan-BIFile "dashboard.pbix" -ShowProgress -OpenResult
-
-# Drag-and-drop batch file
-# Simply drag any .pbix/.twb/.twbx file onto BI-Doc-Quick-Scan.bat
-
-# Graphical user interface
-python analyst_extensions/gui/bidoc_gui.py
-```
-
-See **[Analyst Extensions Guide](analyst_extensions/INSTALLATION_GUIDE.md)** for complete setup instructions.
-
 ### Docker Usage
 
 ```bash
@@ -101,10 +98,10 @@ docker run -v $(pwd):/data bidoc-tool --input /data/report.pbix --output /data/d
 ## 📖 Documentation
 
 - **[User Guide](USER_GUIDE.md)** - Comprehensive usage guide with examples
-- **[Analyst Extensions](analyst_extensions/INSTALLATION_GUIDE.md)** - Windows-friendly GUI and PowerShell tools
-- **[QoL Suggestions](QOL_SUGGESTIONS.md)** - Quality of life improvements and roadmap
+- **[Integration Hooks](INTEGRATION_HOOKS.md)** - Enterprise integration patterns and examples
 - **[Roadmap](ROADMAP.md)** - Development roadmap and planned features
-- **[Deployment Summary](DEPLOYMENT_SUMMARY.md)** - Production deployment information
+- **[Contributing](CONTRIBUTING.md)** - How to contribute to the project
+- **[Changelog](CHANGELOG.md)** - Version history and changes
 
 ## 🔍 What Gets Extracted
 
@@ -269,26 +266,10 @@ python -m pytest --cov=bidoc tests/
 
 This project is licensed under the **Business Source License 1.1 (BSL)** - see the [LICENSE](LICENSE) file for details.
 
-### ⚠️ Commercial Use Restrictions
-
-**IMPORTANT**: Commercial and production use is **RESTRICTED** until July 4, 2030.
-
-**Permitted Uses**:
-- ✅ Non-commercial research and evaluation
-- ✅ Personal and educational purposes  
-- ✅ Open source development and testing
-
-**Prohibited Uses**:
-- ❌ Production business operations
-- ❌ Paid consulting or services
-- ❌ Commercial product integration
-- ❌ Revenue-generating activities
-
-**Future**: Automatically converts to Apache 2.0 license on July 4, 2030.
-
 ## 🆘 Support
 
 - **Documentation**: See [USER_GUIDE.md](USER_GUIDE.md) for detailed usage instructions
+- **Integration Guide**: See [INTEGRATION_HOOKS.md](INTEGRATION_HOOKS.md) for enterprise integration patterns
 - **Issues**: Report bugs and feature requests on GitHub
 - **Discussions**: Join community discussions for questions and ideas
 
@@ -297,20 +278,8 @@ This project is licensed under the **Business Source License 1.1 (BSL)** - see t
 - ✅ **Production Ready**: All core features implemented and tested
 - ✅ **Docker Support**: Containerized for easy deployment
 - ✅ **CI/CD Ready**: Automated testing and deployment pipelines
+- ✅ **Enterprise Integration**: Hooks for major data platforms
 - 🔄 **Active Development**: Regular updates and new features
-
-## Commercial Use & Licensing
-
-This software is licensed under the Business Source License 1.1 (BSL). Production or commercial use requires a commercial license from the author.
-
-**To use this tool in production or for commercial purposes, please contact:**
-
-- Email: <your@email.com>
-- Website: <https://yourproductsite.com>
-
-We offer flexible licensing, support, and enterprise options. Non-commercial, research, and evaluation use is always free under the BSL.
-
-For organizations or users interested in a commercial license, see the [COMMERCIAL_LICENSE_TEMPLATE.md](COMMERCIAL_LICENSE_TEMPLATE.md) file for a sample agreement.
 
 ---
 

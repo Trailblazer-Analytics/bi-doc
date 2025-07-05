@@ -1,9 +1,9 @@
 """Utility functions and common helpers"""
 
-import logging
 from enum import Enum
 from pathlib import Path
 from typing import Optional
+import logging
 
 from colorama import Fore, Style
 
@@ -17,39 +17,6 @@ class FileType(Enum):
     TABLEAU_TWB = TWB_EXTENSION
     TABLEAU_TWBX = TWBX_EXTENSION
     UNKNOWN = "unknown"
-
-
-def setup_logging(verbose: bool = False):
-    """Configure logging with appropriate level and formatting"""
-    level = logging.DEBUG if verbose else logging.INFO
-
-    # Custom formatter with colors
-    class ColoredFormatter(logging.Formatter):
-        def format(self, record):
-            log_colors = {
-                "DEBUG": Fore.CYAN,
-                "INFO": Fore.WHITE,
-                "WARNING": Fore.YELLOW,
-                "ERROR": Fore.RED,
-                "CRITICAL": Fore.MAGENTA,
-            }
-
-            color = log_colors.get(record.levelname, Fore.WHITE)
-            record.levelname = f"{color}{record.levelname}{Style.RESET_ALL}"
-            return super().format(record)
-
-    formatter = ColoredFormatter("%(levelname)s: %(message)s")
-
-    # Configure root logger
-    logging.basicConfig(
-        level=level,
-        format="%(levelname)s: %(message)s",
-        handlers=[logging.StreamHandler()],
-    )
-
-    # Apply colored formatter
-    handler = logging.getLogger().handlers[0]
-    handler.setFormatter(formatter)
 
 
 def detect_file_type(file_path: Path) -> FileType:

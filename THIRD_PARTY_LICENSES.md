@@ -72,6 +72,24 @@ SOFTWARE.
 
 **Attribution**: This project uses the Tableau Document API by Tableau Software for parsing Tableau workbooks. We thank Tableau for providing this valuable open-source library.
 
+### DAX Formatter (Inspiration)
+
+**Project**: DAX Formatter by SQL BI  
+**Purpose**: Inspiration for DAX expression formatting standards  
+**Repository**: <https://github.com/sql-bi/DaxFormatter>  
+**Web Interface**: <https://www.daxformatter.com/>  
+**License**: Not directly used as dependency - formatting conventions inspired by this project  
+
+**Attribution**: The DAX formatting functionality in this tool implements formatting conventions compatible with and inspired by DAX Formatter by SQL BI, which is the industry standard for DAX code formatting. DAX Formatter is developed by the SQL BI team and provides comprehensive formatting capabilities for DAX expressions. Our implementation follows similar principles to ensure consistency with established DAX coding standards.
+
+Special thanks to the SQL BI team for their contributions to the DAX community and for establishing formatting standards that improve DAX code readability across the ecosystem.
+
+For advanced DAX formatting needs beyond what this tool provides, we recommend using the official DAX Formatter tools:
+
+- GitHub: <https://github.com/sql-bi/DaxFormatter>
+- Web interface: <https://www.daxformatter.com/>
+- VS Code extension: DAX Formatter extension by SQL BI
+
 ## Supporting Libraries
 
 ### Click

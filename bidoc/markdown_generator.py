@@ -78,17 +78,20 @@ Generated on {{ generation_date }}
 
 {% for measure in measures %}
 ### {{ measure.name }}
-{% if measure.table %}
-**Table:** {{ measure.table }}  
-{% endif %}
+
+**Table:** {{ measure.table or 'not available' }}
+
 **Expression:**
+
 ```dax
-{{ measure.expression }}
+{{ measure.expression_formatted if measure.expression_formatted != 'not available' else measure.expression }}
 ```
 
-{% if measure.format_string %}**Format:** {{ measure.format_string }}{% endif %}
-{% if measure.description %}**Description:** {{ measure.description }}{% endif %}
+{% if measure.format_string and measure.format_string != 'not available' %}**Format String:** {{ measure.format_string }}{% endif %}
+{% if measure.description and measure.description != 'not available' %}**Description:** {{ measure.description }}{% else %}**Description:** not available{% endif %}
+{% if measure.display_folder and measure.display_folder != 'not available' %}**Display Folder:** {{ measure.display_folder }}{% endif %}
 {% if measure.is_hidden %}**Hidden:** Yes{% endif %}
+{% if measure.data_type and measure.data_type != 'not available' %}**Data Type:** {{ measure.data_type }}{% endif %}
 
 ---
 
@@ -98,16 +101,19 @@ Generated on {{ generation_date }}
 
 {% for column in calculated_columns %}
 ### {{ column.name }}
-{% if column.table %}
-**Table:** {{ column.table }}  
-{% endif %}
-**Data Type:** {{ column.data_type }}  
+
+**Table:** {{ column.table or 'not available' }}
+**Data Type:** {{ column.data_type or 'not available' }}
+
 **Expression:**
+
 ```dax
-{{ column.expression }}
+{{ column.expression_formatted if column.expression_formatted != 'not available' else column.expression }}
 ```
 
-{% if column.description %}**Description:** {{ column.description }}{% endif %}
+{% if column.description and column.description != 'not available' %}**Description:** {{ column.description }}{% else %}**Description:** not available{% endif %}
+{% if column.format_string and column.format_string != 'not available' %}**Format String:** {{ column.format_string }}{% endif %}
+{% if column.display_folder and column.display_folder != 'not available' %}**Display Folder:** {{ column.display_folder }}{% endif %}
 {% if column.is_hidden %}**Hidden:** Yes{% endif %}
 
 ---
@@ -221,16 +227,19 @@ Generated on {{ generation_date }}
 {% for field in calculated_fields %}
 ### {{ field.name }}
 
-**Data Source:** {{ field.datasource }}  
-**Data Type:** {{ field.datatype }}  
-**Role:** {{ field.role }}
+**Data Source:** {{ field.datasource or 'not available' }}
+**Data Type:** {{ field.datatype or 'not available' }}
+**Role:** {{ field.role or 'not available' }}
 
 **Calculation:**
+
 ```sql
-{{ field.calculation }}
+{{ field.calculation_formatted if field.calculation_formatted != 'not available' else field.calculation }}
 ```
 
-{% if field.description %}**Description:** {{ field.description }}{% endif %}
+{% if field.description and field.description != 'not available' %}**Description:** {{ field.description }}{% else %}**Description:** not available{% endif %}
+{% if field.folder and field.folder != 'not available' %}**Folder:** {{ field.folder }}{% endif %}
+{% if field.is_hidden %}**Hidden:** Yes{% endif %}
 
 {% if field.worksheets_used %}
 **Used in Worksheets:** {% for ws in field.worksheets_used %}`{{ ws }}`{% if not loop.last %}, {% endif %}{% endfor %}

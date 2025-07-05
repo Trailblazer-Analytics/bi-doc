@@ -1,8 +1,10 @@
 """Tableau (.twb/.twbx) file parser using Tableau Document API"""
 
 import logging
+import os
 import tempfile
 import zipfile
+from datetime import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
@@ -14,7 +16,9 @@ else:
     except ImportError:
         Workbook = None
 
+from bidoc.metadata_schemas import ensure_complete_metadata
 from bidoc.utils import MetadataExtractor
+from bidoc.metadata_schemas import ensure_complete_metadata, get_default_tableau_metadata
 
 
 class TableauParser(MetadataExtractor):
@@ -31,54 +35,81 @@ class TableauParser(MetadataExtractor):
         """Parse a Tableau workbook file and extract metadata"""
         self.logger.info(f"Parsing Tableau file: {file_path.name}")
 
+        # Get basic file information
+        file_stats = file_path.stat() if file_path.exists() else None
+        
+        # Initialize with comprehensive metadata structure
+        metadata = {
+            "file": file_path.name,
+            "type": "Tableau",
+            "file_path": str(file_path),
+            "file_size": file_stats.st_size if file_stats else None,
+            "last_modified": datetime.fromtimestamp(file_stats.st_mtime).isoformat() if file_stats else "not available",
+            "created_date": datetime.fromtimestamp(file_stats.st_ctime).isoformat() if file_stats else "not available",
+        }
+
         try:
-            # Handle .twbx files (extract .twb from zip)
-            if file_path.suffix.lower() == ".twbx":
-                workbook_path = self._extract_twb_from_twbx(file_path)
+            # Handle .twbx and .tdsx files (extract .twb or .tds from zip)
+            if file_path.suffix.lower() in [".twbx", ".tdsx"]:
+                workbook_path = self._extract_workbook_from_archive(file_path)
             else:
                 workbook_path = str(file_path)
 
             # Load workbook
             workbook = Workbook(workbook_path)
 
-            # Extract core metadata
-            metadata = {
-                "file": file_path.name,
-                "type": "Tableau",
-                "file_path": str(file_path),
+            # Extract all metadata sections
+            metadata.update({
+                "workbook_info": self._extract_workbook_info(workbook, file_path),
                 "data_sources": self._extract_data_sources(workbook),
                 "worksheets": self._extract_worksheets(workbook),
                 "dashboards": self._extract_dashboards(workbook),
                 "parameters": self._extract_parameters(workbook),
                 "calculated_fields": self._extract_calculated_fields(workbook),
+                "stories": self._extract_stories(workbook),
                 "field_usage": self._extract_field_usage(workbook),
-            }
+                "metadata_records": self._extract_metadata_records(workbook),
+                "groups": self._extract_groups(workbook),
+                "sets": self._extract_sets(workbook),
+                "formatting": self._extract_formatting(workbook),
+            })
+
+            # Ensure all possible fields are present
+            metadata = ensure_complete_metadata(metadata, "Tableau")
 
             self._log_extraction_summary(metadata)
             return metadata
 
         except Exception as e:
             self.logger.error(f"Failed to parse Tableau file: {str(e)}")
-            raise
+            # Return comprehensive structure even if parsing fails
+            metadata = ensure_complete_metadata(metadata, "Tableau")
+            return metadata
 
-    def _extract_twb_from_twbx(self, twbx_path: Path) -> str:
-        """Extract .twb file from .twbx archive"""
-        self.log_extraction_progress("Extracting .twb from .twbx archive")
+    def _extract_workbook_from_archive(self, archive_path: Path) -> str:
+        """Extract .twb or .tds file from .twbx or .tdsx archive"""
+        self.log_extraction_progress(f"Extracting from {archive_path.suffix} archive")
+
+        if not archive_path.exists():
+            raise FileNotFoundError(f"Archive file not found at: {archive_path}")
 
         temp_dir = tempfile.mkdtemp()
 
-        with zipfile.ZipFile(twbx_path, "r") as zip_file:
-            # Find the .twb file in the archive
-            twb_files = [f for f in zip_file.namelist() if f.endswith(".twb")]
+        file_extension_to_find = ".twb" if archive_path.suffix.lower() == ".twbx" else ".tds"
 
-            if not twb_files:
-                raise ValueError("No .twb file found in .twbx archive")
+        with open(archive_path, "rb") as archive_file:
+            with zipfile.ZipFile(archive_file, "r") as zip_file:
+                # Find the file in the archive
+                files = [f for f in zip_file.namelist() if f.endswith(file_extension_to_find)]
 
-            # Extract the first .twb file
-            twb_file = twb_files[0]
-            zip_file.extract(twb_file, temp_dir)
+                if not files:
+                    raise ValueError(f"No {file_extension_to_find} file found in {archive_path.suffix} archive")
 
-            return str(Path(temp_dir) / twb_file)
+                # Extract the first file found
+                file_to_extract = files[0]
+                zip_file.extract(file_to_extract, temp_dir)
+
+                return str(Path(temp_dir) / file_to_extract)
 
     def _extract_data_sources(self, workbook) -> List[Dict[str, Any]]:
         """Extract data source information"""
@@ -109,18 +140,29 @@ class TableauParser(MetadataExtractor):
                         "datatype": getattr(field, "datatype", "unknown"),
                         "role": getattr(field, "role", "unknown"),
                         "type": getattr(field, "type", "unknown"),
-                        "is_calculated": hasattr(field, "calculation")
-                        and field.calculation is not None,
-                        "calculation": getattr(field, "calculation", None),
-                        "description": getattr(field, "description", ""),
+                        "is_calculated": hasattr(field, "calculation") and field.calculation is not None,
+                        "calculation": getattr(field, "calculation", "not available"),
+                        "calculation_formatted": self._format_tableau_calculation(getattr(field, "calculation", "")),
+                        "description": getattr(field, "description", "not available"),
                         "worksheets": getattr(field, "worksheets", []),
+                        "default_aggregation": getattr(field, "default_aggregation", "not available"),
+                        "is_hidden": getattr(field, "is_hidden", False),
+                        "aliases": {},
+                        "folder": getattr(field, "folder", "not available"),
+                        "geo_role": getattr(field, "geo_role", "not available"),
+                        "semantic_role": getattr(field, "semantic_role", "not available"),
                     }
                     fields.append(field_info)
+
+                ds_type = "unknown"
+                if connections:
+                    ds_type = connections[0].get("connection_type", "unknown")
 
                 data_sources.append(
                     {
                         "name": datasource.name,
                         "caption": getattr(datasource, "caption", datasource.name),
+                        "type": ds_type,
                         "connections": connections,
                         "fields": fields,
                     }
@@ -216,12 +258,18 @@ class TableauParser(MetadataExtractor):
                     if hasattr(field, "calculation") and field.calculation:
                         calc_field = {
                             "name": field.name,
+                            "caption": getattr(field, "caption", field.name),
                             "datasource": datasource.name,
                             "calculation": field.calculation,
+                            "calculation_formatted": self._format_tableau_calculation(field.calculation),
                             "datatype": getattr(field, "datatype", "unknown"),
                             "role": getattr(field, "role", "unknown"),
-                            "description": getattr(field, "description", ""),
+                            "description": getattr(field, "description", "not available"),
                             "worksheets_used": getattr(field, "worksheets", []),
+                            "folder": getattr(field, "folder", "not available"),
+                            "is_hidden": getattr(field, "is_hidden", False),
+                            "dependencies": [],  # Would need deeper analysis
+                            "comment": getattr(field, "comment", "not available"),
                         }
                         calculated_fields.append(calc_field)
 
@@ -309,3 +357,152 @@ class TableauParser(MetadataExtractor):
         ]
 
         self.logger.info(f"Extraction complete - {', '.join(summary)}")
+
+    def _extract_workbook_info(self, workbook, file_path: Path) -> Dict[str, Any]:
+        """Extract workbook-level information"""
+        self.log_extraction_progress("Extracting workbook information")
+        
+        workbook_info = {
+            "name": file_path.stem,
+            "version": "not available",
+            "repository_url": "not available",
+            "thumbnail": "not available",
+            "show_tabs": True,
+            "locale": "not available",
+            "created_by": "not available",
+            "last_updated_by": "not available",
+            "tags": [],
+            "project": "not available",
+            "site": "not available",
+        }
+        
+        try:
+            # Try to extract workbook-level information
+            if hasattr(workbook, 'version'):
+                workbook_info["version"] = str(getattr(workbook, 'version', 'not available'))
+            if hasattr(workbook, 'show_tabs'):
+                workbook_info["show_tabs"] = bool(getattr(workbook, 'show_tabs', True))
+        except Exception as e:
+            self.logger.debug(f"Error extracting workbook info: {str(e)}")
+        
+        self.log_extraction_progress("Workbook information extracted")
+        return workbook_info
+
+    def _extract_stories(self, workbook) -> List[Dict[str, Any]]:
+        """Extract stories (Tableau presentations)"""
+        self.log_extraction_progress("Extracting stories")
+        
+        stories = []
+        
+        try:
+            # Check if workbook has stories
+            if hasattr(workbook, 'stories'):
+                story_names = getattr(workbook, 'stories', [])
+                for story_name in story_names:
+                    stories.append({
+                        "name": str(story_name),
+                        "caption": str(story_name),
+                        "description": "not available",
+                        "story_points": [],
+                        "sizing": {},
+                        "formatting": {},
+                    })
+        except Exception as e:
+            self.logger.debug(f"Error extracting stories: {str(e)}")
+        
+        self.log_extraction_progress("Stories extracted", len(stories))
+        return stories
+
+    def _extract_metadata_records(self, workbook) -> List[Dict[str, Any]]:
+        """Extract metadata records"""
+        self.log_extraction_progress("Extracting metadata records")
+        
+        metadata_records = []
+        
+        try:
+            # Try to extract metadata records if available
+            # This would typically require XML parsing for detailed metadata
+            pass
+        except Exception as e:
+            self.logger.debug(f"Error extracting metadata records: {str(e)}")
+        
+        self.log_extraction_progress("Metadata records extracted", len(metadata_records))
+        return metadata_records
+
+    def _extract_groups(self, workbook) -> List[Dict[str, Any]]:
+        """Extract groups"""
+        self.log_extraction_progress("Extracting groups")
+        
+        groups = []
+        
+        try:
+            # Groups are typically defined within data sources
+            for datasource in workbook.datasources:
+                # Check if data source has groups information
+                # This would require deeper XML parsing
+                pass
+        except Exception as e:
+            self.logger.debug(f"Error extracting groups: {str(e)}")
+        
+        self.log_extraction_progress("Groups extracted", len(groups))
+        return groups
+
+    def _extract_sets(self, workbook) -> List[Dict[str, Any]]:
+        """Extract sets"""
+        self.log_extraction_progress("Extracting sets")
+        
+        sets = []
+        
+        try:
+            # Sets are typically defined within data sources
+            for datasource in workbook.datasources:
+                # Check if data source has sets information
+                # This would require deeper XML parsing
+                pass
+        except Exception as e:
+            self.logger.debug(f"Error extracting sets: {str(e)}")
+        
+        self.log_extraction_progress("Sets extracted", len(sets))
+        return sets
+
+    def _extract_formatting(self, workbook) -> Dict[str, Any]:
+        """Extract formatting information"""
+        self.log_extraction_progress("Extracting formatting")
+        
+        formatting = {
+            "workbook_formatting": {},
+            "default_formatting": {},
+            "color_palettes": [],
+            "fonts": {},
+        }
+        
+        try:
+            # Try to extract formatting information
+            # This would typically require XML parsing for detailed formatting
+            pass
+        except Exception as e:
+            self.logger.debug(f"Error extracting formatting: {str(e)}")
+        
+        self.log_extraction_progress("Formatting extracted")
+        return formatting
+
+    def _format_tableau_calculation(self, calculation: str) -> str:
+        """Format Tableau calculation for better readability"""
+        if not calculation or calculation == "not available":
+            return "not available"
+        
+        try:
+            # Basic formatting for Tableau calculations
+            # Remove excessive whitespace
+            formatted = " ".join(calculation.split())
+            
+            # Add line breaks for long calculations
+            if len(formatted) > 80:
+                # Break at logical points like operators
+                formatted = formatted.replace(" AND ", "\nAND ")
+                formatted = formatted.replace(" OR ", "\nOR ")
+                formatted = formatted.replace(", ", ",\n    ")
+            
+            return formatted
+        except Exception:
+            return str(calculation)

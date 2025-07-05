@@ -4,7 +4,7 @@ setup(
     name="bidoc",
     version="1.0.0",
     description="Business Intelligence documentation tool for Power BI and Tableau",
-    long_description=open("README.md").read(),
+    long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="BI Documentation Tool",
     python_requires=">=3.8",
@@ -17,6 +17,7 @@ setup(
         "pandas>=1.5.0",
         "lxml>=4.9.0",
         "colorama>=0.4.0",
+        "toml>=0.10.2",
     ],
     entry_points={
         "console_scripts": [

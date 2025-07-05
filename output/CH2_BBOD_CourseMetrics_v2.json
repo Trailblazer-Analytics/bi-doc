@@ -1,0 +1,1101 @@
+{
+  "file": "CH2_BBOD_CourseMetrics_v2.twbx",
+  "type": "Tableau",
+  "file_path": "C:\\SecretProjects\\bi-doc\\samples\\tableau\\CH2_BBOD_CourseMetrics_v2.twbx",
+  "file_size": 1128457,
+  "last_modified": "2025-07-04T14:53:10.772957",
+  "created_date": "2025-07-04T14:53:09.974957",
+  "workbook_info": {
+    "name": "CH2_BBOD_CourseMetrics_v2",
+    "version": "not available",
+    "repository_url": "not available",
+    "thumbnail": "not available",
+    "show_tabs": true,
+    "locale": "not available",
+    "created_by": "not available",
+    "last_updated_by": "not available",
+    "tags": [],
+    "project": "not available",
+    "site": "not available"
+  },
+  "data_sources": [
+    {
+      "name": "federated.1y0ubnb1p8wit416uqf3d1p4fd9m",
+      "caption": "Students (Course Metrics Dashboard Data)",
+      "type": "excel-direct",
+      "connections": [
+        {
+          "server": "",
+          "database": null,
+          "connection_type": "excel-direct",
+          "username": null,
+          "port": null
+        }
+      ],
+      "fields": [
+        {
+          "name": "Semester",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Year",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Year-Semester",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Students",
+          "caption": null,
+          "datatype": "integer",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "[Number of Records]",
+          "caption": null,
+          "datatype": "integer",
+          "role": "measure",
+          "type": "quantitative",
+          "is_calculated": true,
+          "calculation": "1",
+          "calculation_formatted": "1",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "[Students]",
+          "caption": null,
+          "datatype": "integer",
+          "role": "measure",
+          "type": "quantitative",
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Students"
+          ],
+          "default_aggregation": "Sum",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "[Year-Semester]",
+          "caption": null,
+          "datatype": "string",
+          "role": "dimension",
+          "type": "nominal",
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Students"
+          ],
+          "default_aggregation": "Count",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Semester",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Students"
+          ],
+          "default_aggregation": "Count",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Year",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Students"
+          ],
+          "default_aggregation": "Count",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        }
+      ]
+    },
+    {
+      "name": "federated.03gehrm1kx3q4s14fmnoz1pg9ldz",
+      "caption": "Ratings (Course Metrics Dashboard Data)",
+      "type": "excel-direct",
+      "connections": [
+        {
+          "server": "",
+          "database": null,
+          "connection_type": "excel-direct",
+          "username": null,
+          "port": null
+        }
+      ],
+      "fields": [
+        {
+          "name": "Semester",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Year",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Year-Semester",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Year-Semester (group)",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Rating",
+          "caption": null,
+          "datatype": "real",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Students",
+          "caption": null,
+          "datatype": "integer",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "[Number of Records]",
+          "caption": null,
+          "datatype": "integer",
+          "role": "measure",
+          "type": "quantitative",
+          "is_calculated": true,
+          "calculation": "1",
+          "calculation_formatted": "1",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "[Year-Semester (group)]",
+          "caption": null,
+          "datatype": "string",
+          "role": "dimension",
+          "type": "nominal",
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Ratings"
+          ],
+          "default_aggregation": "Count",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Semester",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Ratings"
+          ],
+          "default_aggregation": "Count",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Year",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Ratings"
+          ],
+          "default_aggregation": "Count",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Year-Semester",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Ratings"
+          ],
+          "default_aggregation": "Count",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Rating",
+          "caption": null,
+          "datatype": "real",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Ratings"
+          ],
+          "default_aggregation": "Sum",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Students",
+          "caption": null,
+          "datatype": "integer",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": "Sum",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        }
+      ]
+    },
+    {
+      "name": "federated.1txd47502bl6lf10f5zkn1lyfx00",
+      "caption": "Evaluations (Course Metrics Dashboard Data)",
+      "type": "excel-direct",
+      "connections": [
+        {
+          "server": "",
+          "database": null,
+          "connection_type": "excel-direct",
+          "username": null,
+          "port": null
+        }
+      ],
+      "fields": [
+        {
+          "name": "Date",
+          "caption": null,
+          "datatype": "date",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Entity",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Questions",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Semesters",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Mean Rating",
+          "caption": null,
+          "datatype": "real",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "[Entity]",
+          "caption": null,
+          "datatype": "string",
+          "role": "dimension",
+          "type": "nominal",
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Alternate Legend 2",
+            "Evaluation Ranking"
+          ],
+          "default_aggregation": "Count",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "[Number of Records]",
+          "caption": null,
+          "datatype": "integer",
+          "role": "measure",
+          "type": "quantitative",
+          "is_calculated": true,
+          "calculation": "1",
+          "calculation_formatted": "1",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Date",
+          "caption": null,
+          "datatype": "date",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": "Year",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Questions",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Evaluation Ranking"
+          ],
+          "default_aggregation": "Count",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Semesters",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Evaluation Ranking"
+          ],
+          "default_aggregation": "Count",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Mean Rating",
+          "caption": null,
+          "datatype": "real",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Evaluation Ranking"
+          ],
+          "default_aggregation": "Sum",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        }
+      ]
+    },
+    {
+      "name": "federated.10xvqqd0b5nzde1gej6o01bagq41",
+      "caption": "Enrollments and Classes (Course Metrics Dashboard Data)",
+      "type": "excel-direct",
+      "connections": [
+        {
+          "server": "",
+          "database": null,
+          "connection_type": "excel-direct",
+          "username": null,
+          "port": null
+        }
+      ],
+      "fields": [
+        {
+          "name": "Year",
+          "caption": null,
+          "datatype": "string",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "#",
+          "caption": null,
+          "datatype": "integer",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "# Classes",
+          "caption": null,
+          "datatype": "integer",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "Year2",
+          "caption": "Year2",
+          "datatype": "string",
+          "role": "dimension",
+          "type": "nominal",
+          "is_calculated": true,
+          "calculation": "[Year]",
+          "calculation_formatted": "[Year]",
+          "description": null,
+          "worksheets": [
+            "Enrollments",
+            "Classes"
+          ],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "[Number of Records]",
+          "caption": null,
+          "datatype": "integer",
+          "role": "measure",
+          "type": "quantitative",
+          "is_calculated": true,
+          "calculation": "1",
+          "calculation_formatted": "1",
+          "description": null,
+          "worksheets": [],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "[Year (group)]",
+          "caption": null,
+          "datatype": "string",
+          "role": "dimension",
+          "type": "nominal",
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Enrollments",
+            "Classes"
+          ],
+          "default_aggregation": null,
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "[Year]",
+          "caption": null,
+          "datatype": "string",
+          "role": "dimension",
+          "type": "nominal",
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Enrollments",
+            "Classes"
+          ],
+          "default_aggregation": "Count",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "#",
+          "caption": null,
+          "datatype": "integer",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Enrollments"
+          ],
+          "default_aggregation": "Sum",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        },
+        {
+          "name": "# Classes",
+          "caption": null,
+          "datatype": "integer",
+          "role": null,
+          "type": null,
+          "is_calculated": false,
+          "calculation": null,
+          "calculation_formatted": "not available",
+          "description": null,
+          "worksheets": [
+            "Classes"
+          ],
+          "default_aggregation": "Sum",
+          "is_hidden": false,
+          "aliases": {},
+          "folder": "not available",
+          "geo_role": "not available",
+          "semantic_role": "not available"
+        }
+      ]
+    }
+  ],
+  "worksheets": [
+    {
+      "name": "Alternate Legend",
+      "data_source": "",
+      "fields_used": [],
+      "filters": [],
+      "parameters_used": []
+    },
+    {
+      "name": "Alternate Legend 2",
+      "data_source": "",
+      "fields_used": [],
+      "filters": [],
+      "parameters_used": []
+    },
+    {
+      "name": "Classes",
+      "data_source": "",
+      "fields_used": [],
+      "filters": [],
+      "parameters_used": []
+    },
+    {
+      "name": "Enrollments",
+      "data_source": "",
+      "fields_used": [],
+      "filters": [],
+      "parameters_used": []
+    },
+    {
+      "name": "Evaluation Ranking",
+      "data_source": "",
+      "fields_used": [],
+      "filters": [],
+      "parameters_used": []
+    },
+    {
+      "name": "Ratings",
+      "data_source": "",
+      "fields_used": [],
+      "filters": [],
+      "parameters_used": []
+    },
+    {
+      "name": "Students",
+      "data_source": "",
+      "fields_used": [],
+      "filters": [],
+      "parameters_used": []
+    }
+  ],
+  "dashboards": [
+    {
+      "name": "Course Metrics Dashboard",
+      "worksheets": [],
+      "objects": []
+    },
+    {
+      "name": "The Big Book of Dashboards",
+      "worksheets": [],
+      "objects": []
+    }
+  ],
+  "parameters": [],
+  "calculated_fields": [
+    {
+      "name": "[Number of Records]",
+      "caption": null,
+      "datasource": "federated.1y0ubnb1p8wit416uqf3d1p4fd9m",
+      "calculation": "1",
+      "calculation_formatted": "1",
+      "datatype": "integer",
+      "role": "measure",
+      "description": null,
+      "worksheets_used": [],
+      "folder": "not available",
+      "is_hidden": false,
+      "dependencies": [],
+      "comment": "not available"
+    },
+    {
+      "name": "[Number of Records]",
+      "caption": null,
+      "datasource": "federated.03gehrm1kx3q4s14fmnoz1pg9ldz",
+      "calculation": "1",
+      "calculation_formatted": "1",
+      "datatype": "integer",
+      "role": "measure",
+      "description": null,
+      "worksheets_used": [],
+      "folder": "not available",
+      "is_hidden": false,
+      "dependencies": [],
+      "comment": "not available"
+    },
+    {
+      "name": "[Number of Records]",
+      "caption": null,
+      "datasource": "federated.1txd47502bl6lf10f5zkn1lyfx00",
+      "calculation": "1",
+      "calculation_formatted": "1",
+      "datatype": "integer",
+      "role": "measure",
+      "description": null,
+      "worksheets_used": [],
+      "folder": "not available",
+      "is_hidden": false,
+      "dependencies": [],
+      "comment": "not available"
+    },
+    {
+      "name": "Year2",
+      "caption": "Year2",
+      "datasource": "federated.10xvqqd0b5nzde1gej6o01bagq41",
+      "calculation": "[Year]",
+      "calculation_formatted": "[Year]",
+      "datatype": "string",
+      "role": "dimension",
+      "description": null,
+      "worksheets_used": [
+        "Enrollments",
+        "Classes"
+      ],
+      "folder": "not available",
+      "is_hidden": false,
+      "dependencies": [],
+      "comment": "not available"
+    },
+    {
+      "name": "[Number of Records]",
+      "caption": null,
+      "datasource": "federated.10xvqqd0b5nzde1gej6o01bagq41",
+      "calculation": "1",
+      "calculation_formatted": "1",
+      "datatype": "integer",
+      "role": "measure",
+      "description": null,
+      "worksheets_used": [],
+      "folder": "not available",
+      "is_hidden": false,
+      "dependencies": [],
+      "comment": "not available"
+    }
+  ],
+  "stories": [],
+  "field_usage": {
+    "by_worksheet": {},
+    "by_dashboard": {},
+    "unused_fields": [],
+    "most_used_fields": [],
+    "field_dependencies": {},
+    "[Students]": [
+      "Students"
+    ],
+    "[Year-Semester]": [
+      "Students"
+    ],
+    "Semester": [
+      "Ratings"
+    ],
+    "Year": [
+      "Ratings"
+    ],
+    "[Year-Semester (group)]": [
+      "Ratings"
+    ],
+    "Year-Semester": [
+      "Ratings"
+    ],
+    "Rating": [
+      "Ratings"
+    ],
+    "[Entity]": [
+      "Alternate Legend 2",
+      "Evaluation Ranking"
+    ],
+    "Questions": [
+      "Evaluation Ranking"
+    ],
+    "Semesters": [
+      "Evaluation Ranking"
+    ],
+    "Mean Rating": [
+      "Evaluation Ranking"
+    ],
+    "Year2": [
+      "Enrollments",
+      "Classes"
+    ],
+    "[Year (group)]": [
+      "Enrollments",
+      "Classes"
+    ],
+    "[Year]": [
+      "Enrollments",
+      "Classes"
+    ],
+    "#": [
+      "Enrollments"
+    ],
+    "# Classes": [
+      "Classes"
+    ]
+  },
+  "metadata_records": [],
+  "groups": [],
+  "sets": [],
+  "formatting": {
+    "workbook_formatting": {},
+    "default_formatting": {},
+    "color_palettes": [],
+    "fonts": {}
+  },
+  "generation_info": {
+    "generated_at": "2025-07-05T12:26:16.351825",
+    "generator": "BI Documentation Tool",
+    "version": "1.0.0"
+  }
+}
