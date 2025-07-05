@@ -50,110 +50,7 @@ File Explorer Context Menu:
 - No need to open command prompt
 - Immediate access from file location
 
-### 2. Drag-and-Drop Desktop Application
-
-**Electron-based Desktop App**
-
-A simple, modern desktop application that analysts can pin to their taskbar.
-
-**Key Features:**
-```text
-Main Window:
-┌─────────────────────────────────────────┐
-│ BI Documentation Tool                    │
-├─────────────────────────────────────────┤
-│                                         │
-│    📁 Drag & Drop Files Here           │
-│         or Click to Browse              │
-│                                         │
-│  [Browse Files]  [Settings]  [Help]    │
-│                                         │
-├─────────────────────────────────────────┤
-│ Recent Files:                           │
-│ • sales_dashboard.pbix                  │
-│ • marketing_report.twbx                 │
-│ • operations_summary.twb                │
-└─────────────────────────────────────────┘
-```
-
-**Processing Screen:**
-```text
-┌─────────────────────────────────────────┐
-│ Processing: sales_dashboard.pbix         │
-├─────────────────────────────────────────┤
-│ ████████████████░░░░ 75%                │
-│                                         │
-│ ✓ Extracted data sources                │
-│ ✓ Parsed 15 tables                     │
-│ ✓ Found 23 measures                    │
-│ ⏳ Generating documentation...          │
-│                                         │
-│ [Cancel]                                │
-└─────────────────────────────────────────┘
-```
-
-**Results Dashboard:**
-```text
-┌─────────────────────────────────────────┐
-│ Results: sales_dashboard.pbix            │
-├─────────────────────────────────────────┤
-│ 📊 Overview    📋 Details    📁 Export │
-├─────────────────────────────────────────┤
-│ File Info:                              │
-│ • Data Sources: 3                       │
-│ • Tables: 15                            │
-│ • Measures: 23                          │
-│ • Report Pages: 5                       │
-│                                         │
-│ Quick Actions:                          │
-│ [📄 Open Documentation] [💾 Save As...] │
-│ [📧 Email Report] [📋 Copy Summary]     │
-└─────────────────────────────────────────┘
-```
-
-### 3. Browser-Based Web Application
-
-**Local Web Server with Modern UI**
-
-A local web application that runs on `localhost:8080` with a modern, responsive interface.
-
-**Architecture:**
-- FastAPI/Flask backend serving the CLI functionality
-- React/Vue.js frontend with drag-and-drop
-- WebSocket for real-time progress updates
-- Local storage for settings and history
-
-**Features:**
-- **File Upload**: Drag-and-drop or browse interface
-- **Real-time Processing**: Live progress updates
-- **Interactive Results**: Expandable sections, search, filtering
-- **Export Options**: Multiple format downloads
-- **Batch Processing**: Queue multiple files
-- **History**: Track and revisit previous scans
-
-### 4. Microsoft Office Integration
-
-**Excel Add-in for BI File Analysis**
-
-Create an Excel add-in that allows analysts to import BI file metadata directly into Excel for analysis.
-
-**Functionality:**
-```text
-Excel Ribbon: "BI Documentation"
-├── Import BI File
-├── Scan Directory
-├── Compare Files
-├── Generate Report
-└── Settings
-```
-
-**Use Cases:**
-- Import table structures for data mapping
-- Create inventory spreadsheets
-- Compare multiple BI files
-- Generate executive summaries
-
-### 5. PowerShell Module (Windows-Native CLI)
+### 2. PowerShell Module (Windows-Native CLI)
 
 **Analyst-Friendly PowerShell Commands**
 
@@ -205,61 +102,25 @@ analyst_extensions/
 @="\"C:\Program Files\BIDoc\launcher.exe\" \"%1\""
 ```
 
-### Desktop Application
+### PowerShell Module
 
 **Technology Stack:**
-- Electron with React/TypeScript
-- Node.js backend calling Python CLI
-- Electron Builder for Windows packaging
+- PowerShell 7+
+- .NET 5+ for any custom cmdlet development
 
-**Project Structure:**
+**Module Structure:**
 ```text
-desktop_app/
-├── src/
-│   ├── main/           # Electron main process
-│   ├── renderer/       # React frontend
-│   ├── shared/         # Shared utilities
-│   └── assets/         # Icons, images
-├── public/
-├── build/              # Build configuration
-└── dist/               # Packaged application
+analyst_extensions/
+├── powershell_module/
+│   ├── BIDocumentation.psm1
+│   ├── BIDocumentation.psd1
+│   └── install.ps1
 ```
 
-### Web Application
-
-**Technology Stack:**
-- FastAPI backend with Python
-- React/TypeScript frontend
-- Docker container for easy deployment
-- SQLite for local data storage
-
-**API Endpoints:**
-```text
-POST /api/upload          # Upload BI file
-GET  /api/status/{job_id} # Check processing status
-GET  /api/result/{job_id} # Get results
-GET  /api/history         # List previous scans
-POST /api/settings        # Update configuration
-```
-
-### Excel Add-in
-
-**Technology Stack:**
-- Office.js (JavaScript API)
-- Web-based add-in (HTML/JavaScript)
-- Calls to local web service
-
-**Manifest Configuration:**
-```xml
-<OfficeApp>
-  <Id>BIDocumentationAddin</Id>
-  <Version>1.0.0.0</Version>
-  <ProviderName>BI-Doc</ProviderName>
-  <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="BI Documentation"/>
-  <Description DefaultValue="Import BI file metadata into Excel"/>
-</OfficeApp>
-```
+**PowerShell Gallery Publishing:**
+- Register as a publisher
+- Validate module manifest
+- Push to PowerShell Gallery
 
 ## 📊 Analyst-Focused Features
 
