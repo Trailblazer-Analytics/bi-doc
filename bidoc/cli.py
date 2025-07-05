@@ -15,6 +15,11 @@ from bidoc.markdown_generator import MarkdownGenerator
 from bidoc.pbix_parser import PowerBIParser
 from bidoc.tableau_parser import TableauParser
 from bidoc.utils import FileType, detect_file_type, setup_logging
+from bidoc.constants import (
+    DEFAULT_DOCS_FOLDER,
+    JSON_FORMAT,
+    MARKDOWN_FORMAT,
+)
 
 # Initialize colorama for cross-platform colored output
 init()
@@ -32,14 +37,14 @@ init()
 @click.option(
     "--output",
     "-o",
-    default="docs/",
-    help="Output directory for generated documentation (default: docs/)",
+    default=DEFAULT_DOCS_FOLDER,
+    help=f"Output directory for generated documentation (default: {DEFAULT_DOCS_FOLDER})",
 )
 @click.option(
     "--format",
     "-f",
     "output_format",
-    type=click.Choice(["markdown", "json", "all"], case_sensitive=False),
+    type=click.Choice([MARKDOWN_FORMAT, JSON_FORMAT, "all"], case_sensitive=False),
     default="all",
     help="Output format(s) (default: all)",
 )

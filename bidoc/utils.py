@@ -7,13 +7,15 @@ from typing import Optional
 
 from colorama import Fore, Style
 
+from bidoc.constants import PBIX_EXTENSION, TWB_EXTENSION, TWBX_EXTENSION
+
 
 class FileType(Enum):
     """Supported BI file types"""
 
-    POWER_BI = "pbix"
-    TABLEAU_TWB = "twb"
-    TABLEAU_TWBX = "twbx"
+    POWER_BI = PBIX_EXTENSION
+    TABLEAU_TWB = TWB_EXTENSION
+    TABLEAU_TWBX = TWBX_EXTENSION
     UNKNOWN = "unknown"
 
 
