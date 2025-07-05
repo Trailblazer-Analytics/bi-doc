@@ -8,7 +8,7 @@ dynamic = ["version"]
 description = "Business Intelligence documentation tool for Power BI and Tableau"
 readme = "README.md"
 requires-python = ">=3.8"
-license = "BUSL-1.1"
+license = {text = "BUSL-1.1"}
 authors = [
     {name = "BI Documentation Tool Team"},
 ]
