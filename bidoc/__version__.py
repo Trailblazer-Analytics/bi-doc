@@ -4,7 +4,8 @@
 
 try:
     from setuptools_scm import get_version
-    __version__ = get_version(root='..', relative_to=__file__)
+
+    __version__ = get_version(root="..", relative_to=__file__)
 except (ImportError, LookupError):
     # Fallback for installed packages or when setuptools_scm is not available
     try:
@@ -12,7 +13,7 @@ except (ImportError, LookupError):
     except ImportError:
         # Python < 3.8
         from importlib_metadata import PackageNotFoundError, version
-    
+
     try:
         __version__ = version("bidoc")
     except PackageNotFoundError:
