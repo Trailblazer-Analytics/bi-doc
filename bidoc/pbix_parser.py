@@ -48,9 +48,11 @@ class PowerBIParser(MetadataExtractor):
                 "type": "Power BI",
                 "file_path": str(file_path),
                 "file_size": file_path.stat().st_size if file_path.exists() else None,
-                "last_modified": str(file_path.stat().st_mtime)
-                if file_path.exists()
-                else "not available",
+                "last_modified": (
+                    str(file_path.stat().st_mtime)
+                    if file_path.exists()
+                    else "not available"
+                ),
             }
         )
 
@@ -428,11 +430,11 @@ class PowerBIParser(MetadataExtractor):
                         {
                             "name": str(table_name),
                             "expression": str(expression),
-                            "expression_formatted": self.dax_formatter.format(
-                                str(expression)
-                            )
-                            if expression
-                            else "not available",
+                            "expression_formatted": (
+                                self.dax_formatter.format(str(expression))
+                                if expression
+                                else "not available"
+                            ),
                             "description": str(row.get("Description", "not available")),
                             "is_hidden": bool(row.get("IsHidden", False)),
                             "annotations": {},

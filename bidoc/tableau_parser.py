@@ -42,12 +42,16 @@ class TableauParser(MetadataExtractor):
             "type": "Tableau",
             "file_path": str(file_path),
             "file_size": file_stats.st_size if file_stats else None,
-            "last_modified": datetime.fromtimestamp(file_stats.st_mtime).isoformat()
-            if file_stats
-            else "not available",
-            "created_date": datetime.fromtimestamp(file_stats.st_ctime).isoformat()
-            if file_stats
-            else "not available",
+            "last_modified": (
+                datetime.fromtimestamp(file_stats.st_mtime).isoformat()
+                if file_stats
+                else "not available"
+            ),
+            "created_date": (
+                datetime.fromtimestamp(file_stats.st_ctime).isoformat()
+                if file_stats
+                else "not available"
+            ),
         }
 
         try:
