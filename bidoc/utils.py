@@ -1,11 +1,9 @@
 """Utility functions and common helpers"""
 
+import logging
 from enum import Enum
 from pathlib import Path
 from typing import Optional
-import logging
-
-from colorama import Fore, Style
 
 from bidoc.constants import PBIX_EXTENSION, TWB_EXTENSION, TWBX_EXTENSION
 
@@ -23,14 +21,13 @@ def detect_file_type(file_path: Path) -> FileType:
     """Detect the type of BI file based on extension"""
     suffix = file_path.suffix.lower()
 
-    if suffix == ".pbix":
-        return FileType.POWER_BI
-    elif suffix == ".twb":
-        return FileType.TABLEAU_TWB
-    elif suffix == ".twbx":
-        return FileType.TABLEAU_TWBX
-    else:
-        return FileType.UNKNOWN
+    file_type_mapping = {
+        ".pbix": FileType.POWER_BI,
+        ".twb": FileType.TABLEAU_TWB,
+        ".twbx": FileType.TABLEAU_TWBX,
+    }
+
+    return file_type_mapping.get(suffix, FileType.UNKNOWN)
 
 
 def sanitize_filename(filename: str) -> str:

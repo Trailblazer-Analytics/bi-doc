@@ -1,9 +1,9 @@
-name: Release and Publish to PyPI
+name: Release and Publish
 
 on:
   push:
     tags:
-      - 'v*.*.*'  # Only trigger on semantic version tags like v1.2.3
+      - 'v*.*.*'  # Only trigger on semantic version tags
 
 permissions:
   contents: write    # Required for creating releases
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ['3.8', '3.12']  # Test on minimum and latest versions
+        python-version: ['3.8', '3.9', '3.10', '3.11', '3.12']
 
     steps:
     - uses: actions/checkout@v4
@@ -33,9 +33,13 @@ jobs:
 
     - name: Run tests
       run: |
-        pytest --cov=bidoc --cov-report=term-missing
+        pytest --cov=bidoc --cov-report=xml
 
-  build-and-publish:
+    - name: Upload coverage to Codecov
+      if: matrix.python-version == '3.12'
+      uses: codecov/codecov-action@v3
+
+  build:
     needs: test
     runs-on: ubuntu-latest
 
@@ -60,13 +64,33 @@ jobs:
     - name: Verify package
       run: twine check dist/*
 
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: dist/
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: dist
+        path: dist/
+
     - name: Extract version from tag
       id: version
       run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
 
     - name: Create GitHub Release
-      uses: softprops/action-gh-release@v1
+      uses: ncipollo/create-release@v1
       with:
+        tag: ${{ github.ref_name }}
         name: Release ${{ github.ref_name }}
         body: |
           ## Release ${{ steps.version.outputs.VERSION }}
@@ -79,19 +103,29 @@ jobs:
           ### Changes
           See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md) for detailed changes.
 
-          ### Package Links
-          - [PyPI Package](https://pypi.org/project/bidoc/${{ steps.version.outputs.VERSION }}/)
-          - [Documentation](https://github.com/${{ github.repository }}/blob/main/README.md)
-        files: |
-          dist/*.whl
-          dist/*.tar.gz
+          ### Downloads
+          - [Python Wheel](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/bidoc-${{ steps.version.outputs.VERSION }}-py3-none-any.whl)
+          - [Source Distribution](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/bidoc-${{ steps.version.outputs.VERSION }}.tar.gz)
+        artifacts: "dist/*"
         draft: false
         prerelease: false
         token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Publish to PyPI (with API token)
-      env:
-        TWINE_USERNAME: __token__
-        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-      run: |
-        twine upload dist/*
+  publish:
+    needs: [test, build, release]
+    runs-on: ubuntu-latest
+    environment: release  # Requires manual approval for production releases
+
+    steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: dist
+        path: dist/
+
+    - name: Publish to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
+      with:
+        # Uses trusted publishing - no API token needed!
+        # Configure at: https://pypi.org/manage/account/publishing/
+        repository-url: https://upload.pypi.org/legacy/

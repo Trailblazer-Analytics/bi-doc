@@ -1,7 +1,7 @@
 """AI Summary module - Future integration hook for AI-powered insights"""
 
 import logging
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Union
 
 from bidoc.config import AppConfig
 from bidoc.summary_strategies import (
@@ -16,9 +16,7 @@ from bidoc.utils import FileType
 class AISummary:
     """AI Summary generator - placeholder for future BYO AI integration"""
 
-    def __init__(
-        self, strategy: AISummaryStrategy, config: AppConfig
-    ):
+    def __init__(self, strategy: AISummaryStrategy, config: AppConfig):
         self.logger = logging.getLogger(__name__)
         self.config = config
         self.strategy = strategy
@@ -52,7 +50,7 @@ def get_summary_strategy(file_type: Union[str, FileType]) -> AISummaryStrategy:
             return TableauSummaryStrategy()
         else:
             return DefaultSummaryStrategy()
-    
+
     # Handle FileType enum
     if file_type == FileType.POWER_BI:
         return PowerBISummaryStrategy()

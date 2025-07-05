@@ -1,7 +1,6 @@
 """Test utilities and sample data"""
 
 import json
-import tempfile
 from pathlib import Path
 from typing import Any, Dict
 

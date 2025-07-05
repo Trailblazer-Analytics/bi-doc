@@ -6,7 +6,7 @@
 **Issue:** The variable `$BIDocPath` was assigned but never used.
 **Fix:** Removed the unused variable declaration.
 
-### 2. PSUseApprovedVerbs  
+### 2. PSUseApprovedVerbs
 **Issue:** The cmdlet `Scan-BIFile` uses an unapproved verb.
 **Fix:** Renamed function to `Invoke-BIFileScan` using the approved verb "Invoke".
 

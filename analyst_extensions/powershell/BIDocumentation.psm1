@@ -47,30 +47,30 @@ function Invoke-BIFileScan {
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, ValueFromPipelineByPropertyName = $true)]
         [Alias("FullName", "FilePath")]
         [string]$Path,
-        
+
         [Parameter()]
         [string]$OutputPath = ".\docs",
-        
+
         [Parameter()]
         [ValidateSet("Markdown", "JSON", "All")]
         [string]$Format = "All",
-        
+
         [Parameter()]
         [switch]$ShowProgress,
-        
+
         [Parameter()]
         [switch]$OpenResult
     )
-    
+
     begin {
         Write-Verbose "Starting BI file scanning process"
-        
+
         # Ensure output directory exists
         if (-not (Test-Path $OutputPath)) {
             New-Item -ItemType Directory -Path $OutputPath -Force | Out-Null
             Write-Verbose "Created output directory: $OutputPath"
         }
-        
+
         # Check if Python and bidoc are available
         try {
             $pythonVersion = python --version 2>&1
@@ -80,62 +80,62 @@ function Invoke-BIFileScan {
             throw "Python is not installed or not in PATH. Please install Python 3.8+ and the BI Documentation Tool."
         }
     }
-    
+
     process {
         # Resolve full path
         $FullPath = Resolve-Path $Path -ErrorAction Stop
         $FileName = [System.IO.Path]::GetFileNameWithoutExtension($FullPath)
         $Extension = [System.IO.Path]::GetExtension($FullPath).ToLower()
-        
+
         # Validate file type
         if ($Extension -notin @('.pbix', '.twb', '.twbx')) {
             Write-Warning "Unsupported file type: $Extension. Supported types: .pbix, .twb, .twbx"
             return
         }
-        
+
         Write-Host "📊 Scanning BI file: " -NoNewline
         Write-Host $FileName -ForegroundColor Cyan
-        
+
         if ($ShowProgress) {
             Write-Progress -Activity "Scanning BI File" -Status "Processing $FileName" -PercentComplete 0
         }
-        
+
         # Build command arguments
         $formatArg = switch ($Format) {
             "Markdown" { "markdown" }
             "JSON" { "json" }
             "All" { "all" }
         }
-        
+
         $arguments = @(
             "-m", "bidoc",
             "-i", "`"$FullPath`"",
             "-o", "`"$OutputPath`"",
             "-f", $formatArg
         )
-        
+
         if ($ShowProgress) {
             $arguments += "-v"
         }
-        
+
         try {
             if ($ShowProgress) {
                 Write-Progress -Activity "Scanning BI File" -Status "Extracting metadata..." -PercentComplete 25
             }
-            
+
             # Execute the BI documentation tool
             $result = & python $arguments 2>&1
-            
+
             if ($LASTEXITCODE -eq 0) {
                 if ($ShowProgress) {
                     Write-Progress -Activity "Scanning BI File" -Status "Documentation generated successfully" -PercentComplete 100
                     Start-Sleep -Milliseconds 500
                     Write-Progress -Activity "Scanning BI File" -Completed
                 }
-                
+
                 Write-Host "✅ Successfully generated documentation for " -NoNewline
                 Write-Host $FileName -ForegroundColor Green
-                
+
                 # Create result object
                 $resultObj = [PSCustomObject]@{
                     FileName = $FileName
@@ -147,7 +147,7 @@ function Invoke-BIFileScan {
                     Success = $true
                     Timestamp = Get-Date
                 }
-                
+
                 # Auto-open result if requested
                 if ($OpenResult) {
                     if ($resultObj.MarkdownFile -and (Test-Path $resultObj.MarkdownFile)) {
@@ -159,7 +159,7 @@ function Invoke-BIFileScan {
                         Invoke-Item $resultObj.JSONFile
                     }
                 }
-                
+
                 return $resultObj
             }
             else {
@@ -170,9 +170,9 @@ function Invoke-BIFileScan {
             if ($ShowProgress) {
                 Write-Progress -Activity "Scanning BI File" -Completed
             }
-            
+
             Write-Error "❌ Failed to process $FileName : $($_.Exception.Message)"
-            
+
             return [PSCustomObject]@{
                 FileName = $FileName
                 FilePath = $FullPath
@@ -184,7 +184,7 @@ function Invoke-BIFileScan {
             }
         }
     }
-    
+
     end {
         Write-Verbose "BI file scanning process completed"
     }
@@ -216,24 +216,24 @@ function Get-BIFileInfo {
         [Alias("FullName", "FilePath")]
         [string]$Path
     )
-    
+
     process {
         $FullPath = Resolve-Path $Path -ErrorAction Stop
         $FileInfo = Get-Item $FullPath
         $Extension = $FileInfo.Extension.ToLower()
-        
+
         # Validate file type
         if ($Extension -notin @('.pbix', '.twb', '.twbx')) {
             Write-Warning "Unsupported file type: $Extension"
             return
         }
-        
+
         $FileType = switch ($Extension) {
             '.pbix' { 'Power BI Desktop' }
             '.twb' { 'Tableau Workbook' }
             '.twbx' { 'Tableau Packaged Workbook' }
         }
-        
+
         # Basic file information
         $info = [PSCustomObject]@{
             Name = $FileInfo.BaseName
@@ -244,7 +244,7 @@ function Get-BIFileInfo {
             FullPath = $FullPath
             CanScan = $true
         }
-        
+
         return $info
     }
 }
@@ -273,7 +273,7 @@ function Open-BIDocFolder {
         [Parameter()]
         [string]$Path = ".\docs"
     )
-    
+
     if (Test-Path $Path) {
         Write-Host "📁 Opening documentation folder..." -ForegroundColor Yellow
         Invoke-Item $Path
@@ -307,31 +307,31 @@ function ConvertTo-BIExcel {
     param(
         [Parameter(Mandatory = $true)]
         [string]$JSONPath,
-        
+
         [Parameter()]
         [string]$OutputPath
     )
-    
+
     if (-not (Test-Path $JSONPath)) {
         throw "JSON file not found: $JSONPath"
     }
-    
+
     if (-not $OutputPath) {
         $baseName = [System.IO.Path]::GetFileNameWithoutExtension($JSONPath)
         $OutputPath = "$baseName-analysis.xlsx"
     }
-    
+
     try {
         $jsonContent = Get-Content $JSONPath -Raw | ConvertFrom-Json
-        
+
         Write-Host "📊 Converting BI documentation to Excel..." -ForegroundColor Yellow
         Write-Host "📄 Input: $JSONPath"
         Write-Host "📁 Output: $OutputPath"
-        
+
         # Check if ImportExcel module is available
         if (Get-Module -ListAvailable -Name "ImportExcel") {
             Import-Module ImportExcel
-            
+
             # Create Excel workbook with multiple sheets
             $excelParams = @{
                 Path = $OutputPath
@@ -340,7 +340,7 @@ function ConvertTo-BIExcel {
                 AutoSize = $true
                 FreezeTopRow = $true
             }
-            
+
             # Overview sheet
             $overview = [PSCustomObject]@{
                 "File Name" = $jsonContent.file_name
@@ -350,14 +350,14 @@ function ConvertTo-BIExcel {
                 "Measures" = if ($jsonContent.measures) { ($jsonContent.measures | Measure-Object).Count } else { 0 }
                 "Generated" = Get-Date
             }
-            
+
             $overview | Export-Excel @excelParams
-            
+
             # Data Sources sheet
             if ($jsonContent.data_sources) {
                 $jsonContent.data_sources | Export-Excel -Path $OutputPath -WorksheetName "Data Sources" -TableStyle "Medium2" -AutoSize
             }
-            
+
             # Tables sheet
             if ($jsonContent.tables) {
                 $tables = $jsonContent.tables | ForEach-Object {
@@ -370,7 +370,7 @@ function ConvertTo-BIExcel {
                 }
                 $tables | Export-Excel -Path $OutputPath -WorksheetName "Tables" -TableStyle "Medium2" -AutoSize
             }
-            
+
             Write-Host "✅ Excel analysis file created: $OutputPath" -ForegroundColor Green
             Write-Host "📖 Opening Excel file..." -ForegroundColor Yellow
             Invoke-Item $OutputPath
@@ -445,7 +445,7 @@ function Show-BIDocHelp {
 # Module exports
 Export-ModuleMember -Function @(
     'Invoke-BIFileScan',
-    'Get-BIFileInfo', 
+    'Get-BIFileInfo',
     'Open-BIDocFolder',
     'ConvertTo-BIExcel',
     'Show-BIDocHelp'

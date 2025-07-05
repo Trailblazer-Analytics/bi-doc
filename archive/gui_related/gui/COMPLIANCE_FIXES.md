@@ -89,9 +89,9 @@ The GUI will work without this dependency, but drag-and-drop will be disabled.
 
 ## Compliance Status
 
-✅ **Pylance**: No type checking errors  
-✅ **Import Handling**: Graceful optional dependency management  
-✅ **User Experience**: Clear messaging and fallback behavior  
-✅ **Code Quality**: Consistent parameter types and error handling  
+✅ **Pylance**: No type checking errors
+✅ **Import Handling**: Graceful optional dependency management
+✅ **User Experience**: Clear messaging and fallback behavior
+✅ **Code Quality**: Consistent parameter types and error handling
 
 The GUI is now fully compliant with Python type checking standards and provides an excellent experience for business analysts regardless of their Python environment setup.

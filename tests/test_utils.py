@@ -1,13 +1,10 @@
 """Tests for utility functions"""
 
 from pathlib import Path
+
 import pytest
-from bidoc.utils import (
-    detect_file_type,
-    sanitize_filename,
-    format_file_size,
-    FileType,
-)
+
+from bidoc.utils import FileType, detect_file_type, format_file_size, sanitize_filename
 
 
 @pytest.mark.parametrize(

@@ -1,6 +1,8 @@
-import pytest
 import os
 from pathlib import Path
+
+import pytest
+
 from bidoc.pbix_parser import PowerBIParser
 from bidoc.tableau_parser import TableauParser
 
@@ -28,8 +30,29 @@ TABLEAU_EXPECTED_KEYS = [
 ]
 
 # Define paths to sample files
-PBIX_SAMPLE_PATH = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'samples', 'power_bi', 'COVID-19 US Tracking Sample.pbix')))
-TDSX_SAMPLE_PATH = Path(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'samples', 'Tableau', 'CH2_BBOD_CourseMetrics_v2.twbx')))
+PBIX_SAMPLE_PATH = Path(
+    os.path.abspath(
+        os.path.join(
+            os.path.dirname(__file__),
+            "..",
+            "samples",
+            "power_bi",
+            "COVID-19 US Tracking Sample.pbix",
+        )
+    )
+)
+TDSX_SAMPLE_PATH = Path(
+    os.path.abspath(
+        os.path.join(
+            os.path.dirname(__file__),
+            "..",
+            "samples",
+            "Tableau",
+            "CH2_BBOD_CourseMetrics_v2.twbx",
+        )
+    )
+)
+
 
 @pytest.fixture
 def power_bi_metadata():
@@ -37,25 +60,33 @@ def power_bi_metadata():
     parser = PowerBIParser()
     return parser.parse(PBIX_SAMPLE_PATH)
 
+
 @pytest.fixture
 def tableau_metadata():
     """Provides parsed metadata from a sample Tableau file."""
     parser = TableauParser()
     return parser.parse(TDSX_SAMPLE_PATH)
 
+
 def test_power_bi_metadata_completeness(power_bi_metadata):
     """
     Tests that all expected top-level keys are present in the Power BI metadata.
     """
     for key in POWER_BI_EXPECTED_KEYS:
-        assert key in power_bi_metadata, f"Missing top-level key in Power BI metadata: {key}"
+        assert (
+            key in power_bi_metadata
+        ), f"Missing top-level key in Power BI metadata: {key}"
+
 
 def test_tableau_metadata_completeness(tableau_metadata):
     """
     Tests that all expected top-level keys are present in the Tableau metadata.
     """
     for key in TABLEAU_EXPECTED_KEYS:
-        assert key in tableau_metadata, f"Missing top-level key in Tableau metadata: {key}"
+        assert (
+            key in tableau_metadata
+        ), f"Missing top-level key in Tableau metadata: {key}"
+
 
 def test_power_bi_data_sources_not_empty(power_bi_metadata):
     """
@@ -76,6 +107,7 @@ def test_power_bi_data_sources_not_empty(power_bi_metadata):
             assert "type" in source
             assert "connection" in source
 
+
 def test_tableau_data_sources_not_empty(tableau_metadata):
     """
     Tests that the data_sources list is present and not empty.
@@ -89,6 +121,9 @@ def test_tableau_data_sources_not_empty(tableau_metadata):
         assert "type" in source
         assert "connections" in source
 
+
 def test_tableau_sample_file_exists():
     """Check if the Tableau sample file exists at the specified path."""
-    assert TDSX_SAMPLE_PATH.exists(), f"Tableau sample file not found at {TDSX_SAMPLE_PATH}"
+    assert (
+        TDSX_SAMPLE_PATH.exists()
+    ), f"Tableau sample file not found at {TDSX_SAMPLE_PATH}"

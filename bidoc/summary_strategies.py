@@ -55,7 +55,9 @@ class TableauSummaryStrategy(AISummaryStrategy):
 
     def generate_summary(self, metadata: Dict[str, Any]) -> str:
         file_name = metadata.get("file_name") or metadata.get("file", "Unknown")
-        datasources = metadata.get("data_sources", [])  # Use data_sources instead of datasources
+        datasources = metadata.get(
+            "data_sources", []
+        )  # Use data_sources instead of datasources
         worksheets = metadata.get("worksheets", [])
         dashboards = metadata.get("dashboards", [])
 

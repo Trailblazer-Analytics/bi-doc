@@ -95,7 +95,7 @@ if %errorlevel%==0 (
     if exist "%outputdir%\%filename%.md" echo   - %filename%.md ^(Markdown documentation^)
     if exist "%outputdir%\%filename%.json" echo   - %filename%.json ^(JSON metadata^)
     echo.
-    
+
     REM Ask user what they want to do next
     echo What would you like to do?
     echo   1. Open documentation folder
@@ -103,9 +103,9 @@ if %errorlevel%==0 (
     echo   3. Open JSON metadata
     echo   4. Exit
     echo.
-    
+
     choice /c 1234 /m "Choose an option (1-4): "
-    
+
     if !errorlevel!==1 (
         echo Opening documentation folder...
         explorer "%outputdir%"
@@ -129,7 +129,7 @@ if %errorlevel%==0 (
     if !errorlevel!==4 (
         echo Goodbye!
     )
-    
+
 ) else (
     echo.
     echo ========================================

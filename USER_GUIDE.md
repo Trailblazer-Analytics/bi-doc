@@ -82,7 +82,7 @@ python -m bidoc -i sales_report.pbix -o documentation/
 # Markdown only
 python -m bidoc -i report.pbix -f markdown -o docs/
 
-# JSON only  
+# JSON only
 python -m bidoc -i dashboard.twbx -f json -o exports/
 
 # All formats with verbose logging
@@ -420,10 +420,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Build documentation tool
         run: docker build -t bidoc-tool .
-      
+
       - name: Generate documentation
         run: |
           docker run -v ${{ github.workspace }}:/data bidoc-tool \
@@ -431,7 +431,7 @@ jobs:
             -i /data/dashboards/*.twb* \
             -o /data/docs \
             -f all --verbose
-      
+
       - name: Commit documentation
         run: |
           git config --local user.email "action@github.com"

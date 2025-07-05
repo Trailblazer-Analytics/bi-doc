@@ -31,7 +31,7 @@ Create a Windows Shell Extension that adds "Scan with BI-Doc" to the right-click
 File Explorer Context Menu:
 ├── Open
 ├── Open with...
-├── Scan with BI-Doc → 
+├── Scan with BI-Doc →
 │   ├── Quick Preview (HTML)
 │   ├── Generate Documentation
 │   ├── Export to Excel

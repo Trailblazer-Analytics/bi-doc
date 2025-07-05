@@ -6,11 +6,11 @@ This document provides comprehensive attribution and licensing information for a
 
 ### PBIXRay
 
-**Package**: pbixray  
-**Version**: >=0.3.3  
-**Purpose**: Power BI (.pbix) file parsing and metadata extraction  
-**Repository**: <https://github.com/aafvstam/pbixray>  
-**License**: MIT License  
+**Package**: pbixray
+**Version**: >=0.3.3
+**Purpose**: Power BI (.pbix) file parsing and metadata extraction
+**Repository**: <https://github.com/aafvstam/pbixray>
+**License**: MIT License
 
 ```text
 MIT License
@@ -40,11 +40,11 @@ SOFTWARE.
 
 ### Tableau Document API
 
-**Package**: tableaudocumentapi  
-**Version**: >=0.11  
-**Purpose**: Tableau (.twb/.twbx) workbook parsing and metadata extraction  
-**Repository**: <https://github.com/tableau/document-api-python>  
-**License**: MIT License  
+**Package**: tableaudocumentapi
+**Version**: >=0.11
+**Purpose**: Tableau (.twb/.twbx) workbook parsing and metadata extraction
+**Repository**: <https://github.com/tableau/document-api-python>
+**License**: MIT License
 
 ```text
 MIT License
@@ -74,11 +74,11 @@ SOFTWARE.
 
 ### DAX Formatter (Inspiration)
 
-**Project**: DAX Formatter by SQL BI  
-**Purpose**: Inspiration for DAX expression formatting standards  
-**Repository**: <https://github.com/sql-bi/DaxFormatter>  
-**Web Interface**: <https://www.daxformatter.com/>  
-**License**: Not directly used as dependency - formatting conventions inspired by this project  
+**Project**: DAX Formatter by SQL BI
+**Purpose**: Inspiration for DAX expression formatting standards
+**Repository**: <https://github.com/sql-bi/DaxFormatter>
+**Web Interface**: <https://www.daxformatter.com/>
+**License**: Not directly used as dependency - formatting conventions inspired by this project
 
 **Attribution**: The DAX formatting functionality in this tool implements formatting conventions compatible with and inspired by DAX Formatter by SQL BI, which is the industry standard for DAX code formatting. DAX Formatter is developed by the SQL BI team and provides comprehensive formatting capabilities for DAX expressions. Our implementation follows similar principles to ensure consistency with established DAX coding standards.
 
@@ -94,51 +94,51 @@ For advanced DAX formatting needs beyond what this tool provides, we recommend u
 
 ### Click
 
-**Package**: click  
-**Version**: >=8.0.0  
-**Purpose**: Command-line interface framework  
-**Repository**: <https://github.com/pallets/click>  
-**License**: BSD-3-Clause License  
+**Package**: click
+**Version**: >=8.0.0
+**Purpose**: Command-line interface framework
+**Repository**: <https://github.com/pallets/click>
+**License**: BSD-3-Clause License
 
 **Attribution**: Command-line interface powered by Click, a Python package for creating beautiful command line interfaces.
 
 ### Jinja2
 
-**Package**: jinja2  
-**Version**: >=3.1.0  
-**Purpose**: Template engine for generating documentation  
-**Repository**: <https://github.com/pallets/jinja>  
-**License**: BSD-3-Clause License  
+**Package**: jinja2
+**Version**: >=3.1.0
+**Purpose**: Template engine for generating documentation
+**Repository**: <https://github.com/pallets/jinja>
+**License**: BSD-3-Clause License
 
 **Attribution**: Documentation templates rendered using Jinja2, a modern and designer-friendly templating language for Python.
 
 ### Pandas
 
-**Package**: pandas  
-**Version**: >=1.5.0  
-**Purpose**: Data manipulation and analysis  
-**Repository**: <https://github.com/pandas-dev/pandas>  
-**License**: BSD-3-Clause License  
+**Package**: pandas
+**Version**: >=1.5.0
+**Purpose**: Data manipulation and analysis
+**Repository**: <https://github.com/pandas-dev/pandas>
+**License**: BSD-3-Clause License
 
 **Attribution**: Data processing capabilities provided by pandas, a powerful data analysis and manipulation library for Python.
 
 ### lxml
 
-**Package**: lxml  
-**Version**: >=4.9.0  
-**Purpose**: XML and HTML processing  
-**Repository**: <https://github.com/lxml/lxml>  
-**License**: BSD-3-Clause License  
+**Package**: lxml
+**Version**: >=4.9.0
+**Purpose**: XML and HTML processing
+**Repository**: <https://github.com/lxml/lxml>
+**License**: BSD-3-Clause License
 
 **Attribution**: XML processing capabilities provided by lxml, the most feature-rich and easy-to-use library for processing XML and HTML in Python.
 
 ### Colorama
 
-**Package**: colorama  
-**Version**: >=0.4.0  
-**Purpose**: Cross-platform colored terminal text  
-**Repository**: <https://github.com/tartley/colorama>  
-**License**: BSD-3-Clause License  
+**Package**: colorama
+**Version**: >=0.4.0
+**Purpose**: Cross-platform colored terminal text
+**Repository**: <https://github.com/tartley/colorama>
+**License**: BSD-3-Clause License
 
 **Attribution**: Cross-platform colored output provided by Colorama, making ANSI escape character sequences work under MS Windows.
 
@@ -146,21 +146,21 @@ For advanced DAX formatting needs beyond what this tool provides, we recommend u
 
 ### tkinterdnd2
 
-**Package**: tkinterdnd2  
-**Version**: >=0.3.0  
-**Purpose**: Drag-and-drop functionality for tkinter GUIs  
-**Repository**: <https://github.com/pmgagne/tkinterdnd2>  
-**License**: MIT License  
+**Package**: tkinterdnd2
+**Version**: >=0.3.0
+**Purpose**: Drag-and-drop functionality for tkinter GUIs
+**Repository**: <https://github.com/pmgagne/tkinterdnd2>
+**License**: MIT License
 
 **Attribution**: Drag-and-drop functionality in the analyst GUI provided by tkinterdnd2, a Python wrapper for the tkdnd drag-and-drop library.
 
 ### OpenPyXL
 
-**Package**: openpyxl  
-**Version**: >=3.0.0  
-**Purpose**: Excel file creation and manipulation  
-**Repository**: <https://foss.heptapod.net/openpyxl/openpyxl>  
-**License**: MIT License  
+**Package**: openpyxl
+**Version**: >=3.0.0
+**Purpose**: Excel file creation and manipulation
+**Repository**: <https://foss.heptapod.net/openpyxl/openpyxl>
+**License**: MIT License
 
 **Attribution**: Excel export functionality provided by OpenPyXL, a Python library to read/write Excel 2010 xlsx/xlsm/xltx/xltm files.
 
@@ -168,10 +168,10 @@ For advanced DAX formatting needs beyond what this tool provides, we recommend u
 
 ### Microsoft Power BI Sample Files
 
-**Source**: Microsoft PowerBI Desktop Samples  
-**Repository**: <https://github.com/Microsoft/powerbi-desktop-samples>  
-**License**: MIT License  
-**Purpose**: Demonstration and testing of Power BI file parsing capabilities  
+**Source**: Microsoft PowerBI Desktop Samples
+**Repository**: <https://github.com/Microsoft/powerbi-desktop-samples>
+**License**: MIT License
+**Purpose**: Demonstration and testing of Power BI file parsing capabilities
 
 ```text
 MIT License
@@ -245,8 +245,8 @@ When distributing binary packages, this attribution file should be included to e
 
 This attribution file is maintained alongside the project's dependency management. When dependencies are added, removed, or updated, this file should be updated accordingly.
 
-**Last Updated**: July 4, 2025  
-**Next Review**: Next major release or dependency update  
+**Last Updated**: July 4, 2025
+**Next Review**: Next major release or dependency update
 
 ## Contact
 

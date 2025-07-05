@@ -1,0 +1,261 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel", "setuptools-scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bidoc"
+dynamic = ["version"]
+description = "Business Intelligence documentation tool for Power BI and Tableau"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "BUSL-1.1"
+authors = [
+    {name = "BI Documentation Tool Team"},
+]
+maintainers = [
+    {name = "BI Documentation Tool Team"},
+]
+keywords = [
+    "power-bi",
+    "tableau",
+    "business-intelligence",
+    "documentation",
+    "metadata",
+    "data-catalog",
+    "enterprise-integration"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Intended Audience :: Information Technology",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Documentation",
+    "Topic :: Office/Business",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: System :: Archiving",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "pbixray>=0.3.3",
+    "tableaudocumentapi>=0.11",
+    "click>=8.0.0",
+    "jinja2>=3.1.0",
+    "pandas>=1.5.0",
+    "lxml>=4.9.0",
+    "colorama>=0.4.0",
+    "toml>=0.10.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0.0",
+    "bandit>=1.7.0",
+    "pre-commit>=3.0.0",
+    "sphinx>=6.0.0",
+    "sphinx-rtd-theme>=1.3.0",
+    "jupyter>=1.0.0",
+]
+docs = [
+    "sphinx>=6.0.0",
+    "sphinx-rtd-theme>=1.3.0",
+    "myst-parser>=2.0.0",
+    "sphinx-click>=4.4.0",
+]
+test = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "pytest-mock>=3.10.0",
+]
+
+[project.scripts]
+bidoc = "bidoc.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/your-org/bi-doc"
+Documentation = "https://github.com/your-org/bi-doc#readme"
+Repository = "https://github.com/your-org/bi-doc"
+"Bug Tracker" = "https://github.com/your-org/bi-doc/issues"
+Changelog = "https://github.com/your-org/bi-doc/blob/main/CHANGELOG.md"
+"Integration Guide" = "https://github.com/your-org/bi-doc/blob/main/INTEGRATION_HOOKS.md"
+
+[tool.setuptools]
+packages = ["bidoc"]
+
+[tool.setuptools.package-data]
+bidoc = ["*.toml", "templates/*.j2"]
+
+[tool.setuptools_scm]
+write_to = "bidoc/__version__.py"
+version_scheme = "post-release"
+local_scheme = "dirty-tag"
+
+# Black configuration
+[tool.black]
+line-length = 88
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+# Ruff configuration
+[tool.ruff]
+target-version = "py38"
+line-length = 88
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "B",  # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+    "ARG001", # unused-function-args
+    "SIM", # flake8-simplify
+    "TCH", # flake8-type-checking
+    "TID", # flake8-tidy-imports
+    "Q", # flake8-quotes
+    "FBT", # flake8-boolean-trap
+    "PLR", # pylint refactor
+    "PLW", # pylint warnings
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+    "PLR0913", # too many arguments
+    "PLR2004", # magic value used in comparison
+    "FBT001", # boolean positional arguments (CLI interface needs them)
+    "PLR0912", # too many branches (acceptable for parsers)
+    "PLR0915", # too many statements (acceptable for complex methods)
+]
+unfixable = [
+    "F841", # Remove unused variables
+]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+[tool.ruff.lint.isort]
+known-first-party = ["bidoc"]
+
+# MyPy configuration
+[tool.mypy]
+python_version = "3.8"
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+no_implicit_reexport = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = [
+    "pbixray.*",
+    "tableaudocumentapi.*",
+    "colorama.*",
+]
+ignore_missing_imports = true
+
+# Pytest configuration
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers --strict-config"
+testpaths = ["tests"]
+filterwarnings = [
+    "error",
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+
+# Coverage configuration
+[tool.coverage.run]
+source = ["bidoc"]
+branch = true
+omit = [
+    "bidoc/_version.py",
+    "tests/*",
+    "*/__init__.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+]
+show_missing = true
+skip_covered = false
+skip_empty = false
+
+[tool.coverage.html]
+directory = "htmlcov"
+
+# Bandit security configuration
+[tool.bandit]
+exclude_dirs = ["tests", "build", "dist"]
+skips = ["B101", "B601"]

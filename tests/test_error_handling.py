@@ -1,12 +1,12 @@
 """Tests for error handling and edge cases"""
 
-import pytest
 from pathlib import Path
-from unittest.mock import Mock, patch
+from unittest.mock import patch
+
 from bidoc.cli import parse_file
-from bidoc.utils import FileType, detect_file_type
 from bidoc.pbix_parser import PowerBIParser
 from bidoc.tableau_parser import TableauParser
+from bidoc.utils import FileType, detect_file_type
 
 
 def test_detect_file_type_with_nonexistent_file():
@@ -33,21 +33,21 @@ def test_parse_file_with_unsupported_type():
     assert result is None
 
 
-@patch('bidoc.pbix_parser.PowerBIParser.parse')
+@patch("bidoc.pbix_parser.PowerBIParser.parse")
 def test_powerbi_parser_exception_handling(mock_parse):
     """Test that PowerBI parser exceptions are handled gracefully."""
     mock_parse.side_effect = Exception("Parsing failed")
-    
+
     fake_file = Path("test.pbix")
     result = parse_file(fake_file, FileType.POWER_BI)
     assert result is None
 
 
-@patch('bidoc.tableau_parser.TableauParser.parse')
+@patch("bidoc.tableau_parser.TableauParser.parse")
 def test_tableau_parser_exception_handling(mock_parse):
     """Test that Tableau parser exceptions are handled gracefully."""
     mock_parse.side_effect = Exception("Parsing failed")
-    
+
     fake_file = Path("test.twb")
     result = parse_file(fake_file, FileType.TABLEAU_TWB)
     assert result is None

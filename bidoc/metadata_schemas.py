@@ -16,7 +16,6 @@ POWERBI_METADATA_SCHEMA = {
     "file_size": Optional[int],
     "last_modified": Optional[str],
     "created_date": Optional[str],
-    
     # Model information
     "model_info": {
         "name": str,
@@ -27,7 +26,6 @@ POWERBI_METADATA_SCHEMA = {
         "version": Optional[str],
         "annotations": Dict[str, Any],
     },
-    
     # Enhanced data sources
     "data_sources": [
         {
@@ -44,7 +42,6 @@ POWERBI_METADATA_SCHEMA = {
             "connection_details": Dict[str, Any],
         }
     ],
-    
     # Enhanced tables with complete information
     "tables": [
         {
@@ -77,7 +74,6 @@ POWERBI_METADATA_SCHEMA = {
             "annotations": Dict[str, Any],
         }
     ],
-    
     # Enhanced relationships
     "relationships": [
         {
@@ -94,7 +90,6 @@ POWERBI_METADATA_SCHEMA = {
             "annotations": Dict[str, Any],
         }
     ],
-    
     # Enhanced measures with formatting
     "measures": [
         {
@@ -112,7 +107,6 @@ POWERBI_METADATA_SCHEMA = {
             "annotations": Dict[str, Any],
         }
     ],
-    
     # Enhanced calculated columns
     "calculated_columns": [
         {
@@ -131,7 +125,6 @@ POWERBI_METADATA_SCHEMA = {
             "annotations": Dict[str, Any],
         }
     ],
-    
     # Calculated tables
     "calculated_tables": [
         {
@@ -143,7 +136,6 @@ POWERBI_METADATA_SCHEMA = {
             "annotations": Dict[str, Any],
         }
     ],
-    
     # Enhanced visualizations with complete structure
     "visualizations": [
         {
@@ -172,7 +164,6 @@ POWERBI_METADATA_SCHEMA = {
             ],
         }
     ],
-    
     # Enhanced Power Query
     "power_query": {
         "queries": [
@@ -189,7 +180,6 @@ POWERBI_METADATA_SCHEMA = {
         "data_sources": List[Dict[str, Any]],
         "parameters": List[Dict[str, Any]],
     },
-    
     # Role-Level Security
     "rls_roles": [
         {
@@ -206,7 +196,6 @@ POWERBI_METADATA_SCHEMA = {
             "annotations": Dict[str, Any],
         }
     ],
-    
     # Hierarchies
     "hierarchies": [
         {
@@ -225,7 +214,6 @@ POWERBI_METADATA_SCHEMA = {
             "annotations": Dict[str, Any],
         }
     ],
-    
     # Translations
     "translations": [
         {
@@ -240,7 +228,6 @@ POWERBI_METADATA_SCHEMA = {
             ],
         }
     ],
-    
     # Perspectives
     "perspectives": [
         {
@@ -250,7 +237,6 @@ POWERBI_METADATA_SCHEMA = {
             "annotations": Dict[str, Any],
         }
     ],
-    
     # Culture and formatting
     "culture_info": {
         "culture": str,
@@ -260,7 +246,6 @@ POWERBI_METADATA_SCHEMA = {
         "thousand_separator": str,
         "decimal_separator": str,
     },
-    
     # Model annotations and extended properties
     "model_annotations": Dict[str, Any],
     "extended_properties": Dict[str, Any],
@@ -275,7 +260,6 @@ TABLEAU_METADATA_SCHEMA = {
     "file_size": Optional[int],
     "last_modified": Optional[str],
     "created_date": Optional[str],
-    
     # Workbook information
     "workbook_info": {
         "name": str,
@@ -290,7 +274,6 @@ TABLEAU_METADATA_SCHEMA = {
         "project": str,
         "site": str,
     },
-    
     # Enhanced data sources with complete connection details
     "data_sources": [
         {
@@ -348,7 +331,6 @@ TABLEAU_METADATA_SCHEMA = {
             "refresh_info": Dict[str, Any],
         }
     ],
-    
     # Enhanced worksheets with complete structure
     "worksheets": [
         {
@@ -391,7 +373,6 @@ TABLEAU_METADATA_SCHEMA = {
             "table_calculations": List[Dict[str, Any]],
         }
     ],
-    
     # Enhanced dashboards with layout information
     "dashboards": [
         {
@@ -431,7 +412,6 @@ TABLEAU_METADATA_SCHEMA = {
             ],
         }
     ],
-    
     # Enhanced parameters with complete configuration
     "parameters": [
         {
@@ -450,7 +430,6 @@ TABLEAU_METADATA_SCHEMA = {
             "actions": List[Dict[str, Any]],
         }
     ],
-    
     # Enhanced calculated fields with formatting
     "calculated_fields": [
         {
@@ -469,7 +448,6 @@ TABLEAU_METADATA_SCHEMA = {
             "comment": str,
         }
     ],
-    
     # Stories (Tableau's presentation feature)
     "stories": [
         {
@@ -489,7 +467,6 @@ TABLEAU_METADATA_SCHEMA = {
             "formatting": Dict[str, Any],
         }
     ],
-    
     # Enhanced field usage analytics
     "field_usage": {
         "by_worksheet": Dict[str, List[str]],
@@ -498,7 +475,6 @@ TABLEAU_METADATA_SCHEMA = {
         "most_used_fields": List[Dict[str, Any]],
         "field_dependencies": Dict[str, List[str]],
     },
-    
     # Metadata and performance
     "metadata_records": [
         {
@@ -510,7 +486,6 @@ TABLEAU_METADATA_SCHEMA = {
             "parent": str,
         }
     ],
-    
     # Groups and sets
     "groups": [
         {
@@ -521,7 +496,6 @@ TABLEAU_METADATA_SCHEMA = {
             "description": str,
         }
     ],
-    
     "sets": [
         {
             "name": str,
@@ -532,7 +506,6 @@ TABLEAU_METADATA_SCHEMA = {
             "members": List[Any],
         }
     ],
-    
     # Formatting and themes
     "formatting": {
         "workbook_formatting": Dict[str, Any],
@@ -552,7 +525,6 @@ def get_default_powerbi_metadata() -> Dict[str, Any]:
         "file_size": None,
         "last_modified": "not available",
         "created_date": "not available",
-        
         "model_info": {
             "name": "not available",
             "description": "not available",
@@ -562,7 +534,6 @@ def get_default_powerbi_metadata() -> Dict[str, Any]:
             "version": "not available",
             "annotations": {},
         },
-        
         "data_sources": [],
         "tables": [],
         "relationships": [],
@@ -570,18 +541,15 @@ def get_default_powerbi_metadata() -> Dict[str, Any]:
         "calculated_columns": [],
         "calculated_tables": [],
         "visualizations": [],
-        
         "power_query": {
             "queries": [],
             "data_sources": [],
             "parameters": [],
         },
-        
         "rls_roles": [],
         "hierarchies": [],
         "translations": [],
         "perspectives": [],
-        
         "culture_info": {
             "culture": "not available",
             "date_format": "not available",
@@ -590,7 +558,6 @@ def get_default_powerbi_metadata() -> Dict[str, Any]:
             "thousand_separator": "not available",
             "decimal_separator": "not available",
         },
-        
         "model_annotations": {},
         "extended_properties": {},
     }
@@ -605,7 +572,6 @@ def get_default_tableau_metadata() -> Dict[str, Any]:
         "file_size": None,
         "last_modified": "not available",
         "created_date": "not available",
-        
         "workbook_info": {
             "name": "not available",
             "version": "not available",
@@ -619,14 +585,12 @@ def get_default_tableau_metadata() -> Dict[str, Any]:
             "project": "not available",
             "site": "not available",
         },
-        
         "data_sources": [],
         "worksheets": [],
         "dashboards": [],
         "parameters": [],
         "calculated_fields": [],
         "stories": [],
-        
         "field_usage": {
             "by_worksheet": {},
             "by_dashboard": {},
@@ -634,11 +598,9 @@ def get_default_tableau_metadata() -> Dict[str, Any]:
             "most_used_fields": [],
             "field_dependencies": {},
         },
-        
         "metadata_records": [],
         "groups": [],
         "sets": [],
-        
         "formatting": {
             "workbook_formatting": {},
             "default_formatting": {},
@@ -648,14 +610,16 @@ def get_default_tableau_metadata() -> Dict[str, Any]:
     }
 
 
-def ensure_complete_metadata(metadata: Dict[str, Any], file_type: str) -> Dict[str, Any]:
+def ensure_complete_metadata(
+    metadata: Dict[str, Any], file_type: str
+) -> Dict[str, Any]:
     """
     Ensure that metadata contains all possible fields for the file type.
-    
+
     Args:
         metadata: Existing metadata dictionary
         file_type: "Power BI" or "Tableau"
-        
+
     Returns:
         Complete metadata dictionary with all fields present
     """
@@ -665,18 +629,24 @@ def ensure_complete_metadata(metadata: Dict[str, Any], file_type: str) -> Dict[s
         default = get_default_tableau_metadata()
     else:
         return metadata
-    
+
     # Deep merge the metadata with defaults
-    def deep_merge(default_dict: Dict[str, Any], actual_dict: Dict[str, Any]) -> Dict[str, Any]:
+    def deep_merge(
+        default_dict: Dict[str, Any], actual_dict: Dict[str, Any]
+    ) -> Dict[str, Any]:
         """Recursively merge dictionaries, preserving actual values."""
         result = default_dict.copy()
-        
+
         for key, value in actual_dict.items():
-            if key in result and isinstance(result[key], dict) and isinstance(value, dict):
+            if (
+                key in result
+                and isinstance(result[key], dict)
+                and isinstance(value, dict)
+            ):
                 result[key] = deep_merge(result[key], value)
             else:
                 result[key] = value
-                
+
         return result
-    
+
     return deep_merge(default, metadata)

@@ -1,10 +1,8 @@
 """Tests for configuration management"""
 
-import tempfile
-import pytest
 import os
-from pathlib import Path
-from bidoc.config import load_config, AppConfig, AIConfig
+
+from bidoc.config import AIConfig, AppConfig, load_config
 
 
 def test_default_config():
@@ -25,13 +23,13 @@ endpoint = "https://api.openai.com/v1"
 model = "gpt-4"
 api_key = "test-key"
 """
-    
+
     # Create a temporary file in the current directory
     temp_path = "test_config.toml"
     try:
-        with open(temp_path, 'w') as f:
+        with open(temp_path, "w") as f:
             f.write(config_content)
-        
+
         config = load_config(temp_path)
         assert config.ai.endpoint == "https://api.openai.com/v1"
         assert config.ai.model == "gpt-4"
@@ -48,13 +46,13 @@ def test_partial_config():
 [ai]
 endpoint = "https://custom.ai.endpoint"
 """
-    
+
     # Create a temporary file in the current directory
     temp_path = "test_partial_config.toml"
     try:
-        with open(temp_path, 'w') as f:
+        with open(temp_path, "w") as f:
             f.write(config_content)
-        
+
         config = load_config(temp_path)
         assert config.ai.endpoint == "https://custom.ai.endpoint"
         assert config.ai.model == "gpt-3.5-turbo"  # Default value

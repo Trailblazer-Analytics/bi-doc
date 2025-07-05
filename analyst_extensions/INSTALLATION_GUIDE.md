@@ -28,7 +28,7 @@ Choose the method that best fits your comfort level:
 
 **Setup:**
 1. Navigate to `analyst_extensions\` folder
-2. Right-click `BI-Doc-Quick-Scan.bat` 
+2. Right-click `BI-Doc-Quick-Scan.bat`
 3. Select "Send to" > "Desktop (create shortcut)"
 
 **Usage:**

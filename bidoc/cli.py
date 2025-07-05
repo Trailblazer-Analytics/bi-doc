@@ -1,27 +1,27 @@
 """Command Line Interface for BI Documentation Tool"""
 
 import logging
-from pathlib import Path
 import sys
-from typing import List, Optional
+from pathlib import Path
+from typing import Optional
 
 import click
 from colorama import Fore, Style, init
 
 from bidoc.ai_summary import AISummary, get_summary_strategy
 from bidoc.config import load_config
-from bidoc.json_generator import JSONGenerator
-from bidoc.markdown_generator import MarkdownGenerator
-from bidoc.pbix_parser import PowerBIParser
-from bidoc.tableau_parser import TableauParser
-from bidoc.utils import FileType, detect_file_type
-from bidoc.logger import setup_logging, get_logger
 from bidoc.constants import (
     DEFAULT_DOCS_FOLDER,
     JSON_FORMAT,
     LOG_FILE_NAME,
     MARKDOWN_FORMAT,
 )
+from bidoc.json_generator import JSONGenerator
+from bidoc.logger import get_logger, setup_logging
+from bidoc.markdown_generator import MarkdownGenerator
+from bidoc.pbix_parser import PowerBIParser
+from bidoc.tableau_parser import TableauParser
+from bidoc.utils import FileType, detect_file_type
 
 # Initialize colorama for cross-platform colored output
 init()
@@ -206,7 +206,7 @@ def generate_outputs(
             with open(markdown_file, "w", encoding="utf-8") as f:
                 f.write(markdown_content)
             logger.info(f"  Generated Markdown: {markdown_file}")
-        except IOError as e:
+        except OSError as e:
             logger.error(f"  Failed to write Markdown file: {e}")
 
     if JSON_FORMAT in formats_to_generate:
@@ -217,7 +217,7 @@ def generate_outputs(
             with open(json_file, "w", encoding="utf-8") as f:
                 f.write(json_content)
             logger.info(f"  Generated JSON: {json_file}")
-        except IOError as e:
+        except OSError as e:
             logger.error(f"  Failed to write JSON file: {e}")
 
 

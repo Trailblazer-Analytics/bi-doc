@@ -1,8 +1,10 @@
 """Tests for the command-line interface"""
 
-from click.testing import CliRunner
-from bidoc.cli import main
 import os
+
+from click.testing import CliRunner
+
+from bidoc.cli import main
 
 
 def test_cli_runs_successfully():
@@ -18,8 +20,10 @@ def test_cli_runs_successfully():
             "COVID-19 US Tracking Sample.pbix",
         )
     )
-    result = runner.invoke(main, ["--input", sample_file, "--output", "test_output", "--verbose"])
-    
+    result = runner.invoke(
+        main, ["--input", sample_file, "--output", "test_output", "--verbose"]
+    )
+
     # Debug output
     if result.exit_code != 0:
         print(f"Exit code: {result.exit_code}")
@@ -27,7 +31,13 @@ def test_cli_runs_successfully():
         print(f"Exception: {result.exception}")
         if result.exception:
             import traceback
-            traceback.print_exception(type(result.exception), result.exception, result.exception.__traceback__)
-    
+
+            traceback.print_exception(
+                type(result.exception), result.exception, result.exception.__traceback__
+            )
+
     assert result.exit_code == 0
-    assert "Processing complete" in result.output or "Successfully processed" in result.output
+    assert (
+        "Processing complete" in result.output
+        or "Successfully processed" in result.output
+    )

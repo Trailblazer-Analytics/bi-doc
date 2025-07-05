@@ -9,8 +9,10 @@ from bidoc.ai_summary import AISummary, get_summary_strategy
 from bidoc.config import AppConfig
 from bidoc.json_generator import JSONGenerator
 from bidoc.markdown_generator import MarkdownGenerator
-from bidoc.test_data import (create_sample_powerbi_metadata,
-                             create_sample_tableau_metadata)
+from bidoc.test_data import (
+    create_sample_powerbi_metadata,
+    create_sample_tableau_metadata,
+)
 from bidoc.utils import FileType
 
 
@@ -160,7 +162,7 @@ class TestIntegration(unittest.TestCase):
             self.assertGreater(markdown_file.stat().st_size, 0)
 
             # Verify JSON is valid
-            with open(json_file, "r", encoding="utf-8") as f:
+            with open(json_file, encoding="utf-8") as f:
                 parsed_json = json.load(f)
                 self.assertEqual(parsed_json["type"], "Power BI")
 

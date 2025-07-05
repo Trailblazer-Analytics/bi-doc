@@ -6,8 +6,8 @@
 
 #### 1. Enhanced Visual Parsing
 
-**Status:** Future Enhancement  
-**Impact:** High  
+**Status:** Future Enhancement
+**Impact:** High
 **Effort:** Medium
 
 **Power BI Improvements:**
@@ -32,8 +32,8 @@
 
 #### 2. Batch Processing User Experience
 
-**Status:** Enhancement Needed  
-**Impact:** High  
+**Status:** Enhancement Needed
+**Impact:** High
 **Effort:** Low-Medium
 
 **Features:**
@@ -57,8 +57,8 @@ bidoc-cli --input folder/ --output docs/ --parallel 4 --resume
 
 #### 3. Output Customization
 
-**Status:** High Value Addition  
-**Impact:** High  
+**Status:** High Value Addition
+**Impact:** High
 **Effort:** Medium
 
 **Template System:**
@@ -84,8 +84,8 @@ bidoc-cli --input file.pbix --sections "data_sources,measures" --template corpor
 
 #### 4. Advanced Metadata Extraction
 
-**Status:** Future Feature  
-**Impact:** Medium-High  
+**Status:** Future Feature
+**Impact:** Medium-High
 **Effort:** High
 
 **Power BI Enhancements:**
@@ -104,8 +104,8 @@ bidoc-cli --input file.pbix --sections "data_sources,measures" --template corpor
 
 #### 5. Integration Features
 
-**Status:** Enterprise Focused  
-**Impact:** Medium  
+**Status:** Enterprise Focused
+**Impact:** Medium
 **Effort:** High
 
 **Version Control:**
@@ -129,8 +129,8 @@ bidoc-cli --input file.pbix --sections "data_sources,measures" --template corpor
 
 #### 6. Performance Optimization
 
-**Status:** Scale Improvement  
-**Impact:** Medium  
+**Status:** Scale Improvement
+**Impact:** Medium
 **Effort:** Medium
 
 **Caching System:**
@@ -150,8 +150,8 @@ bidoc-cli --input file.pbix --sections "data_sources,measures" --template corpor
 
 #### 7. Advanced Analytics
 
-**Status:** Nice to Have  
-**Impact:** Low-Medium  
+**Status:** Nice to Have
+**Impact:** Low-Medium
 **Effort:** High
 
 **Data Lineage:**
@@ -170,8 +170,8 @@ bidoc-cli --input file.pbix --sections "data_sources,measures" --template corpor
 
 #### 8. User Interface Options
 
-**Status:** Alternative Interface  
-**Impact:** Medium  
+**Status:** Alternative Interface
+**Impact:** Medium
 **Effort:** High
 
 **Web Interface:**
@@ -326,6 +326,6 @@ bidoc-cli --input file.pbix --sections "data_sources,measures" --template corpor
 
 ---
 
-**Last Updated:** July 4, 2025  
-**Next Review:** August 1, 2025  
+**Last Updated:** July 4, 2025
+**Next Review:** August 1, 2025
 **Maintainers:** BI Documentation Tool Team
