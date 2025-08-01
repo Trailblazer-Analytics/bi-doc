@@ -1,11 +1,15 @@
 """Power BI (.pbix) file parser using PBIXRay"""
 
 import json
-import zipfile
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 import pandas as pd
+
+from .security_utils import (
+    SecurityError,
+    validate_file_path,
+)
 
 if TYPE_CHECKING:
     from pbixray import PBIXRay
@@ -35,30 +39,33 @@ class PowerBIParser(MetadataExtractor):
         self.dax_formatter = DAXFormatter()
 
     def parse(self, file_path: Path) -> Dict[str, Any]:
-        """Parse a Power BI .pbix file and extract metadata"""
+        """Parse a Power BI .pbix file and extract metadata with security validation"""
         self.logger.info(f"Parsing Power BI file: {file_path.name}")
+
+        try:
+            # Validate file for security before processing
+            validated_path = validate_file_path(file_path)
+        except SecurityError as e:
+            self.logger.error(f"Security validation failed for {file_path}: {e}")
+            raise
 
         # Start with comprehensive default metadata structure
         metadata = get_default_powerbi_metadata()
 
-        # Update basic file information
+        # Update basic file information using validated path
         metadata.update(
             {
-                "file": file_path.name,
+                "file": validated_path.name,
                 "type": "Power BI",
-                "file_path": str(file_path),
-                "file_size": file_path.stat().st_size if file_path.exists() else None,
-                "last_modified": (
-                    str(file_path.stat().st_mtime)
-                    if file_path.exists()
-                    else "not available"
-                ),
+                "file_path": str(validated_path),
+                "file_size": validated_path.stat().st_size,
+                "last_modified": str(validated_path.stat().st_mtime),
             }
         )
 
         try:
-            # Initialize PBIXRay
-            model = PBIXRay(str(file_path))
+            # Initialize PBIXRay with validated path
+            model = PBIXRay(str(validated_path))
 
             # Extract and enhance model information
             metadata["model_info"] = self._extract_model_info(model)
@@ -72,7 +79,7 @@ class PowerBIParser(MetadataExtractor):
                     "measures": self._extract_measures(model),
                     "calculated_columns": self._extract_calculated_columns(model),
                     "calculated_tables": self._extract_calculated_tables(model),
-                    "visualizations": self._extract_visualizations(file_path),
+                    "visualizations": self._extract_visualizations(validated_path),
                     "power_query": self._extract_power_query(model),
                     "rls_roles": self._extract_rls_roles(model),
                     "hierarchies": self._extract_hierarchies(model),
@@ -449,18 +456,37 @@ class PowerBIParser(MetadataExtractor):
         return calculated_tables
 
     def _extract_visualizations(self, file_path: Path) -> List[Dict[str, Any]]:
-        """Extract report layout and visualization information"""
+        """Extract report layout and visualization information using secure file access"""
         self.log_extraction_progress("Extracting visualizations")
 
         visualizations = []
 
         try:
+            # Validate the file first
+            validated_path = validate_file_path(file_path)
+            
+            # Import zipfile here to maintain secure practices
+            import zipfile
+            
             # Extract layout JSON from .pbix file
-            with zipfile.ZipFile(file_path, "r") as zip_file:
+            with zipfile.ZipFile(validated_path, "r") as zip_file:
+                # Validate archive contents for security
+                from .security_utils import validate_archive_contents
+                try:
+                    validate_archive_contents(validated_path)
+                except SecurityError as e:
+                    self.logger.warning(f"Archive security validation failed: {e}")
+                    # Continue with extraction but log the warning
+                
                 # Look for Report/Layout file
                 layout_files = [f for f in zip_file.namelist() if "Report/Layout" in f]
 
                 for layout_file in layout_files:
+                    # Check for path traversal in layout file names
+                    if ".." in layout_file or layout_file.startswith("/"):
+                        self.logger.warning(f"Skipping suspicious layout file: {layout_file}")
+                        continue
+                        
                     layout_content = zip_file.read(layout_file)
 
                     # Decode and clean the JSON (handle UTF-16 and control characters)

@@ -1,11 +1,17 @@
 """Tableau (.twb/.twbx) file parser using Tableau Document API"""
 
 import contextlib
-import tempfile
-import zipfile
 from datetime import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List
+
+from .security_utils import (
+    SecurityError,
+    find_archive_members_by_extension,
+    safe_extract_archive_member,
+    secure_temp_directory,
+    validate_file_path,
+)
 
 if TYPE_CHECKING:
     from tableaudocumentapi import Workbook
@@ -95,36 +101,56 @@ class TableauParser(MetadataExtractor):
             return metadata
 
     def _extract_workbook_from_archive(self, archive_path: Path) -> str:
-        """Extract .twb or .tds file from .twbx or .tdsx archive"""
+        """Extract .twb or .tds file from .twbx or .tdsx archive using secure extraction"""
         self.log_extraction_progress(f"Extracting from {archive_path.suffix} archive")
 
-        if not archive_path.exists():
-            raise FileNotFoundError(f"Archive file not found at: {archive_path}")
-
-        temp_dir = tempfile.mkdtemp()
-
-        file_extension_to_find = (
-            ".twb" if archive_path.suffix.lower() == ".twbx" else ".tds"
-        )
-
-        with open(archive_path, "rb") as archive_file, zipfile.ZipFile(
-            archive_file, "r"
-        ) as zip_file:
-            # Find the file in the archive
-            files = [
-                f for f in zip_file.namelist() if f.endswith(file_extension_to_find)
-            ]
-
-            if not files:
+        try:
+            # Validate the archive file
+            validated_path = validate_file_path(archive_path)
+            
+            # Determine the file extension to find
+            file_extension_to_find = (
+                ".twb" if archive_path.suffix.lower() == ".twbx" else ".tds"
+            )
+            
+            # Find matching files in the archive using secure validation
+            matching_members = find_archive_members_by_extension(
+                validated_path, [file_extension_to_find]
+            )
+            
+            if not matching_members:
                 raise ValueError(
                     f"No {file_extension_to_find} file found in {archive_path.suffix} archive"
                 )
-
-            # Extract the first file found
-            file_to_extract = files[0]
-            zip_file.extract(file_to_extract, temp_dir)
-
-            return str(Path(temp_dir) / file_to_extract)
+            
+            # Use secure temporary directory with guaranteed cleanup
+            with secure_temp_directory() as temp_dir:
+                # Import zipfile here to avoid import at module level
+                import zipfile
+                
+                with zipfile.ZipFile(validated_path, "r") as zip_file:
+                    # Extract the first matching file securely
+                    member_to_extract = matching_members[0]
+                    extracted_path = safe_extract_archive_member(
+                        zip_file, 
+                        member_to_extract, 
+                        temp_dir,
+                        allowed_extensions={file_extension_to_find}
+                    )
+                    
+                    self.logger.info(
+                        f"Successfully extracted {member_to_extract.filename} "
+                        f"({member_to_extract.file_size} bytes)"
+                    )
+                    
+                    return str(extracted_path)
+                    
+        except SecurityError as e:
+            self.logger.error(f"Security validation failed for {archive_path}: {e}")
+            raise
+        except Exception as e:
+            self.logger.error(f"Failed to extract workbook from archive {archive_path}: {e}")
+            raise
 
     def _extract_data_sources(self, workbook) -> List[Dict[str, Any]]:
         """Extract data source information"""
