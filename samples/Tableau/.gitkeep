@@ -1,0 +1,5 @@
+# Sample Tableau files should be placed in this directory for testing
+# The tests expect files like:
+# - CH2_BBOD_CourseMetrics_v2.twbx
+# 
+# These files are not included in the repository due to size constraints.
