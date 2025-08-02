@@ -41,8 +41,8 @@ def main():
     
     project_root = Path(__file__).parent.parent
     
-    # Change to project directory
-    subprocess.run(["git", "config", "--global", "init.defaultBranch", "main"], 
+    # Set default branch to 'main' for this repository only
+    subprocess.run(["git", "config", "--local", "init.defaultBranch", "main"], 
                   check=False, capture_output=True)
     
     steps = [
