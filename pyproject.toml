@@ -51,6 +51,7 @@ dependencies = [
     "lxml>=4.9.0",
     "colorama>=0.4.0",
     "toml>=0.10.2",
+    "psutil>=5.9.0",  # For performance monitoring
     "importlib-metadata>=1.0.0; python_version < '3.8'",
 ]
 
@@ -77,6 +78,11 @@ test = [
     "pytest>=7.0.0",
     "pytest-cov>=4.0.0",
     "pytest-mock>=3.10.0",
+]
+performance = [
+    "psutil>=5.9.0",  # Enhanced system monitoring
+    "memory-profiler>=0.60.0",  # Memory profiling
+    "line-profiler>=4.0.0",  # Line-by-line profiling
 ]
 
 [project.scripts]
