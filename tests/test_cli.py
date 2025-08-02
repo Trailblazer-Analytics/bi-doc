@@ -1,7 +1,9 @@
 """Tests for the command-line interface"""
 
 import os
+from pathlib import Path
 
+import pytest
 from click.testing import CliRunner
 
 from bidoc.cli import main
@@ -11,7 +13,7 @@ def test_cli_runs_successfully():
     """Test that the CLI runs without crashing on a sample file."""
     runner = CliRunner()
     # Use a known sample file for testing
-    sample_file = os.path.abspath(
+    sample_file = Path(
         os.path.join(
             os.path.dirname(__file__),
             "..",
@@ -20,8 +22,13 @@ def test_cli_runs_successfully():
             "COVID-19 US Tracking Sample.pbix",
         )
     )
+    
+    # Skip test if sample file doesn't exist
+    if not sample_file.exists():
+        pytest.skip("Sample PowerBI file not available")
+    
     result = runner.invoke(
-        main, ["--input", sample_file, "--output", "test_output", "--verbose"]
+        main, ["--input", str(sample_file), "--output", "test_output", "--verbose"]
     )
 
     # Debug output
