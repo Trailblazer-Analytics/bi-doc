@@ -143,11 +143,22 @@ def main(
             successful_files += 1
 
         except Exception as e:
-            logger.error(
-                f"{Fore.RED}Error processing {input_file}: {str(e)}{Style.RESET_ALL}"
-            )
-            if verbose:
-                logger.exception("Full error details:")
+            # Import here to avoid circular imports
+            from .exceptions import BIDocError, log_structured_error
+            
+            if isinstance(e, BIDocError):
+                # Use structured logging for our custom errors
+                log_structured_error(logger, e)
+                logger.error(
+                    f"{Fore.RED}Error processing {input_file}: {e}{Style.RESET_ALL}"
+                )
+            else:
+                # Handle unexpected errors
+                logger.error(
+                    f"{Fore.RED}Unexpected error processing {input_file}: {str(e)}{Style.RESET_ALL}"
+                )
+                if verbose:
+                    logger.exception("Full error details:")
             failed_files += 1
 
     # Summary
@@ -167,6 +178,9 @@ def main(
 def parse_file(file_path: Path, file_type: FileType) -> Optional[dict]:
     """Parse a BI file and extract metadata"""
     logger = get_logger(__name__)
+    
+    # Import here to avoid circular imports
+    from .exceptions import BIDocError, FileProcessingError, ErrorCode, log_structured_error
 
     try:
         if file_type == FileType.POWER_BI:
@@ -176,13 +190,22 @@ def parse_file(file_path: Path, file_type: FileType) -> Optional[dict]:
             parser = TableauParser()
             logger.debug("Using Tableau parser")
         else:
-            logger.error(f"Unsupported file type: {file_path.suffix}")
+            error = FileProcessingError(
+                f"Unsupported file type: {file_path.suffix}",
+                ErrorCode.INVALID_FILE_FORMAT,
+                {"file_path": str(file_path), "file_type": file_type}
+            )
+            log_structured_error(logger, error)
             return None
 
         return parser.parse(file_path)
 
+    except BIDocError as e:
+        # Our custom errors are already logged by the parsers
+        logger.debug(f"Parser returned structured error: {e}")
+        return None
     except Exception as e:
-        logger.error(f"Parser error: {str(e)}")
+        logger.error(f"Unexpected parser error: {str(e)}")
         return None
 
 

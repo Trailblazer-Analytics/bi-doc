@@ -7,6 +7,15 @@ from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 import pandas as pd
 
+from .exceptions import (
+    ErrorCode,
+    ParserError,
+    handle_file_error,
+    handle_parser_error,
+    log_structured_error,
+)
+from .retry_utils import retry_file_operation
+
 if TYPE_CHECKING:
     from pbixray import PBIXRay
 else:
@@ -29,9 +38,13 @@ class PowerBIParser(MetadataExtractor):
     def __init__(self):
         super().__init__()
         if PBIXRay is None:
-            raise ImportError(
-                "PBIXRay library is required. Install with: pip install pbixray"
+            error = ParserError(
+                "PBIXRay library is required. Install with: pip install pbixray",
+                ErrorCode.PARSER_DEPENDENCY_MISSING,
+                {"parser_type": "PowerBI", "missing_dependency": "pbixray"}
             )
+            log_structured_error(self.logger, error)
+            raise error
         self.dax_formatter = DAXFormatter()
 
     def parse(self, file_path: Path) -> Dict[str, Any]:
@@ -57,43 +70,87 @@ class PowerBIParser(MetadataExtractor):
         )
 
         try:
-            # Initialize PBIXRay
-            model = PBIXRay(str(file_path))
+            # Validate file exists and is accessible
+            if not file_path.exists():
+                raise handle_file_error(FileNotFoundError(), str(file_path))
+            
+            # Initialize PBIXRay with retry logic for file access
+            try:
+                model = self._initialize_pbixray(file_path)
+            except Exception as e:
+                error = handle_parser_error(e, "PowerBI", str(file_path))
+                log_structured_error(self.logger, error)
+                raise error
 
-            # Extract and enhance model information
-            metadata["model_info"] = self._extract_model_info(model)
+            # Extract metadata with individual error handling
+            try:
+                metadata["model_info"] = self._extract_model_info(model)
+            except Exception as e:
+                self.logger.warning(f"Model info extraction failed: {e}")
+                metadata["model_info"] = {}
 
-            # Overwrite default values with extracted data
-            metadata.update(
-                {
-                    "data_sources": self._extract_data_sources(model),
-                    "tables": self._extract_tables(model),
-                    "relationships": self._extract_relationships(model),
-                    "measures": self._extract_measures(model),
-                    "calculated_columns": self._extract_calculated_columns(model),
-                    "calculated_tables": self._extract_calculated_tables(model),
-                    "visualizations": self._extract_visualizations(file_path),
-                    "power_query": self._extract_power_query(model),
-                    "rls_roles": self._extract_rls_roles(model),
-                    "hierarchies": self._extract_hierarchies(model),
-                    "culture_info": self._extract_culture_info(model),
-                    "translations": self._extract_translations(model),
-                    "perspectives": self._extract_perspectives(model),
-                    "annotations": self._extract_model_annotations(model),
-                    "extended_properties": self._extract_extended_properties(model),
-                }
-            )
+            # Extract other metadata sections with error isolation
+            metadata.update(self._extract_all_sections(model, file_path))
 
             # Ensure all metadata fields are present
             metadata = ensure_complete_metadata(metadata, "Power BI")
-
             self._log_extraction_summary(metadata)
             return metadata
 
+        except (ParserError, FileProcessingError):
+            # Re-raise our custom errors
+            raise
         except Exception as e:
-            self.logger.error(f"Failed to parse Power BI file: {str(e)}")
+            # Handle any unexpected errors
+            error = handle_parser_error(e, "PowerBI", str(file_path))
+            log_structured_error(self.logger, error)
+            
             # Return the complete default structure even if parsing fails
+            self.logger.info("Returning default metadata structure due to parsing failure")
             return ensure_complete_metadata(metadata, "Power BI")
+
+    @retry_file_operation(max_retries=3, delay=0.5)
+    def _initialize_pbixray(self, file_path: Path) -> "PBIXRay":
+        """Initialize PBIXRay with retry logic for file access issues."""
+        try:
+            return PBIXRay(str(file_path))
+        except Exception as e:
+            self.logger.debug(f"PBIXRay initialization attempt failed: {e}")
+            raise
+
+    def _extract_all_sections(self, model: "PBIXRay", file_path: Path) -> Dict[str, Any]:
+        """Extract all metadata sections with error isolation."""
+        sections = {}
+        
+        # Define all extraction operations
+        extraction_ops = [
+            ("data_sources", lambda: self._extract_data_sources(model)),
+            ("tables", lambda: self._extract_tables(model)),
+            ("relationships", lambda: self._extract_relationships(model)),
+            ("measures", lambda: self._extract_measures(model)),
+            ("calculated_columns", lambda: self._extract_calculated_columns(model)),
+            ("calculated_tables", lambda: self._extract_calculated_tables(model)),
+            ("visualizations", lambda: self._extract_visualizations(file_path)),
+            ("power_query", lambda: self._extract_power_query(model)),
+            ("rls_roles", lambda: self._extract_rls_roles(model)),
+            ("hierarchies", lambda: self._extract_hierarchies(model)),
+            ("culture_info", lambda: self._extract_culture_info(model)),
+            ("translations", lambda: self._extract_translations(model)),
+            ("perspectives", lambda: self._extract_perspectives(model)),
+            ("annotations", lambda: self._extract_model_annotations(model)),
+            ("extended_properties", lambda: self._extract_extended_properties(model)),
+        ]
+        
+        # Execute each extraction with error isolation
+        for section_name, extraction_func in extraction_ops:
+            try:
+                sections[section_name] = extraction_func()
+            except Exception as e:
+                self.logger.warning(f"Failed to extract {section_name}: {e}")
+                # Provide appropriate default based on expected return type
+                sections[section_name] = [] if section_name != "power_query" else {}
+        
+        return sections
 
     def _extract_model_info(self, model: "PBIXRay") -> Dict[str, Any]:
         """Extract model-level information"""

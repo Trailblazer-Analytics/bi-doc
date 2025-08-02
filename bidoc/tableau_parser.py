@@ -7,6 +7,15 @@ from datetime import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List
 
+from .exceptions import (
+    ErrorCode,
+    ParserError,
+    handle_file_error,
+    handle_parser_error,
+    log_structured_error,
+)
+from .retry_utils import retry_file_operation
+
 if TYPE_CHECKING:
     from tableaudocumentapi import Workbook
 else:
@@ -25,9 +34,13 @@ class TableauParser(MetadataExtractor):
     def __init__(self):
         super().__init__()
         if Workbook is None:
-            raise ImportError(
-                "tableau-document-api library is required. Install with: pip install tableau-document-api"
+            error = ParserError(
+                "tableau-document-api library is required. Install with: pip install tableau-document-api",
+                ErrorCode.PARSER_DEPENDENCY_MISSING,
+                {"parser_type": "Tableau", "missing_dependency": "tableau-document-api"}
             )
+            log_structured_error(self.logger, error)
+            raise error
 
     def parse(self, file_path: Path) -> Dict[str, Any]:
         """Parse a Tableau workbook file and extract metadata"""
