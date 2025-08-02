@@ -2,7 +2,12 @@
 
 import functools
 import logging
-import psutil
+try:
+    import psutil
+    HAS_PSUTIL = True
+except ImportError:
+    psutil = None
+    HAS_PSUTIL = False
 import time
 from contextlib import contextmanager
 from dataclasses import dataclass
@@ -41,11 +46,13 @@ class PerformanceMonitor:
         try:
             process = psutil.Process()
             return process.memory_info().rss / 1024 / 1024
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
+        except Exception:  # Handle all exceptions when psutil might not be available
             return 0.0
     
     def _get_cpu_percent(self) -> float:
         """Get current CPU usage percentage."""
+        if not HAS_PSUTIL:
+            return 0.0  # Return 0 if psutil not available
         try:
             return psutil.cpu_percent(interval=0.1)
         except Exception:
@@ -234,7 +241,7 @@ class BatchProcessor:
         try:
             process = psutil.Process()
             return process.memory_info().rss / 1024 / 1024
-        except (psutil.NoSuchProcess, psutil.AccessDenied):
+        except Exception:  # Handle all exceptions when psutil might not be available
             return 0.0
     
     def _should_force_batch(self) -> bool:
