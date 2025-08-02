@@ -54,6 +54,13 @@ class CodeFormatter:
         except FileNotFoundError:
             print(f"❌ {description} failed - tool not installed")
             return False
+        except subprocess.CalledProcessError as e:
+            print(f"❌ {description} failed - command returned non-zero exit status {e.returncode}")
+            if e.output:
+                print("OUTPUT:", e.output)
+            if e.stderr:
+                print("STDERR:", e.stderr)
+            return False
     
     def format_with_black(self, check_only: bool = False) -> bool:
         """Format code with Black."""
