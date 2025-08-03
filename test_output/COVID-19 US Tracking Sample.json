@@ -3,7 +3,7 @@
   "type": "Power BI",
   "file_path": "/config/workspace/bi-doc/samples/power_bi/COVID-19 US Tracking Sample.pbix",
   "file_size": 642,
-  "last_modified": "not available",
+  "last_modified": "1754191290.5988941",
   "created_date": "not available",
   "model_info": {
     "name": "not available",
@@ -41,7 +41,7 @@
   "model_annotations": {},
   "extended_properties": {},
   "generation_info": {
-    "generated_at": "2025-08-02T13:12:22.640842",
+    "generated_at": "2025-08-03T08:16:29.536768",
     "generator": "BI Documentation Tool",
     "version": "1.0.0"
   }
