@@ -752,6 +752,207 @@ We welcome feedback and suggestions! Ways to contribute:
 - **Community Templates**: Contribute custom templates for different use cases
 - **Documentation**: Help improve guides and examples
 
+## Demo and Testing
+
+### Comprehensive Demo
+
+The project includes a comprehensive demo script that showcases all features:
+
+```bash
+# Run the demo script
+python demo.py
+
+# This will:
+# 1. Process real PowerBI sample files
+# 2. Process Tableau sample files (if available)
+# 3. Demonstrate DAX formatting capabilities
+# 4. Show CLI capabilities
+# 5. Generate quality analysis reports
+```
+
+### Sample Files Available
+
+The project includes real Microsoft PowerBI sample files for testing:
+
+- `Human Resources Sample PBIX.pbix` - HR analytics dashboard with measures and relationships
+- `Sales & Returns Sample v201912.pbix` - Sales performance analysis with complex DAX
+- `Adventure Works DW 2020.pbix` - Enterprise data warehouse sample
+- `COVID-19 US Tracking Sample.pbix` - Public health tracking dashboard
+
+### Running Tests
+
+```bash
+# Run all tests to verify functionality
+pytest tests/ -v
+
+# Run specific test categories
+pytest tests/test_powerbi_parser.py -v
+pytest tests/test_metadata_completeness.py -v
+
+# Run tests with coverage
+pytest --cov=bidoc tests/
+```
+
+## PyPI Installation and Updates
+
+### Production Installation
+
+The tool is available on PyPI for production use:
+
+```bash
+# Install the latest stable version
+pip install bidoc
+
+# Install with all optional dependencies
+pip install bidoc[dev,performance]
+
+# Upgrade to latest version
+pip install --upgrade bidoc
+
+# Verify installation and version
+bidoc --version
+```
+
+### Entry Points
+
+After PyPI installation, the tool is available as:
+
+```bash
+# Primary command
+bidoc -i report.pbix -o docs/
+
+# Alternative entry point
+python -m bidoc -i report.pbix -o docs/
+```
+
+## PowerShell Integration
+
+### Windows PowerShell Module
+
+The tool includes PowerShell integration for Windows environments:
+
+```powershell
+# Import the module
+Import-Module .\analyst_extensions\powershell\BIDocumentation.psm1
+
+# Generate documentation
+New-BIDocumentation -InputPath "C:\Reports\*.pbix" -OutputPath "C:\Docs"
+
+# Batch process with logging
+Process-BIFiles -Path "C:\Reports" -Recursive -Verbose
+
+# Get help
+Get-Help New-BIDocumentation -Full
+```
+
+### PowerShell Functions Available
+
+- `New-BIDocumentation`: Generate documentation for BI files
+- `Process-BIFiles`: Batch process directories of BI files
+- `Test-BIDocumentation`: Validate tool installation and functionality
+- `Export-BIMetadata`: Export metadata to various formats
+
+## Quality Assurance Features
+
+### Metadata Completeness
+
+The tool ensures comprehensive metadata extraction:
+
+- **Complete Schema Coverage**: All possible metadata fields are extracted
+- **Missing Information Handling**: Unavailable metadata clearly marked as "not available"
+- **Validation**: Built-in validation for JSON output and Markdown formatting
+- **Error Handling**: Graceful handling of corrupted or incomplete files
+
+### DAX Formatting Quality
+
+Professional DAX formatting with:
+
+- **Industry Standards**: Compatible with DAX Formatter by SQL BI
+- **Consistent Formatting**: Uppercase functions, proper indentation
+- **Complex Expression Handling**: Multi-line formatting for readability
+- **Function Recognition**: Comprehensive DAX function library
+
+### Output Quality Control
+
+- **Markdownlint Compliance**: Generated Markdown passes markdownlint validation
+- **JSON Schema Validation**: All JSON output is validated before writing
+- **Character Encoding**: Proper UTF-8 encoding for international characters
+- **File Size Optimization**: Efficient output generation for large datasets
+
+## Enterprise Production Deployment
+
+### Recommended Architecture
+
+```
+Production Environment
+├── Data Sources (PowerBI/Tableau files)
+├── Processing Server
+│   ├── bidoc (via PyPI)
+│   ├── Configuration (config.toml)
+│   └── Monitoring (logs/metrics)
+├── Output Storage
+│   ├── Documentation Repository
+│   └── Metadata API
+└── Integration Layer
+    ├── Data Catalog APIs
+    ├── CI/CD Pipelines
+    └── Notification Systems
+```
+
+### Configuration Management
+
+Production `config.toml` example:
+
+```toml
+[general]
+default_output_format = "all"
+verbose_logging = true
+include_hidden_objects = false
+
+[performance]
+parallel_processing = true
+cache_enabled = true
+max_memory_usage = "4GB"
+batch_size = 10
+
+[output]
+include_empty_sections = false
+markdown_line_length = 80
+json_indent = 2
+mark_missing_as = "not available"
+
+[enterprise]
+confluence_url = "https://company.atlassian.net"
+data_catalog_url = "https://datacatalog.company.com"
+api_timeout = 30
+retry_count = 3
+
+[monitoring]
+enable_metrics = true
+log_level = "INFO"
+performance_tracking = true
+```
+
+### Monitoring and Alerting
+
+```bash
+# Production monitoring script
+#!/bin/bash
+LOG_FILE="/var/log/bidoc/bidoc_$(date +%Y%m%d).log"
+ERROR_COUNT=$(grep -c "ERROR" "$LOG_FILE")
+
+if [ "$ERROR_COUNT" -gt 0 ]; then
+    echo "Alert: $ERROR_COUNT errors found in BI documentation generation"
+    # Send alert to monitoring system
+fi
+```
+
 ---
+
+For more information, see:
+- [Demo Script](demo.py) for comprehensive testing
+- [Roadmap](ROADMAP.md) for planned features
+- [Integration Guide](INTEGRATION_HOOKS.md) for enterprise integration
+- [GitHub Repository](https://github.com/Trailblazer-Analytics/bi-doc) for latest updates
 
 This completes the comprehensive user guide. The tool is now ready for production use with detailed documentation for users of all skill levels.

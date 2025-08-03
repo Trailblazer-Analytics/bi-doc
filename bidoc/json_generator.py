@@ -1,12 +1,4 @@
-"""JSON documentat        # Add generation metadata
-output_metadata = {
-    **metadata,
-    "generation_info": {
-        "generated_at": datetime.now().isoformat(),
-        "generator": "BI Documentation Tool",
-        "version": "0.1.0",
-    },
-}tor"""
+"""JSON documentation generator"""
 
 import json
 import logging
