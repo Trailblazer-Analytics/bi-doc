@@ -222,6 +222,10 @@ def performance_monitored(func: F) -> F:
     return wrapper
 
 
+# Alias for backwards compatibility
+performance_monitor = performance_monitored
+
+
 class BatchProcessor:
     """Process items in batches to optimize memory usage."""
     

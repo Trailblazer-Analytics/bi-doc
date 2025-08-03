@@ -442,3 +442,20 @@ def create_optimized_processor(
             max_memory_mb=max_memory_mb,
             batch_size=100
         )
+
+
+def get_processor_for_file(file_path: Path) -> Union[StreamingMetadataProcessor, LargeFileHandler]:
+    """Get appropriate processor for a given file.
+    
+    Args:
+        file_path: Path to the file to process
+        
+    Returns:
+        Appropriate processor instance
+    """
+    try:
+        file_size_mb = file_path.stat().st_size / 1024 / 1024
+        return create_optimized_processor(file_size_mb=file_size_mb)
+    except (OSError, AttributeError):
+        # Fallback to default processor if file stats unavailable
+        return StreamingMetadataProcessor()

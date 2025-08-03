@@ -106,19 +106,19 @@ class MemoryCache:
 class FileCache:
     """File-based cache for persistent storage."""
     
-    def __init__(self, cache_dir: Optional[Path] = None, max_age: int = 86400):
+    def __init__(self, cache_dir: Optional[Path] = None, default_ttl: int = 86400):
         """Initialize file cache.
         
         Args:
             cache_dir: Directory for cache files (defaults to temp dir)
-            max_age: Maximum age of cache files in seconds (24 hours)
+            default_ttl: Default TTL for cache files in seconds (24 hours)
         """
         if cache_dir is None:
             cache_dir = Path(tempfile.gettempdir()) / "bidoc_cache"
         
         self.cache_dir = cache_dir
         self.cache_dir.mkdir(exist_ok=True)
-        self.max_age = max_age
+        self.default_ttl = default_ttl
         self.logger = logging.getLogger(__name__)
     
     def _get_cache_path(self, key: str) -> Path:
@@ -133,7 +133,7 @@ class FileCache:
             return True
         
         age = time.time() - cache_path.stat().st_mtime
-        return age > self.max_age
+        return age > self.default_ttl
     
     def get(self, key: str) -> Optional[Any]:
         """Get value from file cache."""
