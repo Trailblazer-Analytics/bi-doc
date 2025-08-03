@@ -6,7 +6,12 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, Optional
 
-from jinja2 import Environment, FileSystemLoader, Template
+try:
+    from jinja2 import Environment, FileSystemLoader, Template
+    HAS_JINJA2 = True
+except ImportError:
+    Environment = FileSystemLoader = Template = None
+    HAS_JINJA2 = False
 
 
 class TemplateManager:
@@ -20,6 +25,11 @@ class TemplateManager:
                          Defaults to bidoc/templates/
         """
         self.logger = logging.getLogger(__name__)
+        
+        if not HAS_JINJA2:
+            self.logger.warning("Jinja2 not available - template functionality limited")
+            self.env = None
+            return
         
         if template_dir is None:
             # Default to templates directory relative to this file
@@ -96,6 +106,72 @@ class TemplateManager:
 _template_manager: Optional[TemplateManager] = None
 
 
+def _generate_basic_powerbi_markdown(metadata: Dict[str, Any]) -> str:
+    """Generate basic PowerBI markdown when templates are not available."""
+    content = f"""# Documentation for {metadata.get('file', 'Unknown File')}
+
+Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+## Overview
+
+**File Type:** {metadata.get('type', 'Unknown')}
+**File Path:** `{metadata.get('file_path', 'Unknown')}`
+
+## Data Sources
+
+"""
+    for ds in metadata.get('data_sources', []):
+        content += f"### {ds.get('name', 'Unknown')}\n\n"
+        content += f"- **Type:** {ds.get('type', 'Unknown')}\n"
+        content += f"- **Connection:** {ds.get('connection', 'Not specified')}\n\n"
+
+    content += "## Tables and Fields\n\n"
+    for table in metadata.get('tables', []):
+        content += f"### {table.get('name', 'Unknown')}\n\n"
+        for col in table.get('columns', []):
+            content += f"- **{col.get('name', 'Unknown')}** ({col.get('data_type', 'Unknown')})\n"
+        content += "\n"
+
+    content += "## Measures\n\n"
+    for measure in metadata.get('measures', []):
+        content += f"### {measure.get('name', 'Unknown')}\n\n"
+        content += f"```dax\n{measure.get('expression', 'No expression')}\n```\n\n"
+
+    return content
+
+
+def _generate_basic_tableau_markdown(metadata: Dict[str, Any]) -> str:
+    """Generate basic Tableau markdown when templates are not available."""
+    content = f"""# Documentation for {metadata.get('file', 'Unknown File')}
+
+Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+## Overview
+
+**File Type:** {metadata.get('type', 'Unknown')}
+**File Path:** `{metadata.get('file_path', 'Unknown')}`
+
+## Data Sources
+
+"""
+    for ds in metadata.get('data_sources', []):
+        content += f"### {ds.get('name', 'Unknown')}\n\n"
+        if 'connection' in ds:
+            content += f"- **Connection:** {ds['connection']}\n"
+        content += "\n"
+
+    content += "## Worksheets\n\n"
+    for ws in metadata.get('worksheets', []):
+        content += f"### {ws.get('name', 'Unknown')}\n\n"
+        if 'fields' in ws:
+            content += "**Fields:**\n"
+            for field in ws['fields']:
+                content += f"- {field}\n"
+        content += "\n"
+
+    return content
+
+
 def get_template_manager() -> TemplateManager:
     """Get or create global template manager instance.
     
@@ -117,6 +193,9 @@ def render_powerbi_template(metadata: Dict[str, Any]) -> str:
     Returns:
         Rendered markdown content
     """
+    if not HAS_JINJA2:
+        return _generate_basic_powerbi_markdown(metadata)
+    
     context = {
         "file_name": metadata.get("file", "Unknown"),
         "file_type": metadata.get("type", "Unknown"),
@@ -145,6 +224,9 @@ def render_tableau_template(metadata: Dict[str, Any]) -> str:
     Returns:
         Rendered markdown content
     """
+    if not HAS_JINJA2:
+        return _generate_basic_tableau_markdown(metadata)
+    
     context = {
         "file_name": metadata.get("file", "Unknown"),
         "file_type": metadata.get("type", "Unknown"),
