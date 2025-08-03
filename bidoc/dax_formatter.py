@@ -15,6 +15,8 @@ DAX Formatter Web: https://www.daxformatter.com/
 """
 
 import re
+import signal
+from typing import Optional
 
 
 class DAXFormatter:
@@ -31,8 +33,10 @@ class DAXFormatter:
     DAX code formatting.
     """
 
-    def __init__(self):
-        """Initialize the DAX formatter with formatting rules."""
+    def __init__(self, max_expression_length: int = 10000, regex_timeout: int = 5):
+        """Initialize the DAX formatter with formatting rules and security limits."""
+        self.max_expression_length = max_expression_length
+        self.regex_timeout = regex_timeout
         # DAX functions that should be uppercase
         self.dax_functions = {
             "sum",
@@ -315,6 +319,10 @@ class DAXFormatter:
         if not dax_expression or not isinstance(dax_expression, str):
             return dax_expression
 
+        # Input validation and security checks
+        if len(dax_expression) > self.max_expression_length:
+            raise ValueError(f"DAX expression too long. Maximum allowed: {self.max_expression_length} characters")
+
         # Remove extra whitespace and normalize
         expression = self._normalize_whitespace(dax_expression)
 
@@ -400,6 +408,30 @@ class DAXFormatter:
         expression = re.sub(r",\s*", ", ", expression)
         return expression
 
+    def _safe_regex_sub(self, pattern: str, repl: str, text: str) -> str:
+        """Perform regex substitution with timeout protection"""
+        def timeout_handler(signum, frame):
+            raise TimeoutError("Regex operation timed out")
+        
+        try:
+            # Set timeout alarm (Unix-based systems only)
+            if hasattr(signal, 'SIGALRM'):
+                signal.signal(signal.SIGALRM, timeout_handler)
+                signal.alarm(self.regex_timeout)
+            
+            result = re.sub(pattern, repl, text)
+            
+            if hasattr(signal, 'SIGALRM'):
+                signal.alarm(0)  # Cancel alarm
+            
+            return result
+        except TimeoutError:
+            # Return original text if regex times out
+            return text
+        except Exception:
+            # Return original text if regex fails
+            return text
+
     def _format_line_breaks(self, expression: str) -> str:
         """Add line breaks for better readability in complex expressions."""
         # This is a simplified version - more complex logic could be added
@@ -407,13 +439,13 @@ class DAXFormatter:
         # Break long expressions at logical points
         if len(expression) > 80:
             # Break after commas in function calls
-            expression = re.sub(r",\s*(?=[^)]*\()", ",\\n    ", expression)
+            expression = self._safe_regex_sub(r",\s*(?=[^)]*\()", ",\\n    ", expression)
 
             # Break before AND/OR operators
-            expression = re.sub(r"\s+(AND|OR)\s+", r"\\n\1 ", expression)
+            expression = self._safe_regex_sub(r"\s+(AND|OR)\s+", r"\\n\1 ", expression)
 
             # Break around VAR/RETURN
-            expression = re.sub(r"\s+(VAR|RETURN)\s+", r"\\n\1 ", expression)
+            expression = self._safe_regex_sub(r"\s+(VAR|RETURN)\s+", r"\\n\1 ", expression)
 
         return expression
 

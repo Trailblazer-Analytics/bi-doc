@@ -22,7 +22,7 @@ class JSONGenerator:
             "generation_info": {
                 "generated_at": datetime.now().isoformat(),
                 "generator": "BI Documentation Tool",
-                "version": "1.0.0",
+                "version": "1.1.0",
             },
         }
 

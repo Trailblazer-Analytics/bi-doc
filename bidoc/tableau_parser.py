@@ -1,6 +1,7 @@
 """Tableau (.twb/.twbx) file parser using Tableau Document API"""
 
 import contextlib
+import os
 import tempfile
 import zipfile
 from datetime import datetime
@@ -28,6 +29,26 @@ class TableauParser(MetadataExtractor):
             raise ImportError(
                 "tableau-document-api library is required. Install with: pip install tableau-document-api"
             )
+
+    def _safe_extract(self, zip_file: zipfile.ZipFile, member: str, extract_path: str) -> str:
+        """Safely extract a file from zip archive, preventing path traversal attacks"""
+        # Normalize the member path
+        member_path = os.path.normpath(member)
+        
+        # Check for path traversal attempts
+        if member_path.startswith('/') or '..' in member_path.split(os.sep):
+            raise ValueError(f"Unsafe path detected in archive member: {member}")
+        
+        # Create the full extraction path
+        full_path = os.path.join(extract_path, member_path)
+        
+        # Verify the extracted path is within the target directory
+        if not os.path.commonpath([extract_path, full_path]) == extract_path:
+            raise ValueError(f"Path traversal attempt detected: {member}")
+        
+        # Extract the file safely
+        zip_file.extract(member, extract_path)
+        return full_path
 
     def parse(self, file_path: Path) -> Dict[str, Any]:
         """Parse a Tableau workbook file and extract metadata"""
@@ -120,9 +141,9 @@ class TableauParser(MetadataExtractor):
                     f"No {file_extension_to_find} file found in {archive_path.suffix} archive"
                 )
 
-            # Extract the first file found
+            # Extract the first file found safely
             file_to_extract = files[0]
-            zip_file.extract(file_to_extract, temp_dir)
+            self._safe_extract(zip_file, file_to_extract, temp_dir)
 
             return str(Path(temp_dir) / file_to_extract)
 

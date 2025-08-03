@@ -1,13 +1,13 @@
 # BI Documentation Tool
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/Trailblazer-Analytics/bi-doc/releases/tag/v1.0.0)
+[![Version](https://img.shields.io/badge/version-1.1.0-blue.svg)](https://github.com/Trailblazer-Analytics/bi-doc/releases/tag/v1.1.0)
 [![License](https://img.shields.io/badge/license-BSL%201.1-green.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/Trailblazer-Analytics/bi-doc)
 [![Tests](https://img.shields.io/badge/tests-48%20passing-brightgreen.svg)](tests/)
 
 A powerful command-line tool for automatically generating comprehensive documentation from Business Intelligence files. Supports Power BI (.pbix) and Tableau (.twb/.twbx) workbooks, extracting detailed metadata to produce professional Markdown and JSON documentation.
 
-**🎉 Version 1.0.0 - Production Ready!** Complete with enterprise integration hooks for tools like Ataccama, Confluence, SharePoint, and more.
+**🔒 Version 1.1.0 - Security Enhanced!** Production-ready with critical security fixes, comprehensive testing, and enterprise integration capabilities.
 
 ## 🚀 Key Features
 
