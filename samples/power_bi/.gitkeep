@@ -1,0 +1,7 @@
+# Sample PowerBI files should be placed in this directory for testing
+# The tests expect files like:
+# - COVID-19 US Tracking Sample.pbix (from Microsoft samples)
+#
+# These files are not included in the repository due to size constraints.
+# You can download sample files from:
+# https://github.com/microsoft/powerbi-desktop-samples
